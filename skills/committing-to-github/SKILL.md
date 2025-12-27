@@ -3,6 +3,7 @@ name: committing-to-github
 description: >
   Git workflow for staging, committing, and pushing changes to GitHub.
   Automatically handles desktop.ini files from Google Drive sync.
+  Use when the user mentions git, commit, push, or wants to save to GitHub.
 ---
 
 # Committing to GitHub

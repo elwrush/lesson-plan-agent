@@ -1,3 +1,10 @@
+---
+name: designing-slides
+description: >
+  Creates Google Slides presentations using the Slides API. Use when the user
+  mentions slideshows, presentations, or needs to convert lesson plans into slides.
+---
+
 # Designing Slides
 
 **Capability**: Create and manipulate Google Slides presentations programmatically using the Google Slides API.

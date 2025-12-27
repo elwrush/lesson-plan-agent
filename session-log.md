@@ -118,3 +118,217 @@ Create a branded Bell EP slide template with proper design principles.
 ### Files Modified
 - `skills/writing-lesson-plans/SKILL.md`
 - `skills/writing-lesson-plans/REFERENCE.md`
+
+---
+
+## 2025-12-26 | GitHub Integration
+
+### Objective
+Create `committing-to-github` skill and push project to GitHub repository.
+
+### Actions Completed
+
+1. **Created `committing-to-github` Skill**
+   - 6-step workflow (status → review → stage → commit → push → confirm)
+   - Automatic `desktop.ini` exclusion for Google Drive sync
+   - Commit message conventions
+
+2. **Created Project README.md**
+   - Overview of all skills
+   - Setup instructions
+   - Project structure
+   - Skills architecture explanation
+
+3. **Created .gitignore**
+   - `desktop.ini` exclusion
+   - `.credentials/` exclusion (OAuth tokens)
+   - Python, IDE, OS patterns
+
+4. **Initial Git Workflow**
+   - Initialized repository: `git init`
+   - Configured remote: https://github.com/elwrush/lesson-plan-agent.git
+   - Staged 29 files (4733 insertions)
+   - Committed with conventional format
+   - Pushed to master branch
+
+### Repository Details
+- **URL**: https://github.com/elwrush/lesson-plan-agent
+- **Commit**: `5559892` - "feat: initial commit - lesson planning agent with skills architecture"
+- **Files**: 29 files, 172.75 KiB
+
+- Skills: `writing-lesson-plans/`, `designing-slides/`, `committing-to-github/`
+- Knowledge base: lesson shapes, design principles
+- Images: Bell/ACT logos, headers
+- Documentation: README, session logs, error tracking
+
+---
+
+## 2025-12-27 | Intensive Reading Materials Development
+
+### Objective
+Transform source materials (3 JPEG scans on "Politeness") into professional GDocs-ready HTML with Entry Ticket and cross-cultural image.
+
+### Actions Completed
+
+1. **Skills Created/Updated**:
+   - `reading-visual-content`: Multimodal extraction with honesty protocol.
+   - `converting-to-gdocs-html`: GDocs-specific formatting rules.
+   - `pushing-to-gdocs`: Drive API upload workflow.
+   - `writing-bespoke-materials`: Updated with Answer Key/Transcript rules.
+
+2. **Material Development**:
+   - Extracted content from `skilful conv 10-12.jpeg` using Gemini 3 Flash.
+   - Generated cross-cultural greeting image using `generate_image` tool.
+   - Created `intensive-reading-politeness.html` with:
+     - Intensive header image
+     - PET Part 2 Entry Ticket (5 items, 3 matches, 2 distractors)
+     - Reading passage with inset image
+     - Vocabulary box with pipe separators
+     - Global/Close reading exercises
+     - Discussion questions
+     - Complete Answer Key
+
+3. **Entry Ticket Refinements**:
+   - A-E selection box (horizontal)
+   - Tools randomized: scalpel, whisk, tripod, guitar, saw
+   - Matches: 1-A (Anna), 3-E (Eric), 5-B (Ben)
+   - Distractors: 2 (whisk), 4 (guitar)
+
+### Files Modified
+- `outputs/intensive-reading-politeness.html`
+- `inputs/Intensive-Reading-Politeness/` (synced final assets)
+- `skills/reading-visual-content/SKILL.md`
+- `skills/converting-to-gdocs-html/SKILL.md`
+- `skills/pushing-to-gdocs/SKILL.md`
+- `skills/writing-bespoke-materials/SKILL.md`
+
+### Skills Compliance Audit
+All skills audited against `knowledge_base/using-skills.md`:
+
+| Skill | Lines | Triggers | Structure | Compliant |
+|-------|-------|----------|-----------|-----------|
+| reading-visual-content | 130 | ✓ | ✓ SKILL.md only | ✓ |
+| converting-to-gdocs-html | 62 | — | ✓ SKILL.md only | ✓ |
+| pushing-to-gdocs | 41 | — | ✓ SKILL.md only | ✓ |
+| writing-bespoke-materials | 103 | ✓ | ✓ SKILL.md only | ✓ |
+
+**Gap Identified**: Skills are missing YAML frontmatter with `name` and `description` fields (Level 1 metadata).
+
+### Next Steps
+- [ ] Push to Google Docs
+- [ ] Add YAML frontmatter to all skills (optional)
+
+---
+
+## 2025-12-27 | Skills Compliance Fixes
+
+### Objective
+Add YAML frontmatter to all skills per the Skills Architecture specification.
+
+### Actions Completed
+
+1. **Audited All 7 Skills** — Verified compliance against `knowledge_base/using-skills.md`
+2. **Added Frontmatter to 5 Skills**:
+   - `designing-slides/SKILL.md`
+   - `reading-visual-content/SKILL.md`
+   - `converting-to-gdocs-html/SKILL.md`
+   - `pushing-to-gdocs/SKILL.md`
+   - `writing-bespoke-materials/SKILL.md`
+3. **Updated 1 Skill** — Added trigger phrases to `committing-to-github/SKILL.md`
+
+### Compliance Status (Post-Fix)
+
+| Skill | YAML Frontmatter | Triggers | Compliant |
+|-------|------------------|----------|-----------|
+| `writing-lesson-plans` | ✅ | ✅ | ✅ |
+| `committing-to-github` | ✅ | ✅ | ✅ |
+| `designing-slides` | ✅ | ✅ | ✅ |
+| `reading-visual-content` | ✅ | ✅ | ✅ |
+| `converting-to-gdocs-html` | ✅ | ✅ | ✅ |
+| `pushing-to-gdocs` | ✅ | ✅ | ✅ |
+| `writing-bespoke-materials` | ✅ | ✅ | ✅ |
+
+**All 7 skills now fully compliant.**
+
+---
+
+## 2025-12-27 | Templates Folder Creation
+
+### Objective
+Create reusable HTML templates to avoid skill bloat and capture design decisions.
+
+### Templates Created
+
+| Template | Purpose |
+|----------|---------|
+| `entry-ticket-pet-part2.html` | PET Part 2 matching (5 items, 3 matches, 2 distractors) |
+| `vocabulary-box.html` | Horizontal word box with pipe separators |
+| `exercise-box.html` | Blue-shaded exercise container |
+| `glossary-box.html` | Red-tinted vocabulary definitions |
+| `inset-image-table.html` | 2-column table for text + image layout |
+| `answer-key-section.html` | Standard answer key footer |
+
+### Files Modified
+- `skills/writing-bespoke-materials/SKILL.md` — Added Templates section with links
+
+### Design Principle
+Templates accumulate reusable HTML patterns. Skills reference templates rather than embedding rules.
+
+---
+
+## 2025-12-27 | Google Docs HTML Push Implementation
+
+### Objective
+Push HTML materials to Google Docs with formatting preserved (colored boxes, images, tables).
+
+### Problem Discovered
+Google Docs HTML import ignores most CSS:
+- No `float`, `box-shadow`, `border-radius`, `max-width`
+- Class-based styles unreliable
+- Local image paths don't resolve
+
+### Solution Implemented
+
+1. **Created Knowledge Base**: `knowledge_base/GDocs-HTML-Constraints.md`
+2. **Created Push Script**: `scripts/push_to_gdocs.py`
+   - Embeds images as base64 data URIs
+   - Uses `MediaIoBaseUpload` for HTML content
+   - Authenticates via dedicated `gdocs-token.json`
+3. **Rewrote HTML** for Google Docs compatibility:
+   - 1-cell tables for colored boxes
+   - 2-column tables for image insets
+   - Inline `style=""` attributes
+   - `pt` units instead of `px`
+   - `&nbsp;` in empty cells
+   - Explicit `font-family: Roboto; font-size: 10pt; line-height: 1.15; margin: 0;`
+
+### Files Created/Modified
+- `knowledge_base/GDocs-HTML-Constraints.md` — Import constraint reference
+- `scripts/push_to_gdocs.py` — Upload script with base64 image embedding
+- `.credentials/gdocs-token.json` — OAuth token with Drive scope
+- `inputs/Intensive-Reading-Politeness/intensive-reading-politeness.html` — Rewritten for Docs compatibility
+
+### Final Output
+- [27-12-25-Politeness-Reading-Intensive-v8](https://docs.google.com/document/d/1PptUYUrscc4-u-oh-04cdCxMqje8-FErANfsgAWgvjM/edit)
+
+### Lessons Learned
+- Google Docs is a paginated word processor, not a browser — design accordingly
+- Table-based layouts are mandatory for multi-column content
+- Manual adjustment may still be needed for paragraph spacing
+
+### Refined Design Approach (Session Continuation)
+After testing, user feedback led to a simpler approach:
+
+**Avoid tables entirely** — use formatted paragraphs instead:
+- Behavior ratings: Circle icons (⭘) with tabbed numbers
+- Word boxes: Styled paragraphs with pipe separators
+- Content boxes: Bordered paragraphs (optional shading)
+- Images: Placed above text for manual wrapping
+
+**Benefits:**
+- Much easier to edit in Google Docs
+- No table spacing issues
+- Cleaner, more readable HTML
+
+### Final Output (Revised)
+- [27-12-25-Politeness-Reading-Intensive-FINAL-v2](https://docs.google.com/document/d/1Cp9b-L0P9NHQ3LMdTAsaTU0h_0CAIG-c2HlPcgS9GXk/edit)
