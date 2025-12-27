@@ -14,7 +14,7 @@ This skill details how to upload HTML content and convert it into a Google Doc i
 ## Prerequisites
 
 - `.credentials/GDocs-credentials.json` (Google API credentials)
-- `.credentials/gdocs-token.json` (OAuth token with Drive scope)
+- `.credentials/gdocs-token.json` (OAuth token with Drive + Docs scopes)
 - Target Folder ID: `1_n11w9BRN6sd0uaXlqEXjqZuZ74zFiOl`
 
 ---
@@ -60,7 +60,8 @@ python scripts/push_to_gdocs.py --file "inputs/folder/file.html" --name "DD-MM-Y
 The script will:
 1. Embed local images as base64 data URIs
 2. Upload HTML to Drive with MIME type conversion
-3. Return the Google Doc URL
+3. **Set page format: A4 with 2cm margins** (via Docs API)
+4. Return the Google Doc URL
 
 ### Step 3: Verify Upload
 Check the generated Google Doc for:

@@ -25,15 +25,25 @@ PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CREDENTIALS_PATH = os.path.join(PROJECT_ROOT, '.credentials', 'GDocs-credentials.json')
 TOKEN_PATH = os.path.join(PROJECT_ROOT, '.credentials', 'gdocs-token.json')
 
-# Scopes needed for Drive upload
-SCOPES = ['https://www.googleapis.com/auth/drive']
+# Scopes needed for Drive upload and Docs formatting
+SCOPES = [
+    'https://www.googleapis.com/auth/drive',
+    'https://www.googleapis.com/auth/documents'
+]
 
 # Default target folder
 DEFAULT_FOLDER_ID = '1_n11w9BRN6sd0uaXlqEXjqZuZ74zFiOl'
 
+# A4 page size in points (1 inch = 72 points, A4 = 210mm x 297mm)
+A4_WIDTH_PT = 595.276  # 210mm
+A4_HEIGHT_PT = 841.89  # 297mm
 
-def get_drive_service():
-    """Authenticates and returns Google Drive API service."""
+# 2cm margins in points (1cm = 28.35 points)
+MARGIN_2CM_PT = 56.7  # 2cm
+
+
+def get_credentials():
+    """Authenticates and returns Google API credentials."""
     creds = None
     
     if os.path.exists(TOKEN_PATH):
@@ -49,7 +59,57 @@ def get_drive_service():
         with open(TOKEN_PATH, 'w') as token:
             token.write(creds.to_json())
     
+    return creds
+
+
+def get_drive_service(creds=None):
+    """Returns Google Drive API service."""
+    if creds is None:
+        creds = get_credentials()
     return build('drive', 'v3', credentials=creds)
+
+
+def get_docs_service(creds=None):
+    """Returns Google Docs API service."""
+    if creds is None:
+        creds = get_credentials()
+    return build('docs', 'v1', credentials=creds)
+
+
+def set_page_format(doc_id, creds):
+    """
+    Sets A4 page size and 2cm margins on the document.
+    
+    Args:
+        doc_id: Google Doc ID
+        creds: Google API credentials
+    """
+    docs_service = get_docs_service(creds)
+    
+    requests = [
+        {
+            'updateDocumentStyle': {
+                'documentStyle': {
+                    'pageSize': {
+                        'width': {'magnitude': A4_WIDTH_PT, 'unit': 'PT'},
+                        'height': {'magnitude': A4_HEIGHT_PT, 'unit': 'PT'}
+                    },
+                    'marginTop': {'magnitude': MARGIN_2CM_PT, 'unit': 'PT'},
+                    'marginBottom': {'magnitude': MARGIN_2CM_PT, 'unit': 'PT'},
+                    'marginLeft': {'magnitude': MARGIN_2CM_PT, 'unit': 'PT'},
+                    'marginRight': {'magnitude': MARGIN_2CM_PT, 'unit': 'PT'}
+                },
+                'fields': 'pageSize,marginTop,marginBottom,marginLeft,marginRight'
+            }
+        }
+    ]
+    
+    docs_service.documents().batchUpdate(
+        documentId=doc_id,
+        body={'requests': requests}
+    ).execute()
+    
+    print("📐 Set page format: A4 with 2cm margins")
 
 
 def get_mime_type(file_path):
@@ -151,7 +211,8 @@ def push_to_gdocs(file_path: str, doc_name: str, folder_id: str = None) -> str:
     
     # Authenticate
     print("🔑 Authenticating...")
-    service = get_drive_service()
+    creds = get_credentials()
+    service = get_drive_service(creds)
     
     # Prepare upload
     file_metadata = {
@@ -176,6 +237,9 @@ def push_to_gdocs(file_path: str, doc_name: str, folder_id: str = None) -> str:
     
     doc_url = file.get('webViewLink')
     doc_id = file.get('id')
+    
+    # Set A4 page format with 2cm margins
+    set_page_format(doc_id, creds)
     
     print(f"✅ Created Google Doc: {doc_name}")
     print(f"   ID: {doc_id}")

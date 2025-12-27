@@ -332,3 +332,50 @@ After testing, user feedback led to a simpler approach:
 
 ### Final Output (Revised)
 - [27-12-25-Politeness-Reading-Intensive-FINAL-v2](https://docs.google.com/document/d/1Cp9b-L0P9NHQ3LMdTAsaTU0h_0CAIG-c2HlPcgS9GXk/edit)
+
+---
+
+## 2025-12-27 | Lesson Plan Generation & Skill Refinement
+
+### Objective
+Generate a B1 intensive reading lesson plan on politeness and refine the `writing-lesson-plans` skill.
+
+### Actions Completed
+
+1. **Generated Lesson Plan for Politeness Reading**
+   - Collected metadata: B1, Ed Rush, 46 min, Intensive, Shape E
+   - Created pre-teach vocabulary deck (5 words with phonemic script + Thai translations)
+   - Incorporated special request: Thai wai video lead-in
+
+2. **Major Skill Updates (`writing-lesson-plans/SKILL.md`)**:
+   - Added Step 3: Ask Intensive vs Regular Bell lesson (header image)
+   - Added Step 5: Special requests before generation
+   - Changed "Aim" → "Objective" in header
+   - Added "Date" field (DD-MM-YY format) after Objective
+   - Changed "Page Numbers" → "Materials" with meaningful description
+   - Moved pre-teach vocabulary INTO the lesson table (not header)
+   - Added colored stage headers (ACT maroon) spanning table width
+   - Added **Model Compliance Requirement** (critical section)
+   - Defined formatting guidelines: ACT maroon colors, HTML bullets, 1.15 spacing
+
+3. **Push Script Updates (`scripts/push_to_gdocs.py`)**:
+   - Added Google Docs API scope
+   - Added `set_page_format()` function to set A4 with 2cm margins via Docs API
+
+4. **Updated `pushing-to-gdocs/SKILL.md`**:
+   - Documented A4/2cm margins auto-setup
+   - Updated prerequisites (Drive + Docs scopes)
+
+### Model Compliance
+Regenerated lesson plan to match Shape E model structure:
+- **3 stages** (not 6): Lead-in, Reading for gist/detail, Post-reading
+- Consolidated activities into logical stages matching pedagogical intent
+
+### Files Modified
+- `skills/writing-lesson-plans/SKILL.md`
+- `skills/pushing-to-gdocs/SKILL.md`
+- `scripts/push_to_gdocs.py`
+- `inputs/Intensive-Reading-Politeness/27-12-25-LP B1-Politeness-Reading-Shape E Receptive.html`
+
+### Final Output
+- [27-12-25-LP B1-Politeness-Reading-Shape E Receptive-v3](https://docs.google.com/document/d/1kuhsdSkX3SNCqNOeA0N1YWwaFzGncW9hwHvF3J3Sjw0/edit)

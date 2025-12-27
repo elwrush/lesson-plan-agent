@@ -44,7 +44,16 @@ Ask for:
 - **Page Numbers**: Relevant pages
 - **Assessment Type**: CA (Continuous Assessment), formal test, or n/a
 
-### Step 3: Materials Source
+### Step 3: Lesson Type
+
+Ask:
+> "Is this an **Intensive** or **Regular Bell** lesson?"
+
+This determines which header image to use:
+- **Intensive**: `intensive-header.jpg`
+- **Regular Bell**: `bell-header.jpg` (or appropriate regular header)
+
+### Step 4: Materials Source
 
 Ask:
 > "Will you be designing new materials (separate skill) or using pre-existing materials?"
@@ -62,10 +71,12 @@ If materials are unclear, ask specific questions:
 - Are there audio/video components?
 - Are there exercises with answer keys?
 
-### Step 5: Special Requests
+### Step 5: Special Requests and Notes
 
-Ask:
-> "Any special requirements for this lesson? (e.g., specific activities, time constraints, student needs)"
+Before generating the lesson plan, ask:
+> "Do you have any special requests or notes for this lesson? (e.g., include a YouTube video, emphasize particular exercises, specific activities, time constraints, student needs)"
+
+Wait for user response and incorporate their requests into the lesson plan.
 
 ### Step 6: Suggest Objective + Marker Sentences
 
@@ -79,24 +90,176 @@ Based on collected information:
 
 Wait for user approval before proceeding.
 
-### Step 7: Write Lesson Plan
+> [!CRITICAL]
+> ## Model Compliance Requirement
+> 
+> Before generating the lesson plan, **consult the model lesson plan** for the selected shape in [lesson_shapes.yaml](file:///c:/PROJECTS/LESSONS%20AND%20SLIDESHOWS%202/knowledge_base/lesson_shapes.yaml).
+> 
+> The generated lesson plan must:
+> 1. **Match the stage structure** of the model (not be a slavish rendering of materials)
+> 2. **Follow the pedagogical intent** - e.g., Shape E focuses on skills, not language
+> 3. **Use similar stage headers** - e.g., "Lead-in", "Reading for detail", "Post-reading"
+> 4. **Maintain similar timing proportions** - the model shows where to invest time
+> 5. **Consolidate activities** into logical stages rather than listing each exercise separately
+> 
+> **Example: Shape E (Receptive Skills) model has only 3 stages:**
+> - Stage 1: Lead-in (6 min) - Multi-part warmup with prediction/discussion
+> - Stage 2: Reading for detail and specific information (22 min) - Main reading tasks
+> - Stage 3: Post-reading speaking task (2 min) - Brief personalization/discussion
+> 
+> **Do NOT** create 6+ granular stages for each worksheet section. Combine related activities into coherent stages that match the model.
 
-Generate the lesson plan using **markdown tables**:
+### Step 7: Write Lesson Plan (HTML)
 
-#### Header Format
-```markdown
-**[Unit Title]**
-**Aim**: [Objective from Step 6]
-**Systems/Skills**: [From Step 2]
-**Page Numbers**: [From Step 2]
-**Assessment**: [From Step 2]
+Generate the lesson plan **directly in HTML format** (not markdown).
+
+#### File Naming Convention
+Store in the **source folder** (same as materials) with this format:
+```
+DD-MM-YY-LP [CEFR]-[topic]-[skill or system]-[Shape]
 ```
 
-#### Stage Table Format
-| Stage | Aim | Procedure | Time | Interaction |
-|-------|-----|-----------|------|-------------|
-| 1 | To lead-in | [Detailed procedure] | 5 | T-Ss |
-| 2 | To [stage aim] | [Detailed procedure] | 8 | Ss-Ss |
+**Examples:**
+- `27-12-25-LP B1-Politeness-Reading-Shape E Receptive.html`
+- `15-01-25-LP A2-Food-Vocabulary-Shape A Text-based.html`
+- `20-03-25-LP B2-Environment-Writing-Shape F Productive.html`
+
+#### HTML Structure
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>[Lesson Title]</title>
+</head>
+<body style="font-family: Arial, sans-serif; font-size: 11pt; color: #333; line-height: 1.15;">
+    
+    <!-- Header Image -->
+    <p style="text-align: center;">
+        <img src="intensive-header.jpg" width="600" style="margin-bottom: 20pt;">
+        <!-- OR: <img src="bell-header.jpg" width="600"> for regular Bell lessons -->
+    </p>
+    
+    <!-- Lesson Metadata Header (1.15 line spacing) -->
+    <div style="line-height: 1.15;">
+        <h1 style="font-size: 16pt; color: #A62D26; border-bottom: 3pt solid #A62D26; padding-bottom: 5pt;">[Unit Title]</h1>
+        <p><strong>Objective:</strong> [Objective from Step 6]</p>
+        <p><strong>Date:</strong> [DD-MM-YY format]</p>
+        <p><strong>Systems/Skills:</strong> [From Step 2]</p>
+        <p><strong>CEFR Level:</strong> [From Step 2]</p>
+        <p><strong>Teacher:</strong> [From Step 2]</p>
+        <p><strong>Duration:</strong> [From Step 2]</p>
+        <p><strong>Materials:</strong> [Meaningful description of resources, e.g., "Worksheet on comprehending a reading and developing ideas about what it means to be polite in a given culture" OR "Coursebook XYZ, pages 45-48"]</p>
+        <p><strong>Assessment:</strong> [From Step 2]</p>
+    </div>
+    
+    <hr style="margin: 20pt 0; border: none; border-top: 1pt solid #ddd;">
+    
+    <!-- Lesson Stages Table -->
+    <h2 style="color: #A62D26; font-size: 14pt; margin-top: 20pt;">Lesson Stages</h2>
+    
+    <table border="1" style="width: 100%; border-collapse: collapse;">
+        <thead>
+            <tr style="background-color: #A62D26; color: white;">
+                <th style="padding: 8pt; width: 8%;">Stage</th>
+                <th style="padding: 8pt; width: 20%;">Aim</th>
+                <th style="padding: 8pt; width: 52%;">Procedure</th>
+                <th style="padding: 8pt; width: 10%;">Time</th>
+                <th style="padding: 8pt; width: 10%;">Interaction</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Stage Header Row (colored, spanning all columns) -->
+            <tr style="background-color: #cb5c55; color: white;">
+                <td colspan="5" style="padding: 8pt; font-weight: bold; text-align: center;">
+                    STAGE ONE: [Stage Name from Lesson Shape]
+                </td>
+            </tr>
+            <!-- Individual steps within this stage -->
+            <tr>
+                <td style="padding: 8pt; text-align: center;">1</td>
+                <td style="padding: 8pt;">To [specific aim]</td>
+                <td style="padding: 8pt;">
+                    <strong>[Activity Name]</strong>
+                    <ul style="margin: 5pt 0 0 0; padding-left: 20px;">
+                        <li>First step of procedure</li>
+                        <li>Second step of procedure</li>
+                        <li>Pair check / feedback step</li>
+                    </ul>
+                </td>
+                <td style="padding: 8pt; text-align: center;">5</td>
+                <td style="padding: 8pt; text-align: center;">T-Ss</td>
+            </tr>
+            <!-- Alternating row background -->
+            <tr style="background-color: #fceceb;">
+                <td style="padding: 8pt; text-align: center;">2</td>
+                <td style="padding: 8pt;">To [specific aim]</td>
+                <td style="padding: 8pt;">[Use <ul><li> for procedures]</td>
+                <td style="padding: 8pt; text-align: center;">5</td>
+                <td style="padding: 8pt; text-align: center;">Ss-Ss</td>
+            </tr>
+            
+            <!-- Next Stage Header Row -->
+            <tr style="background-color: #cb5c55; color: white;">
+                <td colspan="5" style="padding: 8pt; font-weight: bold; text-align: center;">
+                    STAGE TWO: [Next Stage Name]
+                </td>
+            </tr>
+            <!-- More rows... -->
+        </tbody>
+    </table>
+    
+    <p style="margin-top: 15pt; font-style: italic; color: #7f8c8d;"><strong>Total Time:</strong> [sum of all stage times] minutes</p>
+    
+    <hr style="margin: 30pt 0; border: none; border-top: 2pt solid #A62D26;">
+    
+    <!-- Answer Key (if applicable) -->
+    <h2 style="color: #A62D26; font-size: 16pt; border-bottom: 2pt solid #A62D26; padding-bottom: 5pt;">Answer Key</h2>
+    
+    <!-- Transcript (Shape E Listening ONLY) -->
+    
+</body>
+</html>
+```
+
+#### Stage Headers Guide
+
+Stage headers must be informed by the lesson shape model. **Colored rows** should span all 5 columns and indicate major stages:
+
+**Shape E (Receptive Skills) example stages:**
+- STAGE ONE: Build Interest (Lead-in)
+- STAGE TWO: Pre-teach Vocabulary
+- STAGE THREE: Reading/Listening for Gist (Global Reading)
+- STAGE FOUR: Reading/Listening for Detail (Close Reading)
+- STAGE FIVE: Post-reading/listening Discussion
+
+**Important Notes:**
+1. Pre-teach Vocabulary appears **in the lesson table**, NOT in the header metadata
+2. Each major stage gets a colored header row
+3. Within each stage, individual steps are numbered sequentially (1, 2, 3...)
+
+#### Formatting Guidelines
+
+**Color Scheme (ACT Maroon Branding):**
+- Title heading: `#A62D26` (maroon)
+- Table header: `#A62D26` (maroon)
+- Stage header rows: `#cb5c55` (lighter maroon)
+- Alternating row background: `#fceceb` (light pink tint)
+- Answer Key/dividers: `#A62D26` (maroon)
+
+**Bullet Points (Google Docs Compatible):**
+- Use proper HTML lists `<ul>` and `<li>` in the Procedure column
+- Do NOT use manual dashes with `<br>` tags
+- Apply margin styling: `<ul style="margin: 5pt 0 0 0; padding-left: 20px;">`
+
+**Line Spacing:**
+- All text: `line-height: 1.15` (set on body tag)
+
+#### After Generation
+1. Save the HTML file to the source folder
+2. **Open in browser** for user review and approval
+3. Do NOT proceed until user approves
 
 #### Required Additions
 
@@ -112,16 +275,33 @@ Select **5 words** from the source text that would be challenging for learners a
 **Format for each word:**
 
 ```
-word /phonemic script/: Thai translation
+### [number]. word /phonemic script/: Thai translation
 English context sentence with **target word** highlighted.
 Thai context sentence with **คำแปล** highlighted.
 ```
 
-**Example:**
+**Complete Example:**
+
 ```
-postpone /pəʊstˈpəʊn/: เลื่อน
+### 1. postpone /pəʊstˈpəʊn/: เลื่อน
 They decided to **postpone** the meeting until next week.
 พวกเขาตัดสินใจ**เลื่อน**การประชุมไปสัปดาห์หน้า
+
+### 2. behavior /bɪˈheɪvjər/: พฤติกรรม
+Teachers should always model good **behavior** in the classroom.
+ครูควรเป็นแบบอย่างของ**พฤติกรรม**ที่ดีในห้องเรียนเสมอ
+
+### 3. interrupt /ˌɪntəˈrʌpt/: ขัดจังหวะ
+It's not polite to **interrupt** people when they're talking.
+การ**ขัดจังหวะ**คนอื่นตอนพวกเขากำลังพูดไม่สุภาพ
+
+### 4. appropriate /əˈprəʊpriət/: เหมาะสม
+Wearing formal clothes is **appropriate** for a job interview.
+การแต่งกายอย่างเป็นทางการ**เหมาะสม**สำหรับการสัมภาษณ์งาน
+
+### 5. acceptable /əkˈseptəbl/: ยอมรับได้
+Using your phone during class is not **acceptable**.
+การใช้โทรศัพท์ในระหว่างเรียนไม่**ยอมรับได้**
 ```
 
 ### Step 8: Export Prompt
