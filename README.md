@@ -12,23 +12,68 @@ This project provides an interactive workflow for creating lesson plans using pr
 
 #### `writing-lesson-plans`
 Interactive 8-step workflow for creating lesson plans:
-- 7 lesson shapes (PPP, TTT, TBL, Receptive/Productive Skills, etc.)
+- 10 lesson shapes (A-J): Traditional frameworks (PPP, TTT, TBL, Receptive/Productive Skills) + SCR Storytelling frameworks
 - CEFR-aligned vocabulary pre-teaching (reading/listening lessons)
 - Automatic answer key generation
 - Thai-English bilingual support
+- Model compliance with pedagogical intent
+
+#### `developing-bespoke-materials`
+Creates custom educational materials tailored to CEFR levels and skill types:
+- Transform existing materials or write brand new content
+- Bell/Intensive program branding
+- Mandatory answer keys and transcripts
+- GDocs-compatible HTML output
+- Image generation with fallback protocol
+
+#### `reading-visual-content`
+Extracts text from images and PDFs using Gemini's multimodal vision:
+- JPEG, PNG, and PDF support
+- Honesty protocol (anti-hallucination safeguards)
+- Requires Gemini 3 Flash confirmation
+- Structured markdown output
 
 #### `designing-slides`
-Google Slides API integration:
-- Programmatic presentation creation
-- Bell EP branded templates (maroon theme)
-- Content addition (text, images, tables)
-- Formatting utilities
+Google Slides API integration for presentation creation:
+- Bell EP branded templates (maroon theme, title slide structure)
+- Expert pedagogical framing with metaphors
+- Batch API pattern for performance
+- Content addition (text, tables, formatting)
+- Answer slides and vocabulary slides
+
+#### `generating-worksheets`
+Generates branded, print-ready PDF worksheets:
+- Jinja2-based templating system
+- Bell/Intensive dual branding support
+- Playwright HTML-to-PDF conversion
+- Custom headers and quotes
+
+#### `publishing-worksheets`
+Uploads PDF worksheets to Google Drive:
+- Automatic filename convention (DD-MM-YY-Worksheet-[Title].pdf)
+- OAuth authentication
+- Validation workflow requirement
+
+#### `converting-to-gdocs-html`
+Converts content to HTML that imports cleanly into Google Docs:
+- GDocs typography standards
+- Inline styles for import compatibility
+- Table-based layouts for complex content
+- Element shading and borders
+
+#### `pushing-to-gdocs`
+Uploads HTML content to Google Drive and converts to Google Docs:
+- Base64 image embedding
+- A4 format with 2cm margins auto-setup
+- Drive + Docs API integration
+- Formatted paragraph preference over tables
 
 #### `committing-to-github`
 Git workflow automation:
 - Staging and committing
 - Automatic `desktop.ini` exclusion (Google Drive sync)
 - Commit message conventions
+- Push confirmation
 
 ### 📚 Lesson Shapes
 

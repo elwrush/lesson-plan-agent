@@ -11,6 +11,19 @@ description: >
 
 ## Prerequisites
 
+> [!CRITICAL]
+> **ALWAYS Use Existing Working Examples as Templates**
+> 
+> DO NOT write slideshow generation scripts from scratch. The project contains working examples (e.g., `create_presentation_structure_slides.py`) that demonstrate:
+> - Bell EP template structure
+> - Batch API patterns  
+> - EMU unit conversions
+> - Proper authentication flow
+> 
+> **Workflow**: Copy working example → Adapt slide content → Execute
+> 
+> Writing from scratch wastes hours debugging solved problems (string escaping, API formats, credentials paths).
+
 - Google Cloud project with Slides API enabled
 - OAuth 2.0 credentials in `.credentials/credentials.json`
 - Token file will be auto-generated at `.credentials/token.json` on first run
@@ -44,11 +57,21 @@ Example:
 ## Slide Content Rules
 
 ### Answer Slides
-Each answer to a question must appear on its **own slide** containing:
+Each answer to a question must appear on its **own slide** immediately after the question/task slide, containing:
 - The answer (highlighted/emphasized)
 - A brief explanation
 - A supporting snippet from the reading/transcript (where appropriate)
 
+**Critical**: Answer slides must be **interleaved** with question slides in the pedagogical flow, not grouped at the end of the presentation.
+
+### Narrative Transitions (Signposting)
+To create a cohesive story, you must insert **Transition Slides** between major lesson stages. Do not jump abruptly from one activity to another.
+
+**Format**:
+- Use `MAIN_POINT` or `SECTION_HEADER` layout.
+- **Narrative Voice**: Use friendly, guiding text (e.g., "Now let's look at the rules...", "Time to practice...", "And now for the challenge...").
+- **Purpose**: Act as a "mental break" and reset the context for the next stage.
+ 
 ### Vocabulary Slides
 Each pre-taught vocabulary item must appear on its **own slide** containing:
 - The mandated pattern:

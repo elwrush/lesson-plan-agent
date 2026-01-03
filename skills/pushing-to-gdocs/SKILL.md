@@ -61,16 +61,9 @@ The script will:
 1. Embed local images as base64 data URIs
 2. Upload HTML to Drive with MIME type conversion
 3. **Set page format: A4 with 2cm margins** (via Docs API)
-4. Return the Google Doc URL
+4. Return the Google Doc URL (visible in task artifacts)
 
-### Step 3: Verify Upload
-Check the generated Google Doc for:
-- [ ] Images visible and positioned correctly
-- [ ] Colored boxes (backgrounds) preserved
-- [ ] Tables with proper borders
-- [ ] Typography (Roboto/Arial) correct
-- [ ] Answer Key present
-
-### Step 4: Manual Adjustments (if needed)
+### Step 3: Manual Adjustments (if needed)
+When reviewing the uploaded Google Doc, you may need to:
 - **Image wrapping**: Click image → Wrap text
 - **Paragraph spacing**: Format → Line & paragraph spacing → Remove spacing after paragraph

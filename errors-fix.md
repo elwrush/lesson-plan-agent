@@ -150,3 +150,157 @@ This session proceeded without errors requiring fixes. The `writing-lesson-plans
 - **Issue**: Second attempt at title slide still wrong - used simple maroon background + logos instead of the Bell EP template structure (dark header bar, gradient body, "Bell Language Centre" strap line, centered image).
 - **Cause**: Didn't reference the actual template file (`update_template.py`) which shows the exact structure: header bar (rgb 0.35, 0.05, 0.05), logos in header (centered, side-by-side), strap line (18pt, centered), title (36pt, bold, white), square image placeholder (2.5" centered).
 - **Fix**: Study `update_template.py` before creating title slides. The template has specific positioning, colors, and structure that must be replicated exactly.
+
+### YAML Brittle Multi-line Matching
+- **Issue**: Attempting to patch large sections of YAML with `replace_file_content` frequently failed.
+- **Cause**: YAML's sensitivity to indentation.
+- **Fix**: Rebuild and overwrite the entire file with `write_to_file`.
+
+---
+
+## 2025-12-30
+
+### Header Image Path in Lesson Plans
+- **Issue**: Lesson plans referenced `bell-header.jpg` and `intensive-header.jpg` in same folder as HTML file, causing images not to appear when pushed to Google Docs.
+- **Cause**: Header images are located in project root `images/` directory, not in individual material folders.
+- **Fix**: Use relative path `../../images/bell-header.jpg` or `../../images/intensive-header.jpg` when including headers in HTML lesson plans stored in `inputs/[folder]/` subdirectories.
+- **Note**: The `push_to_gdocs.py` script will resolve paths relative to the HTML file location.
+
+
+---
+
+## 2025-12-30 (Continued) | Worksheet Generation System
+
+### CSS Hardcoded Backgrounds Override Transparency
+- **Issue**: Bell and ACT logos appeared with white backgrounds in PDF despite using transparent PNG files
+- **Cause**: CSS `.bell-logos img` selector had hardcoded `background: white; padding: 5px; border-radius: 4px;`
+- **Fix**: Removed background styling from CSS. Let transparent PNGs render naturally.
+- **Lesson**: Always inspect rendered HTML with `--debug` flag. CSS styling can override image transparency.
+
+### SVG Logo Not Rendering in Playwright PDF
+- **Issue**: Bell logo (`Bell.svg`) did not appear in generated PDF
+- **Cause**: SVG rendering in Playwright's PDF generation is unreliable
+- **Fix**: Switched from `Bell.svg` to `Bell.png`
+- **Lesson**: SVG works in browsers but may fail in headless PDF generation. Use PNG for logos in PDF workflows.
+
+### File Path Encoding with Spaces
+- **Issue**: Images with spaces in directory path ("LESSONS AND SLIDESHOWS 2") sometimes failed to load
+- **Cause**: Manual string concatenation (`f"file:///{path}"`) didn't properly encode spaces
+- **Fix**: Use `pathlib.Path(image_path).as_uri()` for robust file URI generation
+- **Example**: `file:///C:/PROJECTS/LESSONS%20AND%20SLIDESHOWS%202/images/Bell.png`
+
+### Jinja Variables in Injected Content Not Rendering
+- **Issue**: Content fragment HTML used `{{ image_root }}/icon.png` but variable wasn't replaced
+- **Cause**: Jinja2 doesn't auto-process variables in content passed via `{{ content | safe }}`
+- **Fix**: Pre-process content HTML with `content_html.replace("{{ image_root }}", image_root_url)` before passing to template
+- **Lesson**: Nested Jinja rendering requires manual variable substitution
+
+### Page Break Not Rendering in PDF
+- **Issue**: `<div style="page-break-before: always;"></div>` was added but didn't create page breaks
+- **Cause**: Page breaks need top-level margin context to work reliably
+- **Fix**: Add `mt-8` class to section after break: `<section class="mb-8 mt-8">`
+- **Lesson**: Page breaks in Playwright PDF require both the break div AND margin spacing on adjacent elements
+
+### Icon Background Removal with Corner Detection
+- **Issue**: Simple white-threshold scripts (`make_transparent.py`) didn't work for icons with near-white backgrounds (e.g., RGB 243,249,249)
+- **Cause**: Tolerance-based detection failed when background wasn't pure white
+- **Fix**: Created `smart_transparency.py` that samples corner pixel color and removes all similar pixels using Euclidean distance
+- **Lesson**: For AI-generated images, always detect actual background color rather than assuming white
+
+### Slide Outline Created Without Reading Lesson Plan
+- **Issue**: Created `slide-outline-mckinsey.md` with completely different content than the lesson plan (generic presentation skills vs. book/story presentation structure)
+- **Cause**: User asked for slide outline but agent didn't read the existing lesson plan file first. Instead hallucinated content based on general presentation knowledge.
+- **Fix**: ALWAYS read the lesson plan HTML file FIRST before creating any slide outline. Slides must support the lesson stages, objectives, and specific examples from the plan.
+- **Lesson**: Slide outlines are derivative materials - they exist to support the lesson plan, not to be created independently. Never write slides without ingesting the LP first.
+
+---
+
+## 2025-12-30 (Evening) | Slideshow Generation - Critical Workflow Failure
+
+### CRITICAL: Always Use Working Examples as Templates
+- **Issue**: Spent 100+ steps debugging string escaping, API formats, and syntax errors when generating slideshow script from scratch
+- **Root Cause**: **Did NOT copy/adapt existing working example** (`create_presentation_structure_slides.py`) which uses the EXACT same pattern
+- **Correct Workflow**:
+  1. Check for existing working scripts in project (use `find_by_name`)
+  2. Copy the working script as template
+  3. Adapt content (slide titles/body text) to new lesson
+  4. Execute
+- **Wrong Approach**: Writing complex API scripts from scratch, debugging for hours
+- **Lesson**: **NEVER write slideshow generation scripts from scratch. ALWAYS copy and adapt existing working examples.** The batch API pattern, EMU units, styling—all of this is already solved.
+
+### Python String Escaping in Slide Content
+- **Issue**: Syntax errors from apostrophes in slide bullet text (e.g., `'Don\'t'` causing unterminated strings)
+- **Root Cause**: Escaped quotes inside triple-nested Python list structures
+- **Fix**: Use double quotes for strings containing apostrophes: `"Don't"` instead of escape sequences
+- **Prevention**: When copying working examples, maintain their quote style patterns
+
+### Credentials Path from Subdirectories
+- **Issue**: `authenticate_google.py` couldn't find `.credentials/credentials.json` when script runs from subdirectory
+- **Fix**: Working example uses `os.chdir(PROJECT_ROOT)` at start of script before authentication
+- **Lesson**: This pattern is already solved in working examples—copy it
+
+### Google Slides API Network Connectivity
+- **Issue**: `ServerNotFoundError: Unable to find the server at slides.googleapis.com` 
+- **Cause**: Temporary network issue or firewall
+- **Resolution**: Script succeeded on retry—network issues are transient, not code problems
+- **Lesson**: Don't over-engineer around network errors; retry is usually sufficient
+
+### The "Batch API" Pattern Is Already Solved
+- **Documentation**: Lines 103-145 in `designing-slides/SKILL.md` explain batch pattern
+- **Working Example**: `create_presentation_structure_slides.py` shows complete implementation
+- **Pattern**: Each content slide calls `create_content_slide()` which does ONE `batchUpdate()` with all requests for that slide
+- **Don't**: Try to accumulate ALL slides into a single giant batch (causes complexity)
+- **Do**: Copy the working pattern exactly—one function call per slide, each with its own batch
+
+### Answer Slide Interleaving Pattern  
+- **Requirement**: Answers must appear immediately after question slides (pedagogical flow)
+- **Implementation**: Just call `create_content_slide()` for answer immediately after question
+- **Lesson**: Simple sequential execution handles interleaving naturally
+
+---
+
+## 2025-12-30 (Night) | Worksheet Generation Improvements
+
+### Bell Header Parameter Misunderstanding
+- **Issue**: Passed "Bell Language Centre" in `--header-title` when it was already hardcoded as a strap line.
+- **Root Cause**: Unclear skill documentation on header hierarchy.
+- **Fix**: Updated `generating-worksheets/SKILL.md` to specify that `--header-title` should only contain the topic (e.g., "Useful Language"), as the strap line is automatic.
+
+### Quote Section Visibility & "None" Bug
+- **Issue**: Template showed "None" when `--quote` was omitted; also lost spacing when quote was removed.
+- **Fix**: Wrapped quote section in `{% if quote %}`. Added conditional `margin-top: 10mm` to the content wrapper when `quote` is absent to maintain visual separation from the header.
+
+### Page Overflow in BONUS Section
+- **Issue**: Worksheet spilled to 5 pages due to excessive padding/margins in the final "BONUS" box.
+- **Fix**: Reduced padding from `p-6` to `p-3` and bottom margins from `mb-8` to `mb-2` for the bonus section. Compressed previous "Thanking Your Audience" section into a pipe-separated paragraph.
+
+### Workflow & Artifact Links
+- **Issue**: Failed to provide direct Markdown links to generated PDF artifacts.
+- **Fix**: Always provide a direct link to the generated PDF (e.g., `[label](file:///...)`) in the final response to ensure the user can audit the result immediately.
+
+---
+
+## 2026-01-04
+
+### Invalid OAuth Token Persistence
+- **Issue**: Slide generation script hung or failed because `token.json` was expired or invalid, but the script didn't auto-refresh correctly.
+- **Fix**: Manually deleted `.credentials/token.json` to force a new authentication flow.
+- **Lesson**: If authentication fails or hangs, the first step is to clear existing tokens.
+
+### Module Import Errors in Scripts
+- **Issue**: `create_punctuation_slideshow.py` failed with `ModuleNotFoundError` for `authenticate_google` and `format_slides`.
+- **Cause**: Script was in `scripts/` but trying to import from `skills/designing-slides/scripts/` without that directory being in `sys.path`.
+- **Fix**: Explicitly added `SKILL_SCRIPTS_DIR = os.path.join(PROJECT_ROOT, 'skills', 'designing-slides', 'scripts')` to `sys.path`.
+- **Lesson**: Scripts outside the package structure must manually add dependency directories to `sys.path`.
+
+### Google Slides API `updatePageProperties` Error
+- **Issue**: `HttpError 400` with message `At least one field must be listed in 'fields'`.
+- **Cause**: The `updatePageProperties` request (used for background color) requires a `fields` parameter to specify which properties to update, unlike some other requests which infer it.
+- **Fix**: Added `'fields': 'pageBackgroundFill.solidFill.color'` to the request dictionary.
+- **Lesson**: Always specify `fields` for `updatePageProperties` requests in the Google Slides API.
+
+### Google Slides API `updatePageProperties` Error
+- **Issue**: `HttpError 400` with message `At least one field must be listed in 'fields'`.
+- **Cause**: The `updatePageProperties` request (used for background color) requires a `fields` parameter to specify which properties to update, unlike some other requests which infer it.
+- **Fix**: Added `'fields': 'pageBackgroundFill.solidFill.color'` to the request dictionary.
+- **Lesson**: Always specify `fields` for `updatePageProperties` requests in the Google Slides API.

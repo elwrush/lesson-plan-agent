@@ -473,3 +473,137 @@ All documented in `errors-fix.md` with fixes.
 - `skills/developing-bespoke-materials/SKILL.md`
 - `skills/designing-slides/SKILL.md`
 - `errors-fix.md`
+
+### 30-12-25 - Integration of McKinsey SCR Storytelling Framework
+
+1. **Ingested McKinsey SCR Framework**:
+   - Documented core principles in `knowledge_base/mckinsey.md`: Situation -> Complication -> Resolution.
+   - Applied "Storytelling over Data" and "Action Titles" (Dots) vs. "Supporting Data" (Dashes) principles.
+   - Integrated horizontal (titles-only) and vertical (claim-evidence) verification flows.
+
+2. **Enhanced `lesson_shapes.yaml`**:
+   - **Created Shape H (SCR Receptive Skills)**: Structured around discovery stages (Context, Complication Trigger, Deepening, Pattern Recognition, Resolution).
+   - **Created Shape I (SCR Systems - Grammar/Vocabulary)**: Designed for scalability across all CEFR levels (A1-C2). Focuses on showing communication breakdown with current language, then introducing new grammar/vocab as the solution.
+   - **Standardized Headers**: Updated all shapes (A-I) with a unified header block: Objective, Teacher, Date, Duration, CEFR Level, Lesson Shape, Materials, and Assessment.
+
+3. **Restructured Politeness Reading Lesson**:
+   - Mapped the "What does polite mean to you?" lesson to the SCR narrative arc.
+   - Planned a substantial Resolution stage involving 3 cross-cultural scenarios for practical application.
+
+4. **Modularized and Augmented SCR Shapes (Evening Session)**:
+   - User reviewed McKinsey SCR examples (job interview Present Perfect, BTS breakdown reading) and highlighted missing elements:
+     - Communication Breakdown (not just "challenge")
+     - Thai L1 scaffolds (เคย/แล้ว/verb conjugation)
+     - Ambiguity Tolerance for reading
+     - Middle-school-appropriate scenarios (not job interviews)
+     - "Hero Tool" framing for resolutions
+   - Created modular Shape files:
+     - `knowledge_base/shapes/shape-h.yaml`: Enhanced SCR Receptive Skills with BTS breakdown example, scanning strategy, ambiguity tolerance teaching
+     - `knowledge_base/shapes/shape-i.yaml`: Enhanced SCR Systems (Grammar) with gaming guild application example, Present Perfect as "Experience Filter"
+   - Both files include:
+     - Detailed Thai L1 scaffolds (เคย = Present Perfect, แล้ว = completion, gone vs been trap)
+     - Middle-school scenarios (BTS/LINE/gaming/Instagram/YouTube)
+     - Complete example lesson plans
+     - "Grammar Heroes" metaphors (Experience Filter, Upgrade Button, Politeness Shield, etc.)
+
+### Files Created/Modified
+- `knowledge_base/mckinsey.md`
+- `knowledge_base/lesson_shapes.yaml` (retained for reference)
+- `knowledge_base/shapes/shape-a.yaml` ✨ NEW
+- `knowledge_base/shapes/shape-b.yaml` ✨ NEW
+- `knowledge_base/shapes/shape-c.yaml` ✨ NEW
+- `knowledge_base/shapes/shape-d.yaml` ✨ NEW
+- `knowledge_base/shapes/shape-e.yaml` ✨ NEW
+- `knowledge_base/shapes/shape-f.yaml` ✨ NEW
+- `knowledge_base/shapes/shape-g.yaml` ✨ NEW
+- `knowledge_base/shapes/shape-h.yaml` ✨ NEW (Enhanced SCR)
+- `knowledge_base/shapes/shape-i.yaml` ✨ NEW (Enhanced SCR)
+- `knowledge_base/shapes/shape-j.yaml` ✨ NEW (Enhanced SCR)
+- `session-log.md`
+- `inputs/Intensive-Reading-Politeness/politeness-slideshow-complete-outline.md` (Restructuring in progress)
+
+## 2025-12-30 | Worksheet Generation & Publishing System (SUCCESSFUL)
+
+### Objective
+Create a programmatic system for generating and publishing Bell/Intensive worksheets to Google Drive, and migrate the legacy presentation worksheet.
+
+### Skills Created
+1. **`generating-worksheets`** - Jinja2-based PDF generation with Bell/Intensive branding
+2. **`publishing-worksheets`** - Google Drive upload with automatic filename convention
+
+### Actions Completed
+
+1. **Skill Architecture**:
+   - Created `skills/generating-worksheets/` with:
+     - `templates/worksheet-master.html` (Jinja2 master template)
+     - `scripts/build_worksheet.py` (Python orchestrator)
+     - `scripts/pdf_converter.js` (Playwright HTML→PDF)
+     - `SKILL.md` (usage documentation)
+   - Created `skills/publishing-worksheets/` with:
+     - `scripts/publish_to_drive.py` (Drive API upload)
+     - `SKILL.md` (workflow with validation requirement)
+
+2. **Legacy Content Migration**:
+   - Converted `presentation-structure-planning-sheet.html` to modern format
+   - Created `inputs/01-Presentation-Structure/presentation-content-modern.html`
+   - Used Tailwind CSS grid layout (replaced legacy tables)
+   - Renamed "Stage" labels to "Task" labels
+
+3. **Asset Generation & Processing**:
+   - Generated vector illustrations using Gemini 3 Pro:
+     - Hook: Fishing hook catching lightbulb (metaphor for capturing attention)
+     - Story Arc: Mountain plot diagram with climax peak
+     - Microphone: Speech bubble with microphone (recommendation metaphor)
+   - Created `smart_transparency.py` for corner-color detection
+   - Processed logos and icons to remove backgrounds
+
+4. **Critical Fixes**:
+   - **Issue**: Logos had white backgrounds in PDF
+   - **Root Cause**: CSS `.bell-logos img` had hardcoded `background: white; padding: 5px; border-radius: 4px;`
+   - **Fix**: Removed CSS background styling
+   - **Issue**: Bell logo not rendering
+   - **Root Cause**: SVG rendering issues in Playwright
+   - **Fix**: Switched from `Bell.svg` to `Bell.png`
+
+5. **Layout Refinements**:
+   - Added page break before Task 2 (Story Arc)
+   - Added page break before Task 3 "What I found difficult" section
+   - Added `mt-8` margin-top for visual separation after breaks
+
+### Key Design Decisions
+
+- **Single Master Template**: One Jinja2 template handles both Bell and Intensive branding via `{% if brand == 'bell' %}`
+- **File URI Protocol**: Used `pathlib.as_uri()` for robust path encoding (handles spaces in "LESSONS AND SLIDESHOWS 2")
+- **Content Pre-processing**: Builder script replaces `{{ image_root }}` in content fragments before master render
+- **Custom Header Argument**: Added `--header-title` for Bell brand customization
+- **Validation Workflow**: Publishing skill explicitly requires local PDF validation before upload
+
+### Files Created/Modified
+- `skills/generating-worksheets/templates/worksheet-master.html`
+- `skills/generating-worksheets/scripts/build_worksheet.py`
+- `skills/generating-worksheets/scripts/pdf_converter.js`
+- `skills/generating-worksheets/scripts/smart_transparency.py`
+- `skills/generating-worksheets/SKILL.md`
+- `skills/publishing-worksheets/scripts/publish_to_drive.py`
+- `skills/publishing-worksheets/SKILL.md`
+- `inputs/01-Presentation-Structure/presentation-content-modern.html`
+- `images/hook_icon_transparent.png`
+- `images/story_arc_icon_transparent.png`
+- `images/microphone_icon_transparent.png`
+- `images/ACT_transparent.png`
+
+### Final Output
+- Successfully generated Bell-branded PDF with:
+  - Transparent logos (Bell.png + ACT_transparent.png)
+  - Custom header: "Bell Language Centre" / "Structuring your Presentation"
+  - Vector illustrations for each task
+  - Proper page breaks for clean printing
+  - A4 format with correct margins
+
+### Lessons Learned
+- Always inspect rendered HTML (`--debug` flag) before debugging path issues
+- CSS can override transparency with hardcoded backgrounds
+- SVG rendering in Playwright can be unreliable; prefer PNG for logos
+- Path encoding matters: use `pathlib.as_uri()` for spaces in directory names
+- Jinja variables in injected content fragments need manual pre-processing
+

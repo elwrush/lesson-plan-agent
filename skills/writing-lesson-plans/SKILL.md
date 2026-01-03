@@ -12,14 +12,14 @@ This skill guides you through an 8-step interactive workflow to create a lesson 
 
 ## Prerequisites
 
-- Access to `knowledge_base/lesson_shapes.yaml` for shape definitions
+- Access to `knowledge_base/shapes/` directory for modular shape definitions
 - Materials in `/inputs` subfolder (or user will design new materials)
 
 ## Workflow
 
 ### Step 1: Present Lesson Shape Menu
 
-Load shapes from `knowledge_base/lesson_shapes.yaml` and present:
+Load shapes from `knowledge_base/shapes/` directory and present:
 
 ```
 Which lesson shape would you like to use?
@@ -28,9 +28,12 @@ A. Text-based presentation of language
 B. Language Practice
 C. Test-Teach-Test (TTT)
 D. Situational Presentation (PPP)
-E. Receptive Skills (Reading/Listening)
-F. Productive Skills (Speaking/Writing)
+E. Receptive Skills (Reading/Listening - Traditional)
+F. Productive Skills (Speaking/Writing - Traditional)
 G. Task-Based Learning (TBL)
+H. SCR Receptive Skills (Reading/Listening - Storytelling Framework)
+I. SCR Systems (Grammar/Vocabulary - Storytelling Framework)
+J. SCR Productive Skills (Speaking/Writing - Message Structure)
 ```
 
 ### Step 2: Collect Lesson Metadata
@@ -38,7 +41,7 @@ G. Task-Based Learning (TBL)
 Ask for:
 - **CEFR Level**: A1, A2, B1, B2, C1, C2
 - **Focus**: Systems (Grammar/Vocabulary/Pronunciation) or Skills (Reading/Writing/Listening/Speaking)
-- **Teacher Name**
+- **Teacher Name**: Defaults to **Ed Rush** (Always use this unless specified otherwise)
 - **Duration**: Total lesson time in minutes
 - **Textbook/Unit**: If using coursebook
 - **Page Numbers**: Relevant pages
@@ -93,7 +96,7 @@ Wait for user approval before proceeding.
 > [!CRITICAL]
 > ## Model Compliance Requirement
 > 
-> Before generating the lesson plan, **consult the model lesson plan** for the selected shape in [lesson_shapes.yaml](file:///c:/PROJECTS/LESSONS%20AND%20SLIDESHOWS%202/knowledge_base/lesson_shapes.yaml).
+> Before generating the lesson plan, **consult the model lesson plan** for the selected shape in `knowledge_base/shapes/shape-[letter].yaml`.
 > 
 > The generated lesson plan must:
 > 1. **Match the stage structure** of the model (not be a slavish rendering of materials)
@@ -108,6 +111,18 @@ Wait for user approval before proceeding.
 > - Stage 3: Post-reading speaking task (2 min) - Brief personalization/discussion
 > 
 > **Do NOT** create 6+ granular stages for each worksheet section. Combine related activities into coherent stages that match the model.
+
+> [!IMPORTANT]
+> ## Interpretative Pedagogy Principle
+> 
+> Do NOT slavishly and mechanistically reproduce the structure of worksheets in lesson plan format. Instead:
+> - **Frame and Interpret**: Present material as an expert ESL teacher would.
+> - **Guidance**: Use analogies, metaphors, similes, and models to guide students on HOW to do tasks properly.
+> - **Scaffolding**: Provide conceptual "mental models" rather than just lists of instructions.
+> 
+> Example:
+> - *Mechanistic*: "Step 3: Fill in the worksheet now."
+> - *Interpretative*: "Step 3: **Detective Work**. Like detectives searching for clues, scan the text for ONLY the information you need. You don't need to understand every word—just find the answer to solve the case."
 
 ### Step 7: Write Lesson Plan (HTML)
 
@@ -137,8 +152,8 @@ DD-MM-YY-LP [CEFR]-[topic]-[skill or system]-[Shape]
     
     <!-- Header Image -->
     <p style="text-align: center;">
-        <img src="intensive-header.jpg" width="600" style="margin-bottom: 20pt;">
-        <!-- OR: <img src="bell-header.jpg" width="600"> for regular Bell lessons -->
+        <img src="../../images/intensive-header.jpg" width="600" style="margin-bottom: 20pt;">
+        <!-- OR: <img src="../../images/bell-header.jpg" width="600"> for regular Bell lessons -->
     </p>
     
     <!-- Lesson Metadata Header (1.15 line spacing) -->
@@ -317,7 +332,9 @@ This triggers the `uploading-to-google-docs` skill.
 
 For full lesson shape details and examples, see:
 - [REFERENCE.md](REFERENCE.md) - Shape summaries
-- [lesson_shapes.yaml](file:///c:/PROJECTS/LESSONS%20AND%20SLIDESHOWS%202/knowledge_base/lesson_shapes.yaml) - Complete definitions
+- [knowledge_base/shapes/](file:///c:/PROJECTS/LESSONS%20AND%20SLIDESHOWS%202/knowledge_base/shapes/) - Complete shape definitions (modular files)
+  - Shapes A-G: Traditional lesson frameworks
+  - Shapes H-J: SCR (Situation-Complication-Resolution) frameworks for Thai middle schoolers
 
 ---
 

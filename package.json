@@ -1,0 +1,24 @@
+{
+  "name": "lessons-and-slideshows-2",
+  "version": "1.0.0",
+  "description": "AI-powered lesson planning assistant for English language teachers, built with Google Gemini and the Skills-based architecture.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/elwrush/lesson-plan-agent.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/elwrush/lesson-plan-agent/issues"
+  },
+  "homepage": "https://github.com/elwrush/lesson-plan-agent#readme",
+  "dependencies": {
+    "playwright": "^1.57.0"
+  }
+}

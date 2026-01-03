@@ -13,6 +13,9 @@ Quick reference for the 7 lesson shapes. Full details in [lesson_shapes.yaml](fi
 | **E** | Receptive Skills | Reading/Listening focus | Lead-in → Pre-teach Vocab → Pre-task → Main Task → Post-task |
 | **F** | Productive Skills | Speaking/Writing focus | Lead-in → Preparation → Task → Feedback |
 | **G** | Task-Based Learning (TBL) | Communication-first approach | Pre-task → Task Cycle → Planning → Report → Analysis |
+| **H** | SCR Receptive Skills | Narrative-driven Reading/Listening | Situation → Complication (Conflict) → Resolution (Insight) |
+| **I** | SCR Systems | Narrative-driven Grammar/Vocab | Situation (Awareness) → Complication (Challenge) → Resolution (Mastery) |
+| **J** | SCR Productive Skills | Narrative-driven Speaking/Writing | Situation (Position) → Complication (Counter-view) → Resolution (Synthesis) |
 
 ## Interaction Patterns
 
