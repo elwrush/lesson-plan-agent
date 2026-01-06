@@ -28,6 +28,52 @@ description: >
 - OAuth 2.0 credentials in `.credentials/credentials.json`
 - Token file will be auto-generated at `.credentials/token.json` on first run
 
+---
+
+## Workflow (GATED - MANDATORY)
+
+> [!CRITICAL]
+> **Markdown Preview Gate**
+> 
+> Before executing ANY Python script that creates a slideshow via the Google Slides API, you MUST:
+> 
+> 1. **Create a Markdown Outline** of all slides in the following format:
+>    ```markdown
+>    # Slideshow Outline: [Title]
+>    
+>    ## Slide 1: [Title]
+>    - [Brief content summary or key bullet points]
+>    
+>    ## Slide 2: [Title]
+>    - [Brief content summary]
+>    ...
+>    ```
+> 
+> 2. **🔍 RUN VALIDATOR**: Check outline for compliance
+>    ```bash
+>    python skills/designing-slides/scripts/validate_slideshow_outline.py <outline.md>
+>    ```
+>    - **Checks performed**:
+>      - ❌ Answer key interleaving
+>      - ❌ Bullet limits (max 7)
+>      - ❌ Vocabulary format
+>      - ❌ No image placeholders
+>      - ⚠️ Mechanistic language
+>    - **Fix ALL errors** before proceeding
+> 
+> 3. **🚦 USER REVIEW GATE**: Present the markdown outline + validation report to the user
+>    - If user requests changes OR validator fails, revise and go back to step 2
+>    - **DO NOT proceed until user explicitly approves AND validator passes**
+> 
+> 4. **Generate Python Script**: Only after approval, create/run the slideshow generation script
+> 
+> 5. **Execute & Upload**: Run the script to push to Google Slides
+> 
+> **Reason**: API calls are expensive and irreversible. The markdown gate + validator allows rapid iteration on content/structure before committing to the API.
+
+
+---
+
 ## Design Principles
 
 | Principle | Implementation |

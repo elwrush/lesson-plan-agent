@@ -304,3 +304,11 @@ This session proceeded without errors requiring fixes. The `writing-lesson-plans
 - **Cause**: The `updatePageProperties` request (used for background color) requires a `fields` parameter to specify which properties to update, unlike some other requests which infer it.
 - **Fix**: Added `'fields': 'pageBackgroundFill.solidFill.color'` to the request dictionary.
 - **Lesson**: Always specify `fields` for `updatePageProperties` requests in the Google Slides API.
+
+## 2026-01-05
+
+### UnicodeEncodeError in Console Output (Windows)
+- **Issue**: push_to_gdocs.py failed with UnicodeEncodeError: 'charmap' codec can't encode character... when printing emojis (📄, ✅) to console.
+- **Cause**: Windows console default encoding (cp1252) doesn't support these emojis.
+- **Fix**: Set environment variable $env:PYTHONIOENCODING='utf-8' before running the Python script in PowerShell.
+- **Micro-lesson**: When scripts use rich console output (emojis), always ensure the shell or python environment is forced to UTF-8 on Windows.

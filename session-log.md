@@ -607,3 +607,10 @@ Create a programmatic system for generating and publishing Bell/Intensive worksh
 - Path encoding matters: use `pathlib.as_uri()` for spaces in directory names
 - Jinja variables in injected content fragments need manual pre-processing
 
+
+### 2026-01-06 | WeasyPrint & Worksheet Refinement
+- **PDF Engine Switch**: Migrated from Playwright to **WeasyPrint** in uild_worksheet.py for more reliable CSS page-break handling.
+- **Header Duplication Fix**: Removed hardcoded header image from reading worksheet fragment as the master template already provides it.
+- **Page Break Logic**: Reduced manual page breaks. Only a hard break before the Answer Key is now mandatory.
+- **Skill Update**: Updated generating-worksheets/SKILL.md to reflect the move to WeasyPrint.
+- **Output**: Generated and uploaded  5-01-26-Social-Media-Reading-Intensive-v4.pdf.

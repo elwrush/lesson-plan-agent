@@ -66,15 +66,26 @@ def main():
     
     print(f"Generated HTML: {temp_html_path}")
 
-    # Convert to PDF
-    pdf_script = os.path.join(script_dir, "pdf_converter.js")
-    cmd = ["node", pdf_script, temp_html_path, args.output]
-    
-    print(f"Generating PDF: {args.output}...")
+    # Convert to PDF using WeasyPrint
+    print(f"Generating PDF (WeasyPrint): {args.output}...")
     try:
-        subprocess.check_call(cmd, shell=True) # shell=True often needed on Windows for node
+        from weasyprint import HTML, CSS
+        
+        # Define CSS for A4 and page breaks
+        pdf_css = CSS(string="""
+            @page { size: A4; margin: 2cm; }
+            .page-break { page-break-before: always; }
+            body { font-family: 'Roboto', Arial, sans-serif; font-size: 11pt; }
+            table { width: 100%; border-collapse: collapse; }
+        """)
+        
+        HTML(string=rendered_html, base_url=output_dir).write_pdf(args.output, stylesheets=[pdf_css])
         print("Done.")
-    except subprocess.CalledProcessError as e:
+        
+    except ImportError:
+        print("Error: WeasyPrint not installed. Please install it with 'pip install weasyprint'")
+        sys.exit(1)
+    except Exception as e:
         print(f"Error generating PDF: {e}")
         sys.exit(1)
     finally:

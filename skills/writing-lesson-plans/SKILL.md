@@ -272,9 +272,25 @@ Stage headers must be informed by the lesson shape model. **Colored rows** shoul
 - All text: `line-height: 1.15` (set on body tag)
 
 #### After Generation
+
 1. Save the HTML file to the source folder
-2. **Open in browser** for user review and approval
-3. Do NOT proceed until user approves
+
+2. **🔍 RUN VALIDATOR**: Check lesson plan for compliance
+   ```bash
+   python skills/writing-lesson-plans/scripts/validate_lesson_plan.py <lesson_plan.html>
+   ```
+   - **Checks performed**:
+     - ❌ Timing sums to total duration
+     - ❌ Pre-teach vocabulary (Shape E-H)
+     - ❌ Thai scaffolding in vocabulary
+     - ⚠️ Answer key present
+     - ⚠️ Stage structure
+   - **Fix ALL errors** before proceeding
+
+3. **🚦 USER REVIEW GATE**: Open in browser for user review
+   - If user requests changes, edit and go back to step 2
+   - **DO NOT proceed until user approves**
+
 
 #### Required Additions
 

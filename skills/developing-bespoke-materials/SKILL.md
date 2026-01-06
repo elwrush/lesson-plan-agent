@@ -109,8 +109,13 @@ To get started, please tell me:
 ### Format Standards
 - **Headers**: Start with the correct branded image (`bell-header.jpg` or `intensive-header.jpg`).
 - **Typography**: Use Arial or Roboto; `11pt` body text is standard.
-- **Tables**: Use tables for layout structure (columns, boxes).
+- **Layout**:
+    - **NEVER use multiple columns for main text**. Text should always flow in a single column for readability.
+    - **Tables**: Use tables for boxing content (rules, examples), not for page layout columns.
 - **Self-Checks**: Include "Before You Present" or "Self-Check" checklists for student autonomy.
+- **Mandatory Page Breaks**:
+    - Always insert a hard page break before the **Answer Key**.
+    - Use `<div class="page-break"></div>` followed by a spacer (e.g., `&nbsp;`).
 
 ### File Naming Convention
 
