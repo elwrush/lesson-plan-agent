@@ -166,14 +166,17 @@ Toshi had such extreme **hikikomori** that he had not left his room for a week.
 
 ### Image Policy
 
-**CRITICAL**: The agent will NEVER attempt to generate images or add image placeholders.
+**CRITICAL**: The agent will NEVER attempt to generate images or add image placeholders *unless bespoke images have already been created*.
 
-- The user will ALWAYS add images manually post-upload
-- Do NOT use `generate_image` tool for slideshows
-- Do NOT add image placeholder boxes
-- Do NOT suggest image descriptions
+1. **Check Inputs Folder**: Before generating slides, scan the input directory for any image files (e.g., `diagrams/*.png`, `images/*.jpg`).
+2. **Use Bespoke Images**: If custom images exist (e.g., diagrams created during material generation), you MUST:
+   - Upload them to Google Drive (publicly viewable).
+   - Insert them into the relevant slides using `createImage`.
+   - **Do NOT** use a text placeholder for these images.
+3. **No New Generation**: Do NOT use `generate_image` tool specifically for the slideshow if it wasn't done earlier. Only use what exists.
+4. **Placeholders**: Only use text placeholders (e.g., `[IMAGE: .../`) if no bespoke image exists for that concept.
 
-Focus solely on text content and layout.
+Focus solely on text content and layout, unless assets are provided.
 
 ## Title Slide Template Structure
 

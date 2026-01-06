@@ -67,7 +67,18 @@ Ask the user:
    ```
 4. **Wait for explicit approval** before proceeding to any next steps (like Lesson Plans).
 
-### Step 6: Export to HTML (with inline styles) as the primary format
+### Step 6: Export & Format
+
+> ⚠️ **MANDATORY FORMAT RULE**
+> - **Materials (worksheets, handouts)** → Export as **PDF** using the `generating-worksheets` skill.
+> - **Lesson Plans** → Export as **HTML** and push to **Google Docs** using the `pushing-to-gdocs` skill.
+
+#### For Materials (PDF Output)
+1. Create content HTML in `inputs/[Topic]/` as a content fragment.
+2. Use the `generating-worksheets` skill to render the final PDF with Bell/Intensive branding.
+3. Open the PDF locally for user validation before publishing.
+
+#### For Lesson Plans (GDocs Output)
 - **File Location**: Save the final HTML in `inputs/[Topic]/`.
 - **Styling**:
     -   **Colored Boxes**: ALWAYS use **single-cell tables** (`<table><tr><td style="background: ..."> ... </td></tr></table>`) for rule boxes, examples, or exercise containers. `<div>` background colors are often stripped by Google Docs.

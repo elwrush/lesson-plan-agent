@@ -312,3 +312,29 @@ This session proceeded without errors requiring fixes. The `writing-lesson-plans
 - **Cause**: Windows console default encoding (cp1252) doesn't support these emojis.
 - **Fix**: Set environment variable $env:PYTHONIOENCODING='utf-8' before running the Python script in PowerShell.
 - **Micro-lesson**: When scripts use rich console output (emojis), always ensure the shell or python environment is forced to UTF-8 on Windows.
+
+---
+
+## 2026-01-06
+
+### PDF Permission Denied (File Locking)
+- **Issue**: `[Errno 13] Permission denied` when generating PDF worksheet.
+- **Cause**: The previous version of the PDF was open in a PDF viewer, which locks the file on Windows.
+- **Fix**: Generate to a new filename (versioning, e.g., `-v2.pdf`) instead of failing. This is faster than asking the user to close the file.
+
+### Logo Overlay in WeasyPrint (PDF)
+- **Issue**: Bell and ACT logos overlapped in the worksheet header.
+- **Cause**: `display: flex` with `gap` property is often poorly supported in WeasyPrint (PDF generator).
+- **Fix**: Switched to `display: table` / `inline-block` with explicit margins for robust layout rendering in PDF.
+
+### Missing Bespoke Images in Slides
+- **Issue**: A custom AI-generated diagram (`eye_contact_triangle.png`) was ignored in the slideshow, replaced by a generic text placeholder.
+- **Cause**: The `designing-slides` workflow didn't strictly mandate checking for/using existing bespoke assets.
+- **Fix**: Updated `SKILL.md` to mandate checking the inputs folder for images. Updated the generation script to upload and embed the specific image.
+
+### NameError Global Variable Scope
+- **Issue**: `NameError: name 'LOGO_DIR' is not defined` in slideshow script.
+- **Cause**: Moved `LOGO_DIR` definition inside a function or deleted it during refactoring, but other functions still relied on it globally.
+- **Fix**: Restored `LOGO_DIR` to global scope at the top of the script.
+- **Lesson**: When refactoring script structures, verify that all global constants used in helper functions remain accessible.
+

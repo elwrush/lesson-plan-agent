@@ -45,14 +45,19 @@
         }
 
         .bell-logos {
-            display: flex;
-            gap: 20px;
-            align-items: center;
+            display: table;
         }
 
         .bell-logos img {
             height: 50px;
             width: auto;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 20px;
+        }
+
+        .bell-logos img:last-child {
+            margin-right: 0;
         }
 
         .intensive-header-img {
