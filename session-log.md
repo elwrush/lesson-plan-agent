@@ -652,3 +652,41 @@ Finalize the "Grammar Repair Shop" lesson materials and permanently standardize 
 - `skills/designing-slides/scripts/authenticate_google.py`
 - `errors-fix.md`
 - `session-log.md`
+
+## 2026-01-12 (Night) | Pronunciation Soundcheck Materials
+
+### Summary
+Complete creation of the 'Pronunciation Soundcheck' suite (Worksheet, Lesson Plan, Slideshow), featuring a consistent 'Audio Studio' metaphor. Fixed critical workflow issues in slideshow generation.
+
+### Key Outputs
+1.  **Worksheet**: 12-01-2026-A2-B2-Pronunciation-Repair-Shop.pdf (Published to Drive)
+    *   Rebranded from 'Repair Shop' to 'Soundcheck'.
+    *   Features: Mic Check (Diagnosis), Crossfader (Binding/Linking), Anchors (Final Consonants), Fade-Out (Tapering).
+    *   Strict 4-page layout (A2/B1/B2/Model) using Typst.
+
+2.  **Lesson Plan**: 12-01-2026-LP B1-Pronunciation-Soundcheck (Google Doc)
+    *   Converted from HTML to GDocs.
+    *   Stages aligned with Studio metaphors (Mix Check, Blueprinting, Recording/Performance).
+    *   Includes specific differentiation box and focus on 'Dropped Consonants' and 'Overstressed Endings'.
+
+3.  **Slideshow**: 12-01-2026-Pronunciation-Soundcheck-Slides (Google Slides)
+    *   Built using the **Batch API Pattern** (15s generation time).
+    *   Visualizes all metaphors with specific segments and narrative segues.
+    *   Includes 'Model Blueprint' slide as success criteria.
+
+### Technical Improvements & Fixes
+-   **Slideshow Generation Skill Fixed**:
+    *   Identified that SKILL.md was instructing agents to import non-existent 'batch helper' functions.
+    *   **Fix**: Updated designing-slides/SKILL.md to MANDATE copying the 'Self-Contained Script' pattern (local helper functions) from create_presentation_structure_slides.py.
+    *   Logged this 'Library Hallucination' in rrors-fix.md.
+-   **Workflow Standardization**:
+    *   Simplified all .agent/workflows/*.md files to be concise pointers to skills.
+    *   Added a **Publish Gate** to developing-bespoke-materials to prevent premature uploads.
+-   **Import Path Safety**:
+    *   Enforced sys.path.append in generated scripts to ensure they can find project modules regardless of where the script resides.
+
+### Artifacts
+-   [Worksheet PDF](https://drive.google.com/file/d/1w7xBsOsA61VrLd7lU4M5YX98-55DtyB9/view?usp=drivesdk)
+-   [Lesson Plan GDoc](https://docs.google.com/document/d/19P5G_M2F4n1005sF7-A6vZw7vR0nfSslo/edit?usp=drivesdk)
+-   [Slideshow Link](https://docs.google.com/presentation/d/1X5l8t_fLxnQ4r_wz6zX5qqQ3zQ5b_X5q/edit)
+

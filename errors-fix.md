@@ -1,4 +1,20 @@
+
 # Errors & Fixes Log
+
+## 2026-01-12 (Night) | Slideshow Generation Refinements
+
+### ImportError due to Non-Existent Function in SKILL.md
+- **Issue**: `ImportError: cannot import name ...` and flawed batching logic.
+- **Cause**: The `designing-slides` skill documentation hallucinated a "Batch Helper Library" that doesn't exist. The actual library functions (`add_slide_content.py`) are designed for immediate execution, not batch request generation.
+- **Fix**: 
+  1. Updated `SKILL.md` to explicitly FORBID importing slide creation functions.
+  2. Mandated the **"Self-Contained Script" Pattern**: Copy the working logic (including local `batchUpdate` calls) from known good examples (e.g., `create_presentation_structure_slides.py`) into the new script.
+  3. Do NOT assume library functions support batching unless verified by reading the code.
+
+### Incorrect Relative Import Paths
+- **Issue**: `ModuleNotFoundError` when running scripts in subfolders.
+- **Cause**: Scripts didn't add the root or skill directories to `sys.path`.
+- **Fix**: Use `sys.path.insert(0, ...)` to explicitly add project root and skill script folders before imports. Do NOT rely on relative imports.
 
 ## 2025-12-26
 
@@ -364,4 +380,3 @@ This session proceeded without errors requiring fixes. The `writing-lesson-plans
 - **Issue**: `authenticate_google.py` crashed when printing `✓` or `⚠` to a Windows terminal file redirection.
 - **Cause**: Windows CP1252 encoding doesn't support these symbols.
 - **Fix**: Replaced special symbols with ASCII-safe text: `[OK]` and `[WARN]`.
-

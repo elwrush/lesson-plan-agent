@@ -209,56 +209,35 @@ All slideshows MUST use the Bell EP template structure for the title slide:
 
 ---
 
-## Batch API Pattern (Critical for Performance)
-
-> [!IMPORTANT]
-> Always use batch operations. Individual API calls are slow and trigger rate limits.
-
-### Anti-Pattern (Slow)
-```python
-# ❌ BAD: Each call is a separate network request
-slides_service.presentations().batchUpdate(...).execute()  # request 1
-slides_service.presentations().batchUpdate(...).execute()  # request 2
-# ... 100+ requests = 3-4 minutes
-```
-
-### Correct Pattern (Fast)
-```python
-# ✅ GOOD: Accumulate requests, execute once
-all_requests = []
-
-for slide_data in slides:
-    slide_id = _generate_id()
-    all_requests.extend(get_create_slide_requests(slide_id))
-    all_requests.extend(get_content_requests(slide_id, slide_data))
-
-# Single API call with all requests
-slides_service.presentations().batchUpdate(
-    presentationId=presentation_id,
-    body={'requests': all_requests}
-).execute()  # 1 request = ~30 seconds
-```
-
-### Helper Function Pattern
-Functions should **return request dicts**, not execute them:
-
-```python
-def get_header_bar_requests(slide_id, title, color):
-    """Returns list of request dicts (does NOT execute)."""
-    return [
-        {'createShape': {...}},
-        {'insertText': {...}},
-        {'updateShapeProperties': {...}},
-    ]
-```
+> [!CRITICAL]
+> **Use "Self-Contained Script" Pattern**
+>
+> The helper library `scripts/add_slide_content.py` functions (e.g., `add_title_slide`) execute requests immediately, which is slow and prevents batching.
+>
+> **Do NOT import slide creation functions.**
+> **Do NOT try to use the library for batching.**
+>
+> Instead, you MUST:
+> 1. **Copy the Working Pattern**: See `inputs/01-Presentation-Structure/create_presentation_structure_slides.py`.
+> 2. **Define Local Helper Functions**: In your new script, define `create_content_slide()` locally.
+> 3. **Implement Batch Logic Locally**: Build the `requests` list inside your local function and call `batchUpdate` there.
+>
+> This "copy-paste-adapt" approach allows you to customize the batching logic for each specific slideshow without breaking library dependencies or fighting import paths.
 
 ---
 
 ### 1. Authenticate
 
-
 ```python
-from scripts.authenticate_google import authenticate_slides
+import sys
+import os
+
+# Add skill scripts to path
+# Adjust relative path as needed based on where you run the script from
+SCRIPT_DIR = os.path.join(os.path.dirname(__file__), '../../skills/designing-slides/scripts')
+sys.path.append(os.path.abspath(SCRIPT_DIR))
+
+from authenticate_google import authenticate_slides
 
 service = authenticate_slides()
 ```
@@ -353,14 +332,9 @@ url = f"https://docs.google.com/presentation/d/{presentation_id}/edit"
 
 ### Apply Template Styling
 ```python
-from scripts.format_slides import apply_bell_theme
-
-apply_bell_theme(
-    service=service,
-    presentation_id=presentation_id,
-    primary_color="#8B0000",  # Maroon
-    secondary_color="#FFFFFF"  # White
-)
+# Note: Theme application is usually handled within individual slide creation 
+# or by explicitly setting backgrounds on specific slides.
+# See scripts/format_slides.py for set_slide_background()
 ```
 
 ### Batch Create Slides from Lesson Plan

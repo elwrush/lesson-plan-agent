@@ -69,14 +69,18 @@ Ask the user:
 
 ### Step 6: Export & Format
 
-> ⚠️ **MANDATORY FORMAT RULE**
-> - **Materials (worksheets, handouts)** → Export as **PDF** using the `generating-worksheets` skill.
-> - **Lesson Plans** → Export as **HTML** and push to **Google Docs** using the `pushing-to-gdocs` skill.
-
 #### For Materials (PDF Output)
-1. Create content HTML in `inputs/[Topic]/` as a content fragment.
-2. Use the `generating-worksheets` skill to render the final PDF with Bell/Intensive branding.
-3. Open the PDF locally for user validation before publishing.
+1. Use the **Typst-based** `generating-worksheets` skill. 
+2. **Gold Standard**: ALWAYS reference `knowledge_base/templates/grammar_repair_worksheet_gold.typ`.
+3. Create a `.typ` template in `skills/generating-worksheets/templates/`.
+4. Compile using the Typst CLI (see `generating-worksheets/SKILL.md`).
+5. **FORBIDDEN**: Do not use HTML fragments or WeasyPrint for printable worksheets.
+6. Open the resulting PDF locally for user validation before publishing.
+
+7. **Publish**:
+   - Ask the user: "Do you want to push this file to Google Drive?"
+   - **Step 7a**: If YES, use the `publishing-worksheets` skill.
+   - **Step 7b**: If NO, stop.
 
 #### For Lesson Plans (GDocs Output)
 - **File Location**: Save the final HTML in `inputs/[Topic]/`.
@@ -118,15 +122,14 @@ To get started, please tell me:
 - **Mandatory Transcript**: If the materials involve a listening task, the full transcript MUST be included at the end (after the answer key).
 
 ### Format Standards
-- **Headers**: Start with the correct branded image (`bell-header.jpg` or `intensive-header.jpg`).
-- **Typography**: Use Arial or Roboto; `11pt` body text is standard.
+- **PDF Engine**: ALWAYS use **Typst**. 
+- **Headers**: Use the `#integrated_header()` function from the gold standard template.
+- **Typography**: Arial is standard for Typst worksheets.
 - **Layout**:
-    - **NEVER use multiple columns for main text**. Text should always flow in a single column for readability.
-    - **Tables**: Use tables for boxing content (rules, examples), not for page layout columns.
-- **Self-Checks**: Include "Before You Present" or "Self-Check" checklists for student autonomy.
-- **Mandatory Page Breaks**:
-    - Always insert a hard page break before the **Answer Key**.
-    - Use `<div class="page-break"></div>` followed by a spacer (e.g., `&nbsp;`).
+    - Use the `#task_card()` component for boxed activities.
+    - Use the `#writing_lines(count: 15)` component for responses to prevent spillover.
+- **Self-Checks**: Include the `#radar_box()` or peer review checklists.
+- **Mandatory Page Breaks**: Use `#pagebreak()` between major sections or levels.
 
 ### File Naming Convention
 
