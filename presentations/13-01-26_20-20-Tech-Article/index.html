@@ -16,12 +16,14 @@
 
     <style>
         :root {
-            --maroon: #8B1538;
+            --maroon: #ff0055;
+            /* More vibrant neon pink/red */
             --cyan: #00F2FF;
             --navy: #050811;
             --slate: #1e293b;
-            --glass: rgba(15, 23, 42, 0.7);
-            --neon-border: rgba(0, 242, 255, 0.3);
+            --glass: rgba(10, 10, 20, 0.95);
+            /* Much darker for readability */
+            --neon-border: #00F2FF;
         }
 
         body {
@@ -38,71 +40,69 @@
         .reveal h3 {
             font-family: 'Outfit', sans-serif !important;
             text-transform: uppercase;
-            letter-spacing: 4px;
+            letter-spacing: 2px;
             font-weight: 800;
         }
 
         .reveal h1 {
             color: white;
-            text-shadow: 0 0 20px rgba(139, 21, 56, 0.5);
-            border-left: 12px solid var(--maroon);
-            padding-left: 30px;
+            text-shadow: 4px 4px 0px var(--maroon);
+            /* Pop art shadow */
+            font-style: italic;
         }
 
         .reveal h2 {
             color: var(--cyan);
             font-size: 2.2em;
             margin-bottom: 40px;
+            text-shadow: 0 0 20px rgba(0, 242, 255, 0.4);
         }
 
-        /* Glassmorphism Box */
+        /* Gamer/Cyber Box */
         .glass-box {
             background: var(--glass);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid var(--neon-border);
+            border: 2px solid var(--neon-border);
             padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            border-radius: 0px;
+            /* Sharper edges */
+            box-shadow: 10px 10px 0px rgba(0, 242, 255, 0.2);
             margin-top: 20px;
             position: relative;
-            overflow: hidden;
         }
 
         .glass-box::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 4px;
-            height: 100%;
-            background: var(--maroon);
+            display: none;
+            /* Remove corporate side bar */
         }
 
         .stage-badge {
-            background: var(--maroon);
-            color: white;
-            padding: 8px 25px;
-            font-size: 0.6em;
-            font-weight: 600;
-            letter-spacing: 2px;
-            margin-bottom: 40px;
+            background: var(--cyan);
+            color: black;
+            padding: 5px 15px;
+            font-size: 0.8em;
+            font-weight: 800;
+            transform: skew(-10deg);
+            /* Action feel */
+            margin-bottom: 20px;
             display: inline-block;
-            border-radius: 2px;
-            box-shadow: 0 0 15px rgba(139, 21, 56, 0.4);
         }
 
         .q-highlight {
-            color: var(--cyan);
-            font-weight: 600;
-            text-shadow: 0 0 10px rgba(0, 242, 255, 0.3);
+            color: var(--maroon);
+            font-weight: 800;
+            background: yellow;
+            /* Highlighter marker style */
+            color: black;
+            padding: 0 5px;
         }
 
         .model-text {
-            font-style: italic;
-            font-size: 0.9em;
-            line-height: 1.5;
-            color: #cbd5e1;
+            font-style: normal;
+            font-size: 1.0em;
+            line-height: 1.6;
+            color: white;
+            font-family: 'Courier New', monospace;
+            /* Hacker vibe */
         }
 
         .segue-title {
@@ -111,37 +111,37 @@
             width: 100%;
             display: block;
             margin-bottom: 0 !important;
-            color: white !important;
-            text-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+            color: yellow !important;
+            text-shadow: 5px 5px 0px var(--maroon);
+            transform: rotate(-2deg);
         }
 
         .segue-subtitle {
             text-align: center;
-            color: var(--cyan);
-            font-style: italic;
-            font-size: 1.6em;
+            color: white;
+            font-size: 1.8em;
             margin-top: 20px;
+            font-weight: 300;
         }
 
         .teacher-tip {
-            border-left: 4px solid var(--cyan);
+            border: 2px dashed var(--maroon);
             padding: 20px;
             margin-top: 30px;
-            background: rgba(0, 242, 255, 0.05);
-            font-size: 0.85em;
-            color: #94a3b8;
+            background: black;
+            font-size: 0.9em;
+            color: white;
         }
 
         .teacher-tip strong {
-            color: var(--cyan);
+            color: var(--maroon);
             text-transform: uppercase;
-            font-size: 0.9em;
+            font-size: 1.0em;
         }
 
         .img-pedagogical {
-            border-radius: 8px;
-            border: 2px solid var(--neon-border);
-            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+            border: 4px solid white;
+            box-shadow: 10px 10px 0px var(--cyan);
         }
 
         .r-stretch {
@@ -155,116 +155,121 @@
         <div class="slides">
 
             <!-- TITLE SLIDE -->
-            <section data-background-image="images/cyber_bg.png" data-background-opacity="0.4">
-                <div class="stage-badge">B1 INTENSIVE MASTERCLASS</div>
-                <h1 style="font-size: 4em; line-height: 0.9;">THE 20/20<br>TECH WRITER</h1>
-                <p style="font-size: 1.8em; color: var(--cyan); font-weight: 600; margin-top: 20px;">Cracking the
-                    Cambridge Article Code</p>
-                <div style="margin-top: 80px; display: flex; align-items: center; gap: 30px;">
-                    <div style="height: 2px; width: 100px; background: var(--maroon);"></div>
-                    <p style="opacity: 0.6; font-size: 0.8em; letter-spacing: 2px;">BELL LANGUAGE CENTRE | 2026</p>
+            <section data-background-image="images/cyber_bg.png" data-background-opacity="0.2">
+                <div class="stage-badge">LEVEL UP: WRITING</div>
+                <h1 style="font-size: 5em; line-height: 0.9;">THE 20/20<br>TECH WRITER</h1>
+                <p style="font-size: 2em; color: white; font-weight: 600; margin-top: 20px;">
+                    <span style="background: var(--maroon); padding: 5px 15px;">CRACK THE CODE</span>
+                </p>
+                <div style="margin-top: 80px;">
+                    <p style="opacity: 0.8; font-size: 1em; letter-spacing: 4px; color: var(--cyan);">BELL LANGUAGE
+                        CENTRE | 2026</p>
                 </div>
             </section>
 
             <!-- PHASE 1 SEGUE -->
-            <section data-background-image="images/cyber_bg.png">
-                <h1 class="segue-title">PHASE 1:<br>THE HOOK</h1>
-                <p class="segue-subtitle">What makes a viral moment tick?</p>
+            <section data-background-image="images/cyber_bg.png" data-background-opacity="0.1">
+                <h1 class="segue-title">PHASE 1:<br>WHAT MAKES A VIRAL MOMENT TICK?</h1>
             </section>
 
             <!-- LEAD-IN: BBC DAD -->
-            <section>
-                <div class="stage-badge">01. STARTER</div>
+            <section data-background-image="images/cyber_bg.png" data-background-opacity="0.1">
+                <div class="stage-badge">01. THE SPARK</div>
                 <h2>The Office Interruption</h2>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start;">
                     <div class="glass-box">
-                        <p style="font-size: 1.1em; line-height: 1.6;">"A live world news interview. A serious topic.
-                            And then... the children arrive."</p>
+                        <p style="font-size: 1.2em; line-height: 1.4; font-weight: bold;">"A live world news interview.
+                            A serious topic.</p>
+                        <p style="font-size: 1.2em; line-height: 1.4; color: var(--cyan); margin-top: 20px;">And then...
+                            the chaos begins."</p>
                         <div class="teacher-tip">
-                            <strong>EXPERT NOTE:</strong> This video went viral because of the
-                            <strong>contrast</strong>—the formal world vs. the chaotic reality of home.
+                            <strong>WHY IT WENT VIRAL:</strong> It's all about the
+                            <strong>CLASH</strong>—the serious suit vs. the dancing kid. content writers call this
+                            "CONTRAST."
                         </div>
                     </div>
                     <div>
-                        <a href="https://www.youtube.com/watch?v=Mh4f9AYRCZY" target="_blank">
-                            <img src="https://img.youtube.com/vi/Mh4f9AYRCZY/maxresdefault.jpg" class="img-pedagogical">
-                            <p style="text-align: center; font-size: 0.7em; color: var(--cyan); margin-top: 10px;">[
-                                CLICK TO PLAY VIDEO ]</p>
-                        </a>
+                        <div class="r-stack">
+                            <iframe class="r-stretch" data-src="https://www.youtube.com/embed/Mh4f9AYRCZY?autoplay=1"
+                                width="1600" height="900" frameborder="0" allow="autoplay; encrypted-media"
+                                allowfullscreen>
+                            </iframe>
+                        </div>
                     </div>
                 </div>
             </section>
 
             <!-- PHASE 2 SEGUE -->
-            <section data-background-image="images/cyber_bg.png" data-background-color="var(--navy)">
-                <h1 class="segue-title">PHASE 2:<br>DECODING</h1>
-                <p class="segue-subtitle">Peeking behind the curtain of a perfect score.</p>
+            <section data-background-image="images/cyber_bg.png" data-background-opacity="0.1">
+                <h1 class="segue-title">PHASE 2:<br>DECODING THE BOSS LEVEL</h1>
+                <p class="segue-subtitle">Let's look at a 20/20 Score.</p>
             </section>
 
             <!-- THE PROMPT -->
-            <section>
-                <div class="stage-badge">02. ANALYSIS</div>
+            <section data-background-image="images/cyber_bg.png" data-background-opacity="0.1">
+                <div class="stage-badge">02. MISSION BRIEF</div>
                 <h2>The Challenge</h2>
                 <div class="glass-box">
-                    <p style="text-transform: uppercase; color: var(--maroon); font-weight: 800; font-size: 0.8em;">
-                        Articles wanted!</p>
-                    <h3 style="color: white; margin: 10px 0;">WHAT MAKES YOU LAUGH?</h3>
-                    <p style="font-size: 1.2em; line-height: 1.5; color: #e2e8f0;">Write an article telling us
+                    <h3 style="color: yellow; margin: 10px 0; font-size: 2em;">WHAT MAKES YOU LAUGH?</h3>
+                    <p style="font-size: 1.4em; line-height: 1.5; color: white;">Write an article telling us
                         <strong>what makes you laugh and why</strong>. Is it <strong>important for people to
                             laugh</strong>?
                     </p>
                     <div class="teacher-tip">
-                        <strong>TEACHER'S TIP:</strong> Underline the 3 questions. If you miss one, you fail the "Task
-                        Achievement" grade. Simple as that.
+                        <strong>PRO TIP:</strong> See those 3 bold questions? If you miss one, it's <span
+                            style="color: red;">GAME OVER</span> for your score.
                     </div>
                 </div>
             </section>
 
             <!-- THE MODEL -->
-            <section>
-                <div class="stage-badge">02. ANALYSIS</div>
-                <h2>The Perfectionist (20/20)</h2>
+            <section data-background-image="images/cyber_bg.png" data-background-opacity="0.1">
+                <div class="stage-badge">02. PRO PLAY</div>
+                <h2>The Perfect 20/20</h2>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
-                    <div class="glass-box model-text" style="font-size: 0.8em;">
+                    <div class="glass-box model-text">
                         <p><span class="q-highlight">[Q1]</span> "I love comedies... The comedy I love most is
                             <strong>Chinese Running Man</strong>."
                         </p>
-                        <p class="fragment" style="margin-top: 15px;"><span class="q-highlight">[Q2]</span> "Famous
+                        <p class="fragment" style="margin-top: 25px;"><span class="q-highlight">[Q2]</span> "Famous
                             actors <strong>must overcome challenging quests</strong>... They tickle my funny bone!"</p>
-                        <p class="fragment" style="margin-top: 15px;"><span class="q-highlight">[Q3]</span> "Laughing
+                        <p class="fragment" style="margin-top: 25px;"><span class="q-highlight">[Q3]</span> "Laughing
                             helps <strong>release stress</strong>... and makes us more attractive too!"</p>
                     </div>
                     <div class="fragment">
-                        <h4 style="color: var(--cyan); font-size: 1em;">Why this won:</h4>
-                        <ul style="font-size: 0.8em; line-height: 1.8;">
-                            <li>Answered all 3 prompts.</li>
-                            <li>Used <strong>specific evidence</strong> (coffee beans!).</li>
-                            <li>Used <strong>modals</strong> (can, may) for opinions.</li>
+                        <h4
+                            style="color: var(--cyan); font-size: 1.5em; transform: rotate(-2deg); background: black; display: inline-block; padding: 10px;">
+                            WHY IT WINS:</h4>
+                        <ul style="font-size: 1.1em; line-height: 1.8; margin-top: 20px;">
+                            <li>✅ Hits all 3 targets.</li>
+                            <li>✅ Real details (coffee beans!).</li>
+                            <li>✅ Strong opinions.</li>
                         </ul>
                     </div>
                 </div>
             </section>
 
             <!-- PHASE 3 SEGUE -->
-            <section data-background-image="images/cyber_bg.png">
-                <h1 class="segue-title">PHASE 3:<br>BLUEPRINT</h1>
-                <p class="segue-subtitle">Great writers are actually great architects.</p>
+            <section data-background-image="images/cyber_bg.png" data-background-opacity="0.1">
+                <h1 class="segue-title">PHASE 3:<br>THE BLUEPRINT</h1>
+                <p class="segue-subtitle">Don't build without a map.</p>
             </section>
 
             <!-- ARCHITECTURE -->
-            <section>
-                <div class="stage-badge">03. STRATEGY</div>
-                <h2>The Paragraph Logic</h2>
+            <section data-background-image="images/cyber_bg.png" data-background-opacity="0.1">
+                <div class="stage-badge">03. ARCHITECTURE</div>
+                <h2>The Logic Flow</h2>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;">
                     <div class="glass-box">
                         <div style="margin-bottom: 30px;">
-                            <span class="q-highlight" style="font-size: 1.4em;">1. THE TOPIC SENTENCE</span>
-                            <p style="font-size: 0.85em; margin-top: 10px;">Your Headline. Your assertion. "Computers
-                                are essential."</p>
+                            <span class="q-highlight" style="font-size: 1.4em; background: var(--cyan);">1.
+                                HEADLINE</span>
+                            <p style="font-size: 1.0em; margin-top: 10px;">Your main point. The assertion.
+                                <br>"Computers are essential."</p>
                         </div>
                         <div class="fragment">
-                            <span class="q-highlight" style="font-size: 1.4em;">2. SUPPORTING DETAILS</span>
-                            <p style="font-size: 0.85em; margin-top: 10px;">The evidence. The "why". "For example,
+                            <span class="q-highlight" style="font-size: 1.4em; background: yellow;">2. EVIDENCE</span>
+                            <p style="font-size: 1.0em; margin-top: 10px;">The proof. The "because". <br>"For example,
                                 students use them for..."</p>
                         </div>
                     </div>
@@ -273,26 +278,26 @@
             </section>
 
             <!-- PHASE 4 SEGUE -->
-            <section data-background-image="images/cyber_bg.png">
-                <h1 class="segue-title">PHASE 4:<br>THE ARSENAL</h1>
-                <p class="segue-subtitle">Level up from "Basic" to "Brilliant."</p>
+            <section data-background-image="images/cyber_bg.png" data-background-opacity="0.1">
+                <h1 class="segue-title">PHASE 4:<br>THE LOADOUT</h1>
+                <p class="segue-subtitle">Equip these weapons for higher scores.</p>
             </section>
 
             <!-- TOOLKIT -->
-            <section>
-                <div class="stage-badge">04. THE TOOLS</div>
-                <h2>High-Score Weapons</h2>
+            <section data-background-image="images/cyber_bg.png" data-background-opacity="0.1">
+                <div class="stage-badge">04. INVENTORY</div>
+                <h2>Vocabulary Weapons</h2>
                 <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; align-items: start;">
                     <div class="glass-box">
-                        <ul style="font-size: 1em; line-height: 2.2; list-style: none; padding: 0;">
-                            <li class="fragment"><span class="q-highlight">Preference:</span> "The app I use most
-                                frequently is..."</li>
-                            <li class="fragment"><span class="q-highlight">Opinion:</span> "In my view, computers are
-                                essential because..."</li>
-                            <li class="fragment"><span class="q-highlight">Evidence:</span> "Furthermore, they allow us
-                                to..."</li>
-                            <li class="fragment"><span class="q-highlight">Possibility:</span> "It might make us..." /
-                                "We could also..."</li>
+                        <ul style="font-size: 1.2em; line-height: 2.2; list-style: none; padding: 0;">
+                            <li class="fragment"><span style="color: var(--cyan);">PREFERENCE:</span> <br>"The app I use
+                                most frequently is..."</li>
+                            <li class="fragment"><span style="color: var(--cyan);">OPINION:</span> <br>"In my view,
+                                computers are essential because..."</li>
+                            <li class="fragment"><span style="color: var(--cyan);">PROOF:</span> <br>"Furthermore, they
+                                allow us to..."</li>
+                            <li class="fragment"><span style="color: var(--cyan);">POSSIBILITY:</span> <br>"It might
+                                make us..."</li>
                         </ul>
                     </div>
                     <img src="images/toolkit.png" class="img-pedagogical fragment">
@@ -300,27 +305,31 @@
             </section>
 
             <!-- PHASE 5 SEGUE -->
-            <section data-background-image="images/cyber_bg.png">
-                <h1 class="segue-title">PHASE 5:<br>EXECUTION</h1>
+            <section data-background-image="images/cyber_bg.png" data-background-opacity="0.1">
+                <h1 class="segue-title">PHASE 5:<br>GO TIME</h1>
                 <p class="segue-subtitle">The mission starts now.</p>
             </section>
 
             <!-- FINAL MISSION -->
             <section data-background-color="var(--maroon)">
-                <div class="stage-badge" style="background: var(--navy);">FINAL CHALLENGE</div>
+                <div class="stage-badge" style="background: black; color: white;">FINAL QUEST</div>
                 <div style="display: grid; grid-template-columns: 1fr 1.2fr; gap: 40px; align-items: center;">
-                    <img src="images/mission.png" class="img-pedagogical">
-                    <div class="glass-box" style="background: rgba(0,0,0,0.3); border-color: rgba(255,255,255,0.2);">
-                        <p style="text-transform: uppercase; color: var(--cyan); font-weight: 800; font-size: 0.8em;">
+                    <img src="images/mission.png" class="img-pedagogical"
+                        style="border-color: black; box-shadow: none;">
+                    <div class="glass-box" style="background: rgba(0,0,0,0.5); border-color: black; box-shadow: none;">
+                        <p style="text-transform: uppercase; color: var(--cyan); font-weight: 800; font-size: 1.2em;">
                             Articles wanted!</p>
-                        <h3 style="color: white; margin: 10px 0;">TECHNOLOGY AND YOU</h3>
-                        <p style="font-size: 1em; line-height: 1.4; color: white;">Write about <strong>which website/app
+                        <h3 style="color: white; margin: 10px 0; font-size: 2.5em;">TECHNOLOGY AND YOU</h3>
+                        <p style="font-size: 1.2em; line-height: 1.4; color: white;">Write about <strong>which
+                                website/app
                                 you like most</strong> and how often you use it. Do you think it is <strong>important
                                 for teenagers to have a computer</strong>? Why?</p>
 
                         <div class="fragment"
-                            style="margin-top: 40px; border: 4px solid white; padding: 25px; text-align: center; border-radius: 4px;">
-                            <h2 style="color: white; margin: 0; font-size: 2.5em; letter-spacing: 6px;">START WRITING
+                            style="margin-top: 40px; border: 4px solid white; padding: 25px; text-align: center; border-radius: 4px; background: var(--maroon);">
+                            <h2
+                                style="color: white; margin: 0; font-size: 2.5em; letter-spacing: 6px; transform: skew(-5deg);">
+                                START WRITING
                             </h2>
                         </div>
                     </div>
