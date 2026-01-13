@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/elwrush/lesson-plan-agent#readme",
   "dependencies": {
-    "playwright": "^1.57.0"
+    "playwright": "^1.57.0",
+    "reveal.js": "^5.2.1"
   }
 }

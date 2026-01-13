@@ -290,8 +290,10 @@ Stage headers must be informed by the lesson shape model. **Colored rows** shoul
      - ⚠️ Stage structure
    - **Fix ALL errors** before proceeding
 
-3. **🚦 USER REVIEW GATE**: Open in browser for user review
-   - If user requests changes, edit and go back to step 2
+3. **🚦 USER REVIEW GATE**: User reviews via IDE preview
+   - Do NOT open the file in a browser automatically.
+   - Wait for the user to review the file in their IDE.
+   - If user requests changes, edit and go back to step 2.
    - **DO NOT proceed until user approves**
 
 
@@ -338,11 +340,13 @@ Using your phone during class is not **acceptable**.
 การใช้โทรศัพท์ในระหว่างเรียนไม่**ยอมรับได้**
 ```
 
-### Step 8: Export via ADC to GDocs
+### Step 8: Export & Archiving
 
-Once the lesson plan is approved, use the **`push_to_gdocs`** tool.
-- Ensure the push operation uses the **ADC (Application Default Credentials)** method.
-- The tool will automatically embed local images as base64.
+Once the lesson plan is approved:
+1.  **Push to GDocs**: Use the `push_to_gdocs` skill (via ADC) to create the cloud version.
+2.  **Save Locally**: Copy the final HTML file to the local Google Drive path:
+    `G:\My Drive\A CLASSES- ED - TERM 2\M24A - M3-3A`
+    *(Naming: `DD-MM-YYYY-LP-[CEFR]-[Topic].html`)*
 
 ---
 

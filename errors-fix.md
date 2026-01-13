@@ -380,3 +380,23 @@ This session proceeded without errors requiring fixes. The `writing-lesson-plans
 - **Issue**: `authenticate_google.py` crashed when printing `✓` or `⚠` to a Windows terminal file redirection.
 - **Cause**: Windows CP1252 encoding doesn't support these symbols.
 - **Fix**: Replaced special symbols with ASCII-safe text: `[OK]` and `[WARN]`.
+
+## 2026-01-13 | Authentication & Worksheet Pagination
+
+### ADC Authentication "App Blocked" / Invalid Scope
+- **Issue**: `gcloud auth application-default login` failed with `invalid_scope` and "This app is blocked" because it defaulted to the generic Google Cloud SDK client ID.
+- **Cause**: Generic gcloud login didn't use the project's client ID.
+- **Fix**: Force gcloud to use the project's client ID:
+  ```powershell
+  gcloud auth application-default login --client-id-file=".credentials/credentials.json" --scopes="https://www.googleapis.com/auth/drive,https://www.googleapis.com/auth/documents,https://www.googleapis.com/auth/cloud-platform"
+  ```
+- **Lesson**: Warn users to use project-specific auth commands.
+
+### PDF Permission Denied (File Locking)
+- **Issue**: `failed to write PDF file` during compilation.
+- **Fix**: Forbid auto-opening PDFs. Use IDE preview links `[file](file:///...)`.
+
+### Worksheet Pagination
+- **Issue**: Worksheet spilled to 5 pages.
+- **Fix**: Reducing writing lines and consolidating content.
+

@@ -5,7 +5,7 @@ description: Grammar or vocabulary lesson where students encounter a communicati
 The Complication is a FUNCTIONAL FAILURE: "Your current grammar/vocabulary makes you sound [ROBOT/BORING/RUDE]. You LOSE something (respect, opportunity, connection)."
 
 pedagogical_justification: |
-  This shape applies the McKinsey SCR (Situation-Complication-Resolution) storytelling framework to systems (grammar/vocabulary) lessons at any CEFR level FOR THAI MIDDLE SCHOOLERS. Students begin with an initial approach, encounter a communication breakdown that makes them sound ineffective, and learn the grammatical/ lexical "Hero Tool" that solves the problem.
+  This shape applies the McKinsey SCR (Situation-Complication-Resolution) storytelling framework to systems (grammar/vocabulary) lessons at any CEFR level FOR THAI MIDDLE SCHOOLERS. Students begin with an initial approach, encounter a communication breakdown that makes them sound ineffective, and learn the grammatical/lexical "Solution Strategy" that solves the problem. A unifying METAPHOR is selected to frame this solution.
   
   CRITICAL DISTINCTIONS from PPP/traditional productive lessons:
   1. Students TRY to communicate BEFORE learning the target language
@@ -20,6 +20,16 @@ pedagogical_justification: |
 
 main_aim_format: |
   By the end of the lesson, learners will be better able to use [target language] to [functional goal] in the context of [topic].
+
+# Metaphor Selection Protocol (CRITICAL)
+
+metaphor_selection:
+  rule: "Do NOT default to 'Hero Tool'. Engage the user to select the best unifying concept."
+  procedure:
+    1. "Analyze the context (e.g., Gaming, Business, Travel)."
+    2. "Propose 2-3 relevant metaphors."
+    3. "Example: For a business lesson, 'Efficiency Upgrade' is better than 'Hero Tool'. For tech, 'Reverse Engineering' or 'Patch'."
+    4. "Ask the user to confirm or suggest their own."
 
 # Thai L1 Scaffolds (MANDATORY for Thai Middle Schoolers)
 
@@ -77,7 +87,7 @@ age_appropriate_scenarios:
       You: "I beat the Ender Dragon on Monday. I built a castle in 2022. I won a tournament last year."
       Guild Leader: "OK... but can you do it NOW?"
     what_you_sound_like: "Living in the past / Not confident"
-    hero_tool: "Present Perfect (Experience Filter)"
+    solution_strategy: "Present Perfect (Experience Filter)"
     resolution_dialogue: |
       You: "I have beaten the Ender Dragon 5 times. I have built 3 castles. I have won 2 tournaments."
       Guild Leader: "Nice! You're in."
@@ -90,7 +100,7 @@ age_appropriate_scenarios:
       Friend: "What games have you played?"
       You: "I played ROV in 2020. I played Genshin in 2021. I played Minecraft in 2022."
     what_you_sound_like: "Old news / Not interesting"
-    hero_tool: "Present Perfect for experience"
+    solution_strategy: "Present Perfect for experience"
     resolution_dialogue: |
       Friend: "What games have you played?"
       You: "I've played ROV, Genshin, and Minecraft. I've been playing ROV the longest—3 years now!"
@@ -102,7 +112,7 @@ age_appropriate_scenarios:
     complication_example: |
       "I like photography. I play guitar. I watch anime."
     what_it_sounds_like: "Boring / Generic / No proof"
-    hero_tool: "Present Perfect for achievements"
+    solution_strategy: "Present Perfect for achievements"
     resolution_example: |
       "I've visited 12 provinces. I've learned 3 instruments. I've watched over 50 anime series."
     what_it_sounds_like: "Accomplished / Experienced / Interesting"
@@ -113,7 +123,7 @@ age_appropriate_scenarios:
     complication_example: |
       "I tried this. It didn't work."
     what_it_sounds_like: "Gave up / Weak"
-    hero_tool: "Present Perfect to show persistence"  
+    solution_strategy: "Present Perfect to show persistence"  
     resolution_example: |
       "I've tried this 3 times. It hasn't worked yet, but I'll keep trying!"
     what_it_sounds_like: "Persistent / Serious / Not a quitter"
@@ -142,10 +152,10 @@ stage_structure:
       - "What's the problem with focusing on WHEN instead of WHO?"
       
   resolution:
-    purpose: "Introduce the target language as the HERO TOOL"
-    teacher_mindset: "This grammar is your superpower. It fixes EVERYTHING."
+    purpose: "Introduce the target language as the SOLUTION STRATEGY (framed by Metaphor)"
+    teacher_mindset: "This grammar is your [Metaphor]. It fixes EVERYTHING."
     stages:
-      - "7. Introduce the Hero: [Target Language] is the [Metaphor]"
+      - "7. Introduce the Solution: [Target Language] is the [Metaphor]"
       - "8. Teach the form (Make it a game - V3 race for Present Perfect)"
       - "9. Show the 'good version' dialogue (same scenario, better outcome)"
       - "10. Practice + Produce (redo the original scenario WITH the Hero Tool)"
@@ -211,7 +221,7 @@ example_lesson_plan:
       time: 4
       interaction: T-Ss
     
-    - stage_name: Resolution - The Hero: Present Perfect
+    - stage_name: Resolution - The Solution: Present Perfect
       stage_number: 5
       aim: To introduce the target language
       procedure: |
@@ -258,7 +268,7 @@ example_lesson_plan:
     
     - stage_name: Resolution - Practice (Redo the application)
       stage_number: 8
-      aim: To produce with the Hero Tool
+      aim: To produce with the Solution Strategy (Metaphor)
       procedure: |
         - Same pairs. Same roles. But NOW use Present Perfect.
         - Give prompts on slide:
@@ -298,9 +308,9 @@ example_lesson_plan:
       time: 5
       interaction: T-Ss
 
-# Additional Middle-School Grammar Heroes (Quick Reference)
+# Additional Middle-School Grammar Solutions (Quick Reference)
 
-grammar_heroes:
+grammar_solutions:
   - target: "Comparatives (better, more interesting)"
     metaphor: "Upgrade Button"
     function: "Shows progress and improvement"

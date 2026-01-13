@@ -1,0 +1,10 @@
+{
+  "hosting": {
+    "public": "inputs/13 JAN WRITING PART 2/clean-deck",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}

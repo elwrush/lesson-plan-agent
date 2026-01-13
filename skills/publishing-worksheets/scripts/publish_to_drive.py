@@ -40,6 +40,8 @@ def authenticate():
                 return build('drive', 'v3', credentials=creds)
         except Exception as e:
             print(f"⚠ ADC found but failed to load: {e}")
+            print("  To fix, run:")
+            print('  gcloud auth application-default login --client-id-file=".credentials/credentials.json" --scopes="https://www.googleapis.com/auth/drive,https://www.googleapis.com/auth/documents,https://www.googleapis.com/auth/cloud-platform"')
 
     # Strategy 2: Legacy OAuth flow (fallback)
     print("⚠ ADC not configured, falling back to legacy OAuth...")

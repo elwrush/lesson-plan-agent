@@ -58,14 +58,9 @@ Ask the user:
 
 ### Step 5: Draft & Approval
 1. Develop all materials in **Markdown format** first for content clarity, OR directly in HTML if the design is complex.
-2. **Do NOT use the browser tool to automatically review the file.**
-3. Instead, run a command to open the file in the user's default browser window:
-   ```python
-   # Windows
-   import os
-   os.startfile("path/to/file.html")
-   ```
-4. **Wait for explicit approval** before proceeding to any next steps (like Lesson Plans).
+3. **Do NOT open the file in a browser or external viewer automatically.**
+4. Instead, provide a **clickable link** in the chat for the user to open in their IDE preview.
+5. **Wait for explicit approval** before proceeding to any next steps (like Lesson Plans).
 
 ### Step 6: Export & Format
 
@@ -75,12 +70,14 @@ Ask the user:
 3. Create a `.typ` template in `skills/generating-worksheets/templates/`.
 4. Compile using the Typst CLI (see `generating-worksheets/SKILL.md`).
 5. **FORBIDDEN**: Do not use HTML fragments or WeasyPrint for printable worksheets.
-6. Open the resulting PDF locally for user validation before publishing.
+6. **IDE PREVIEW**: Provide a clickable link in the chat for the user to review the PDF within the IDE. Do NOT use `Start-Process` or `os.startfile` on PDF files.
+7. Open the resulting PDF locally for user validation before publishing.
 
-7. **Publish**:
-   - Ask the user: "Do you want to push this file to Google Drive?"
-   - **Step 7a**: If YES, use the `publishing-worksheets` skill.
-   - **Step 7b**: If NO, stop.
+7.  **Publish & Archive**:
+    - Ask the user: "Do you want to publish this to Google Drive?"
+    - **Cloud Upload**: Use `publishing-worksheets` skill.
+    - **Local Sync**: Copy the PDF to `G:\My Drive\A CLASSES- ED - TERM 2\M24A - M3-3A`.
+    - *(Ensure naming convention is strictly followed)*
 
 #### For Lesson Plans (GDocs Output)
 - **File Location**: Save the final HTML in `inputs/[Topic]/`.

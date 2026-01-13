@@ -12,7 +12,10 @@ Uploads PDF worksheets to a specific Google Drive folder for distribution.
 
 ## Authentication (ADC)
 This skill uses **Application Default Credentials (ADC)** as the primary authentication method. 
-- Ensure you have run `gcloud auth application-default login` on your system.
+- Ensure you have run:
+  ```powershell
+  gcloud auth application-default login --client-id-file=".credentials/credentials.json" --scopes="https://www.googleapis.com/auth/drive,https://www.googleapis.com/auth/documents,https://www.googleapis.com/auth/cloud-platform"
+  ```
 - The script will automatically detect these credentials.
 - Fallback to legacy OAuth (`token.json`) is supported but discouraged.
 
@@ -33,7 +36,9 @@ python skills/publishing-worksheets/scripts/publish_to_drive.py --file <path_to_
 ### Workflow
 1.  **Generate** the worksheet PDF using the `generating-worksheets` skill.
 2.  **Validate** the PDF locally (open file to check branding/layout before upload).
-3.  **Publish** using this skill - the Google Drive link will appear in task artifacts.
+3.  **Archive Locally (Preferred)**: Copy the file to `G:\My Drive\A CLASSES- ED - TERM 2\M24A - M3-3A`.
+4.  **Cloud Publish**: Use the Python script if web-based distribution/sharing links are needed.
+    - Cloud Upload returns a Drive link in task artifacts.
 
 ### Arguments
 - `--file`: Path to the local file to upload.

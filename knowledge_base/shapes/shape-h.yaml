@@ -8,15 +8,23 @@ pedagogical_justification: |
   This shape applies the McKinsey SCR (Situation-Complication-Resolution) storytelling framework to receptive skills lessons FOR THAI MIDDLE SCHOOLERS. The lesson is structured as a narrative journey where students discover a functional problem (a communication breakdown) through the text and arrive at a skill/strategy that solves it.
   
   CRITICAL DISTINCTIONS from traditional reading/listening lessons:
-  1. The Complication must be a REAL PROBLEM the student cannot solve with current skills
-  2. The Resolution provides a "Hero Tool" (skill/strategy) that solves the problem  
-  3. For reading: Teach AMBIGUITY TOLERANCE (you don't need every word)
+  2. The Resolution provides a "Solution Strategy" (skill/tool) that solves the problem. A unifying METAPHOR must be selected (e.g., 'Hero Tool', 'Reverse Engineering', 'Cheat Code').
   4. For listening: Teach selective attention and prediction
   
   Each stage advances the story rather than just practicing skills. The slideshow provides Action Titles (claims) and the worksheet provides evidence.
 
 main_aim_format: |
   By the end of the lesson, learners will have discovered [insight/skill] through practicing [specific sub-skill] in the context of [topic].
+
+# Metaphor Selection Protocol (CRITICAL)
+
+metaphor_selection:
+  rule: "Do NOT default to 'Hero Tool'. Engage the user to select the best unifying concept."
+  procedure:
+    1. "Analyze the context (e.g., Gaming, Business, Travel)."
+    2. "Propose 2-3 relevant metaphors."
+    3. "Example: For a business lesson, 'Efficiency Upgrade' is better than 'Hero Tool'."
+    4. "Ask the user to confirm or suggest their own."
 
 # Thai L1 Scaffolds (MANDATORY for Thai Middle Schoolers)
 
@@ -86,8 +94,8 @@ stage_structure:
     key_question: "How does your current approach make you sound/look? (e.g., 'Like a robot,' 'Boring,' 'Confused')"
     
   resolution:
-    purpose: "Introduce the HERO TOOL that solves the problem"
-    teacher_mindset: "Here's the skill/strategy that fixes everything"
+    purpose: "Introduce the SOLUTION STRATEGY that solves the problem"
+    teacher_mindset: "Here's the skill/strategy that fixes everything. Frame it with the selected METAPHOR."
     stages:
       - "7. Apply the insight (use the new skill in realistic scenarios)"
       - "8. (Optional) Reflect on the transformation"
@@ -162,9 +170,9 @@ example_lesson_plan:
       time: 4
       interaction: Ss-Ss
     
-    - stage_name: Resolution - The Hero: Scanning
+    - stage_name: Resolution - The Solution: Scanning
       stage_number: 6
-      aim: To introduce the skill as a solution
+      aim: To introduce the skill as a solution (using selected metaphor)
       procedure: |
         - "Here's your Time-Saver: SCANNING."
         - Teach the strategy:
@@ -208,14 +216,14 @@ quick_scenarios:
   - context: "YouTube gaming tutorial"
     text_type: "Video transcript with fast speech"
     breakdown: "Can't keep up, accent unfamiliar"
-    hero_tool: "Listening for action verbs + visual cues"
+    solution_strategy: "Listening for action verbs + visual cues"
     
   - context: "LINE group chat from teacher"
     text_type: "Long message about homework"
     breakdown: "Too much text, need deadline fast"
-    hero_tool: "Scanning for date/time expressions"
+    solution_strategy: "Scanning for date/time expressions"
     
   - context: "Instagram comment thread in English"
     text_type: "Informal slang, abbreviations"
     breakdown: "Grammar is broken, can't translate"
-    hero_tool: "Reading for sentiment (emojis) + main opinion"
+    solution_strategy: "Reading for sentiment (emojis) + main opinion"
