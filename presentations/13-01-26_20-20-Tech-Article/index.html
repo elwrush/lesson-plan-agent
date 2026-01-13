@@ -98,8 +98,8 @@
 
         .model-text {
             font-style: normal;
-            font-size: 1.0em;
-            line-height: 1.6;
+            font-size: 0.9em;
+            line-height: 1.4;
             color: white;
             font-family: 'Courier New', monospace;
             /* Hacker vibe */
@@ -142,10 +142,55 @@
         .img-pedagogical {
             border: 4px solid white;
             box-shadow: 10px 10px 0px var(--cyan);
+            max-height: 500px;
+        }
+
+        .footer-branding {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.7em;
+            letter-spacing: 3px;
+            opacity: 0.6;
+            color: var(--cyan);
+            text-transform: uppercase;
+            font-weight: 600;
         }
 
         .r-stretch {
             object-fit: cover;
+        }
+
+        /* TIMER STYLES */
+        .timer-display {
+            font-family: 'Courier New', monospace;
+            font-size: 4em;
+            color: #fff;
+            text-shadow: 0 0 20px var(--cyan);
+            margin: 20px 0;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px 40px;
+            border: 2px solid var(--cyan);
+            display: inline-block;
+        }
+
+        .timer-btn {
+            background: var(--cyan);
+            color: black;
+            border: none;
+            padding: 15px 30px;
+            font-weight: 800;
+            font-size: 1.2em;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: 0.3s;
+        }
+
+        .timer-btn:hover {
+            background: white;
+            box-shadow: 0 0 20px var(--cyan);
         }
     </style>
 </head>
@@ -167,19 +212,19 @@
                     <!-- Right Column: Typography -->
                     <div>
                         <div class="stage-badge" style="font-size: 1.2em; margin-bottom: 30px;">LEVEL UP: WRITING</div>
-                        <h1 style="font-size: 5.5em; line-height: 0.9; margin-bottom: 30px;">
+                        <h1 style="font-size: 5.0em; line-height: 0.9; margin-bottom: 25px;">
                             THE 20/20<br>
                             <span style="color: var(--cyan); text-shadow: 0 0 30px rgba(0,242,255,0.5);">TECH
                                 WRITER</span>
                         </h1>
-                        <p style="margin-bottom: 40px;">
+                        <p style="margin-bottom: 35px;">
                             <span
-                                style="background: var(--maroon); color: white; padding: 10px 30px; font-weight: 800; font-size: 1.8em; text-transform: uppercase; transform: skew(-10deg); display: inline-block; box-shadow: 5px 5px 0px rgba(255,255,255,0.2);">
+                                style="background: var(--maroon); color: white; padding: 10px 30px; font-weight: 800; font-size: 1.6em; text-transform: uppercase; transform: skew(-10deg); display: inline-block; box-shadow: 5px 5px 0px rgba(255,255,255,0.2);">
                                 CRACK THE CODE
                             </span>
                         </p>
                         <p
-                            style="opacity: 0.7; font-size: 0.9em; letter-spacing: 3px; border-left: 3px solid var(--cyan); padding-left: 15px;">
+                            style="opacity: 0.8; font-size: 1.0em; letter-spacing: 3px; border-left: 4px solid var(--cyan); padding-left: 20px;">
                             BELL LANGUAGE CENTRE | 2026
                         </p>
                     </div>
@@ -195,14 +240,15 @@
             <section data-background-image="images/cyber_bg.png" data-background-opacity="0.1">
                 <div class="stage-badge">WARM UP</div>
                 <h2>The Office Interruption</h2>
-                <div style="display: grid; grid-template-columns: 1fr 1.2fr; gap: 30px; align-items: start;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;">
                     <div class="glass-box" style="padding: 20px;">
-                        <p style="font-size: 0.8em; line-height: 1.4; font-weight: bold; margin: 0;">"A live world news
+                        <p style="font-size: 0.85em; line-height: 1.4; font-weight: bold; margin: 0;">"A live world news
                             interview.
                             A serious topic.</p>
-                        <p style="font-size: 0.8em; line-height: 1.4; color: var(--cyan); margin-top: 10px;">And then...
+                        <p style="font-size: 0.85em; line-height: 1.4; color: var(--cyan); margin-top: 10px;">And
+                            then...
                             the chaos begins."</p>
-                        <div class="teacher-tip" style="margin-top: 15px; padding: 10px; font-size: 0.8em;">
+                        <div class="teacher-tip" style="margin-top: 15px; padding: 12px; font-size: 0.8em;">
                             <strong>WHY IT WENT VIRAL:</strong> It's all about the
                             <strong>CLASH</strong>—the serious suit vs. the dancing kid. content writers call this
                             "CONTRAST."
@@ -210,12 +256,13 @@
                     </div>
                     <div>
                         <div class="r-stack">
-                            <iframe class="r-stretch" data-src="https://www.youtube.com/embed/Mh4f9AYRCZY" width="1600"
-                                height="900" frameborder="0" allow="encrypted-media" allowfullscreen>
+                            <iframe class="r-stretch" data-src="https://www.youtube.com/embed/Mh4f9AYRCZY" width="1000"
+                                height="600" frameborder="0" allow="encrypted-media" allowfullscreen>
                             </iframe>
                         </div>
                     </div>
                 </div>
+                <div class="footer-branding">BELL LANGUAGE CENTRE</div>
             </section>
 
             <!-- PHASE 2 SEGUE -->
@@ -228,17 +275,18 @@
             <section data-background-image="images/cyber_bg.png" data-background-opacity="0.1">
                 <div class="stage-badge">TASK 1: ANALYSIS</div>
                 <h2>The Challenge</h2>
-                <div class="glass-box">
-                    <h3 style="color: yellow; margin: 10px 0; font-size: 2em;">WHAT MAKES YOU LAUGH?</h3>
-                    <p style="font-size: 1.4em; line-height: 1.5; color: white;">Write an article telling us
+                <div class="glass-box" style="padding: 25px; max-width: 900px; margin: 0 auto;">
+                    <h3 style="color: yellow; margin: 5px 0; font-size: 1.6em;">WHAT MAKES YOU LAUGH?</h3>
+                    <p style="font-size: 1.1em; line-height: 1.4; color: white;">Write an article telling us
                         <strong>what makes you laugh and why</strong>. Is it <strong>important for people to
                             laugh</strong>?
                     </p>
-                    <div class="teacher-tip">
+                    <div class="teacher-tip" style="padding: 12px; font-size: 0.9em; margin-top: 10px;">
                         <strong>PRO TIP:</strong> See those 3 bold questions? If you miss one, it's <span
                             style="color: red;">GAME OVER</span> for your score.
                     </div>
                 </div>
+                <div class="footer-branding">BELL LANGUAGE CENTRE</div>
             </section>
 
             <!-- THE MODEL -->
@@ -294,8 +342,9 @@
                                 students use them for..."</p>
                         </div>
                     </div>
-                    <img src="images/structure.png" class="img-pedagogical">
+                    <img src="images/structure.png" class="img-pedagogical" style="max-height: 450px;">
                 </div>
+                <div class="footer-branding">BELL LANGUAGE CENTRE</div>
             </section>
 
             <!-- PHASE 4 SEGUE -->
@@ -308,21 +357,30 @@
             <section data-background-image="images/cyber_bg.png" data-background-opacity="0.1">
                 <div class="stage-badge">TASK 3: TOOLBOX</div>
                 <h2>Vocabulary Weapons</h2>
-                <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; align-items: start;">
-                    <div class="glass-box">
-                        <ul style="font-size: 1.2em; line-height: 2.2; list-style: none; padding: 0;">
-                            <li><span style="color: var(--cyan);">PREFERENCE:</span> <br>"The app I use
-                                most frequently is..."</li>
-                            <li><span style="color: var(--cyan);">OPINION:</span> <br>"In my view,
-                                computers are essential because..."</li>
-                            <li><span style="color: var(--cyan);">PROOF:</span> <br>"Furthermore, they
-                                allow us to..."</li>
-                            <li><span style="color: var(--cyan);">POSSIBILITY:</span> <br>"It might
-                                make us..."</li>
-                        </ul>
+                <div class="glass-box" style="padding: 40px; max-width: 1000px; margin: 0 auto;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 60px; text-align: left;">
+                        <div>
+                            <p style="color: var(--cyan); font-weight: 800; font-size: 1.2em; margin-bottom: 5px;">
+                                PREFERENCE:</p>
+                            <p style="font-size: 1.1em; margin-bottom: 30px;">"The app I use most frequently is..."</p>
+
+                            <p style="color: var(--cyan); font-weight: 800; font-size: 1.2em; margin-bottom: 5px;">
+                                OPINION:</p>
+                            <p style="font-size: 1.1em;">"In my view, computers are essential because..."</p>
+                        </div>
+                        <div>
+                            <p style="color: var(--cyan); font-weight: 800; font-size: 1.2em; margin-bottom: 5px;">
+                                PROOF:
+                            </p>
+                            <p style="font-size: 1.1em; margin-bottom: 30px;">"Furthermore, they allow us to..."</p>
+
+                            <p style="color: var(--cyan); font-weight: 800; font-size: 1.2em; margin-bottom: 5px;">
+                                POSSIBILITY:</p>
+                            <p style="font-size: 1.1em;">"It might make us..."</p>
+                        </div>
                     </div>
-                    <img src="images/toolkit.png" class="img-pedagogical">
                 </div>
+                <div class="footer-branding">BELL LANGUAGE CENTRE</div>
             </section>
 
             <!-- PHASE 5 SEGUE -->
@@ -334,27 +392,28 @@
             <!-- FINAL MISSION -->
             <section data-background-color="var(--maroon)">
                 <div class="stage-badge" style="background: black; color: white;">TASK 3: WRITING</div>
-                <div style="display: grid; grid-template-columns: 1fr 1.2fr; gap: 40px; align-items: center;">
+                <div style="display: grid; grid-template-columns: 1fr 1.2fr; gap: 30px; align-items: center;">
                     <img src="images/mission.png" class="img-pedagogical"
-                        style="border-color: black; box-shadow: none;">
-                    <div class="glass-box" style="background: rgba(0,0,0,0.5); border-color: black; box-shadow: none;">
-                        <p style="text-transform: uppercase; color: var(--cyan); font-weight: 800; font-size: 1.2em;">
+                        style="border-color: black; box-shadow: none; max-height: 450px;">
+                    <div class="glass-box"
+                        style="background: rgba(0,0,0,0.5); border-color: black; box-shadow: none; padding: 20px;">
+                        <p
+                            style="text-transform: uppercase; color: var(--cyan); font-weight: 800; font-size: 1.0em; margin: 0;">
                             Articles wanted!</p>
-                        <h3 style="color: white; margin: 10px 0; font-size: 2.5em;">TECHNOLOGY AND YOU</h3>
-                        <p style="font-size: 1.2em; line-height: 1.4; color: white;">Write about <strong>which
+                        <h3 style="color: white; margin: 5px 0; font-size: 2.0em;">TECHNOLOGY AND YOU</h3>
+                        <p style="font-size: 1.0em; line-height: 1.4; color: white;">Write about <strong>which
                                 website/app
                                 you like most</strong> and how often you use it. Do you think it is <strong>important
                                 for teenagers to have a computer</strong>? Why?</p>
 
-                        <div
-                            style="margin-top: 40px; border: 4px solid white; padding: 25px; text-align: center; border-radius: 4px; background: var(--maroon);">
-                            <h2
-                                style="color: white; margin: 0; font-size: 2.5em; letter-spacing: 6px; transform: skew(-5deg);">
-                                START WRITING
-                            </h2>
+                        <div style="margin-top: 20px;">
+                            <div id="countdown" class="timer-display">20:00</div>
+                            <br>
+                            <button id="timer-btn" class="timer-btn" onclick="toggleTimer()">START MISSION</button>
                         </div>
                     </div>
                 </div>
+                <div class="footer-branding" style="color: white; opacity: 0.4;">BELL LANGUAGE CENTRE</div>
             </section>
 
         </div>
@@ -373,13 +432,49 @@
             center: true,
             transition: 'convex',
             backgroundTransition: 'convex',
-            width: 1920,
-            height: 1080,
-            margin: 0.04,
+            width: 1280,
+            height: 720,
+            margin: 0.08,
             minScale: 0.2,
             maxScale: 2.0,
             autoPlayMedia: true
         });
+
+        // COUNTDOWN TIMER LOGIC
+        let timeLeft = 20 * 60;
+        let timerInterval;
+        let isRunning = false;
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            document.getElementById('countdown').textContent =
+                `${minutes}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function toggleTimer() {
+            const btn = document.getElementById('timer-btn');
+            if (isRunning) {
+                clearInterval(timerInterval);
+                btn.textContent = 'RESUME';
+                isRunning = false;
+            } else {
+                isRunning = true;
+                btn.textContent = 'PAUSE';
+                timerInterval = setInterval(() => {
+                    if (timeLeft > 0) {
+                        timeLeft--;
+                        updateTimerDisplay();
+                    } else {
+                        clearInterval(timerInterval);
+                        document.getElementById('countdown').textContent = "00:00";
+                        document.getElementById('countdown').style.color = "red";
+                        btn.textContent = 'MISSION COMPLETE';
+                        btn.disabled = true;
+                    }
+                }, 1000);
+            }
+        }
     </script>
 </body>
 
