@@ -78,27 +78,26 @@ description: >
 
 | Principle | Implementation |
 |-----------|----------------|
-| **Expert Pedagogy** | Frame material using analogies/metaphors; don't just copy worksheets |
+| **McKinsey Logic** | Use **Action Titles** (Dots) as headers; the slide body (Dashes) must prove the title |
+| **Similes over Metaphors** | Use professional similes to explain tasks; avoid 'hokey' or labored metaphors |
+| **Logic Checks** | Verify **Horizontal Flow** (Story in titles) and **Vertical Flow** (Proof in body) |
 | **5-7 lines max** | Limit bullet lists to 6 items |
 | **One idea per slide** | Generate multiple slides for complex topics |
-| **High contrast** | Use Bell maroon/white palette |
+| **High contrast** | Use Bell maroon/Oxford blue palette |
 | **Large fonts** | Body 24pt+, titles 44pt+ |
-| **Visuals over text** | Include images where possible |
 | **30-50% white space** | Don't overcrowd slides |
-| **Left-align text** | Avoid centering for body text |
-| **Two font families max** | Use consistent typography |
 | **Accessibility** | Test contrast ratios (WCAG 4.5:1) |
 
-### Pedagogical Framing (Critical)
+### McKinsey Pedagogical Framing (Critical)
 
-Do NOT slavishly and mechanistically reproduce the structure of worksheets or lesson plans in slide format. Instead:
-- **Frame and Interpret**: Present material as an expert ESL teacher would.
-- **Guidance**: Use analogies, metaphors, similes, and models to guide students on HOW to do tasks properly.
-- **Scaffolding**: Provide conceptual "mental models" rather than just lists of instructions.
-
-Example:
-- *Mechanistic*: "Slide 5: Fill in your worksheet now."
-- *Expert*: "Slide 5: **Be the Architect**. Before a house is built, we need a sketch. Sketch your talk on your planning sheet now."
+Do NOT slavishly and mechanistically reproduce the structure of worksheets. Avoid "Gamer", "Hacker", or "Hero" metaphors unless they are extremely light and requested. Instead:
+- **Frame and Interpret**: Present material as an expert strategist would.
+- **Action Titles (Dots)**: Every slide title must be an **assertion** or a **step in the story**, not just a label.
+- **Guidance through Similes**: Use similes to guide students on HOW to do tasks properly.
+  - *Example (Simile)*: "Analyzing this text is like using a magnifying glass—look for the small, hidden clues."
+- **Avoid Hokey Framing**: 
+  - *Anti-pattern*: "Slide 5: **System Architecture**. Write your code now."
+  - *Good pattern*: "Slide 5: **The Strategic Plan**. Like a master architect, sketch your argument before you build."
 
 ## Slide Content Rules
 

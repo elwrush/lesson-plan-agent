@@ -53,6 +53,7 @@ Ask the user:
 2. Determine required content types:
    - 📖 Reading texts
    - 🎧 Audio scripts (for listening)
+   - 🎬 **Multimedia Assets**: Identify YouTube links or record/locate `.m4a`/`.mp3` audio files.
    - 🖼️ Images (use `generate_image` tool ONLY for content illustrations, not layout elements)
 3. Collaborate iteratively to develop the content
 

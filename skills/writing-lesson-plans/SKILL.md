@@ -113,16 +113,17 @@ Wait for user approval before proceeding.
 > **Do NOT** create 6+ granular stages for each worksheet section. Combine related activities into coherent stages that match the model.
 
 > [!IMPORTANT]
-> ## Interpretative Pedagogy Principle
+> ## McKinsey Storylining & Strategic Pedagogy
 > 
-> Do NOT slavishly and mechanistically reproduce the structure of worksheets in lesson plan format. Instead:
-> - **Frame and Interpret**: Present material as an expert ESL teacher would.
-> - **Guidance**: Use analogies, metaphors, similes, and models to guide students on HOW to do tasks properly.
-> - **Scaffolding**: Provide conceptual "mental models" rather than just lists of instructions.
+> Do NOT slavishly and mechanistically reproduce the structure of worksheets. Also, **AVOID labored, hokey, or intrusive metaphors** (e.g., Turning everything into "Coding", "Heroes", or "Mechanics").
 > 
-> Example:
-> - *Mechanistic*: "Step 3: Fill in the worksheet now."
-> - *Interpretative*: "Step 3: **Detective Work**. Like detectives searching for clues, scan the text for ONLY the information you need. You don't need to understand every word—just find the answer to solve the case."
+> Instead:
+> - **McKinsey Logic**: Use the **SCR Framework** (Situation, Complication, Resolution) to structure the lesson flow.
+> - **Dot-Dash Strategy**: Organize key points as **Dots** (Headlines) and evidence as **Dashes** (Details).
+> - **Similes over Metaphors**: When explain pedagogy, use **professional similes** rather than deep metaphors. 
+>   - *Example (Simile)*: "Like an architect sketching a plan, we must outline our ideas before writing."
+>   - *Avoid (Labored Metaphor)*: "You are the Programmer, and Paragraph 2 is your System Architecture."
+> - **Strategic Clarity**: Frame material as an expert consultant would—focused on *influence* and *clarity*.
 
 ### Step 7: Write Lesson Plan (HTML for GDocs)
 
@@ -241,21 +242,11 @@ DD-MM-YYYY-LP [CEFR]-[topic]-[skill or system]-[Shape]
 </html>
 ```
 
-#### Stage Headers Guide
+#### McKinsey Logic Checks (MANDATORY)
 
-Stage headers must be informed by the lesson shape model. **Colored rows** should span all 5 columns and indicate major stages:
-
-**Shape E (Receptive Skills) example stages:**
-- STAGE ONE: Build Interest (Lead-in)
-- STAGE TWO: Pre-teach Vocabulary
-- STAGE THREE: Reading/Listening for Gist (Global Reading)
-- STAGE FOUR: Reading/Listening for Detail (Close Reading)
-- STAGE FIVE: Post-reading/listening Discussion
-
-**Important Notes:**
-1. Pre-teach Vocabulary appears **in the lesson table**, NOT in the header metadata
-2. Each major stage gets a colored header row
-3. Within each stage, individual steps are numbered sequentially (1, 2, 3...)
+Before finalizing, run these two tests on your lesson/slides structure:
+1. **Horizontal Flow (The Story)**: Can you understand the lesson's narrative path by reading ONLY the stage headers (or slide titles)? They should form a cohesive SCR story.
+2. **Vertical Flow (The Proof)**: Does every activity (Dash) explicitly support the lesson objective or Stage Aim (Dot)? If an activity is just "fun" but doesn't prove the goal, it is "waste" and should be refined.
 
 #### Formatting Guidelines
 
@@ -344,8 +335,9 @@ Using your phone during class is not **acceptable**.
 
 Once the lesson plan is approved:
 1.  **Push to GDocs**: Use the `push_to_gdocs` skill (via ADC) to create the cloud version.
-2.  **Save Locally**: Copy the final HTML file to the local Google Drive path:
-    `G:\My Drive\A CLASSES- ED - TERM 2\M24A - M3-3A`
+2.  **Save Locally**: Copy the final HTML file to the local Google Drive path based on lesson type:
+    - **Intensive**: `G:\My Drive\A CLASSES- ED - TERM 2\INTENSIVE - SHORTCUT FROM HERE`
+    - **Regular Bell**: `G:\My Drive\A CLASSES- ED - TERM 2\M24A - M3-3A`
     *(Naming: `DD-MM-YYYY-LP-[CEFR]-[Topic].html`)*
 
 ---

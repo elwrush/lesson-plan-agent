@@ -20,15 +20,15 @@ pedagogical_justification: |
 main_aim_format: |
   By the end of the lesson, learners will be better able to [write/speak] [output type] using the SCR structure in the context of [topic].
 
-# Metaphor Selection Protocol (CRITICAL)
+# Strategic Theme Selection (CRITICAL)
 
-metaphor_selection:
-  rule: "Do NOT default to a generic frame. Engage the user to select the best unifying METAPHOR or CONCEPT for the lesson."
+theme_selection:
+  rule: "Focus on STRATEGIC CLARITY. Avoid 'hokey' or labored metaphors (e.g. Gamer/Hacker). Use professionally framed concepts and similes."
   procedure:
     1. "Analyze the context (e.g., Tech, Travel, Business)."
-    2. "Propose 2-3 relevant metaphors."
-    3. "Example: For a tech lesson, 'Reverse Engineering' or 'Coding' is appropriate. For travel, 'The Guide' or 'The Scout'."
-    4. "Ask the user to confirm or suggest their own."
+    2. "Propose a Strategic Overriding Theme (e.g., 'The Precision Architect', 'The Strategic Consultant')."
+    3. "Develop 2-3 similes that explain the tasks within that theme."
+    4. "Ask the user to confirm."
 
 # Thai L1 Challenge: Kreng Jai (เกรงใจ)
 
