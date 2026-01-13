@@ -66,7 +66,7 @@ If pre-existing:
 2. Ask user to select one
 3. Note: Actual file scanning uses a separate multimodal skill
 
-### Step 4: Clarify Materials
+### Step 5: Clarify Materials
 
 If materials are unclear, ask specific questions:
 - What is the main topic/context?
@@ -74,14 +74,14 @@ If materials are unclear, ask specific questions:
 - Are there audio/video components?
 - Are there exercises with answer keys?
 
-### Step 5: Special Requests and Notes
+### Step 6: Special Requests and Notes
 
 Before generating the lesson plan, ask:
 > "Do you have any special requests or notes for this lesson? (e.g., include a YouTube video, emphasize particular exercises, specific activities, time constraints, student needs)"
 
 Wait for user response and incorporate their requests into the lesson plan.
 
-### Step 6: Suggest Objective + Marker Sentences
+### Step 7: Suggest Objective + Marker Sentences
 
 Based on collected information:
 
@@ -125,7 +125,7 @@ Wait for user approval before proceeding.
 >   - *Avoid (Labored Metaphor)*: "You are the Programmer, and Paragraph 2 is your System Architecture."
 > - **Strategic Clarity**: Frame material as an expert consultant would—focused on *influence* and *clarity*.
 
-### Step 7: Write Lesson Plan (HTML for GDocs)
+### Step 8: Write Lesson Plan (HTML for GDocs)
 
 Generate the lesson plan **directly in HTML format** for native Google Docs editing. 
 
@@ -163,13 +163,13 @@ DD-MM-YYYY-LP [CEFR]-[topic]-[skill or system]-[Shape]
     <!-- Lesson Metadata Header (1.15 line spacing) -->
     <div style="line-height: 1.15;">
         <h1 style="font-size: 16pt; color: #A62D26; border-bottom: 3pt solid #A62D26; padding-bottom: 5pt;">[Unit Title]</h1>
-        <p><strong>Objective:</strong> [Objective from Step 6]</p>
-        <p><strong>Date:</strong> [DD-MM-YY format]</p>
+        <p><strong>Objective:</strong> [Objective from Step 7]</p>
+        <p><strong>Date:</strong> [DD-MM-YYYY format]</p>
         <p><strong>Systems/Skills:</strong> [From Step 2]</p>
         <p><strong>CEFR Level:</strong> [From Step 2]</p>
         <p><strong>Teacher:</strong> [From Step 2]</p>
         <p><strong>Duration:</strong> [From Step 2]</p>
-        <p><strong>Materials:</strong> [Meaningful description of resources, e.g., "Worksheet on comprehending a reading and developing ideas about what it means to be polite in a given culture" OR "Coursebook XYZ, pages 45-48"]</p>
+        <p><strong>Materials:</strong> [Meaningful description of resources]</p>
         <p><strong>Assessment:</strong> [From Step 2]</p>
     </div>
     
@@ -331,7 +331,7 @@ Using your phone during class is not **acceptable**.
 การใช้โทรศัพท์ในระหว่างเรียนไม่**ยอมรับได้**
 ```
 
-### Step 8: Export & Archiving
+### Step 9: Export & Archiving
 
 Once the lesson plan is approved:
 1.  **Push to GDocs**: Use the `push_to_gdocs` skill (via ADC) to create the cloud version.

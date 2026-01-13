@@ -71,7 +71,7 @@ Reveal.initialize({
 });
 ```
 
-### 🎬 Multimedia Rule
+### �🎬 Multimedia Rule
 Classroom connectivity can be inconsistent.
 - **Local Assets**: Use local images inside the `images/` folder where possible.
 - **YouTube Embeds**: Use `r-stretch` to ensure the video dominates the room.
