@@ -11,19 +11,22 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/theme/black.min.css">
 
-    <!-- Theme used for syntax highlighted code -->
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/highlight/monokai.min.css">
+    <!-- Google Fonts: Outfit -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            --r-main-color: #f8fafc;
-            --r-heading-color: #fff;
-            --r-link-color: #00f2ff;
-            --r-selection-background-color: #8b1538;
-            --r-background-color: #0f172a;
-            --maroon: #8b1538;
-            --cyber-blue: #00f2ff;
+            --maroon: #8B1538;
+            --cyan: #00F2FF;
+            --navy: #050811;
+            --slate: #1e293b;
+            --glass: rgba(15, 23, 42, 0.7);
+            --neon-border: rgba(0, 242, 255, 0.3);
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif !important;
+            background-color: var(--navy);
         }
 
         .reveal .slides {
@@ -33,69 +36,116 @@
         .reveal h1,
         .reveal h2,
         .reveal h3 {
+            font-family: 'Outfit', sans-serif !important;
             text-transform: uppercase;
-            text-shadow: 0 0 10px rgba(139, 21, 56, 0.7);
+            letter-spacing: 4px;
+            font-weight: 800;
         }
 
         .reveal h1 {
-            color: var(--maroon);
-            border-left: 5px solid var(--maroon);
-            padding-left: 20px;
+            color: white;
+            text-shadow: 0 0 20px rgba(139, 21, 56, 0.5);
+            border-left: 12px solid var(--maroon);
+            padding-left: 30px;
         }
 
-        .glow-maroon {
-            color: var(--maroon);
-            text-shadow: 0 0 15px var(--maroon);
+        .reveal h2 {
+            color: var(--cyan);
+            font-size: 2.2em;
+            margin-bottom: 40px;
         }
 
-        .glow-blue {
-            color: var(--cyber-blue);
-            text-shadow: 0 0 15px var(--cyber-blue);
+        /* Glassmorphism Box */
+        .glass-box {
+            background: var(--glass);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--neon-border);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            margin-top: 20px;
+            position: relative;
+            overflow: hidden;
         }
 
-        .code-box {
-            background: rgba(15, 23, 42, 0.9);
-            border: 2px solid var(--maroon);
-            padding: 20px;
-            border-radius: 8px;
-            font-family: 'Courier New', Courier, monospace;
-            box-shadow: 0 0 20px rgba(139, 21, 56, 0.3);
-        }
-
-        .glitch-text {
-            animation: glitch 1s linear infinite;
-        }
-
-        @keyframes glitch {
-
-            2%,
-            64% {
-                transform: translate(2px, 0) skew(0deg);
-            }
-
-            4%,
-            60% {
-                transform: translate(-2px, 0) skew(0deg);
-            }
-
-            62% {
-                transform: translate(0, 0) skew(5deg);
-            }
+        .glass-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--maroon);
         }
 
         .stage-badge {
             background: var(--maroon);
             color: white;
-            padding: 5px 15px;
-            font-size: 0.8em;
-            margin-bottom: 20px;
+            padding: 8px 25px;
+            font-size: 0.6em;
+            font-weight: 600;
+            letter-spacing: 2px;
+            margin-bottom: 40px;
             display: inline-block;
+            border-radius: 2px;
+            box-shadow: 0 0 15px rgba(139, 21, 56, 0.4);
         }
 
-        .background-dim {
-            background-color: rgba(0, 0, 0, 0.6);
+        .q-highlight {
+            color: var(--cyan);
+            font-weight: 600;
+            text-shadow: 0 0 10px rgba(0, 242, 255, 0.3);
+        }
+
+        .model-text {
+            font-style: italic;
+            font-size: 0.9em;
+            line-height: 1.5;
+            color: #cbd5e1;
+        }
+
+        .segue-title {
+            font-size: 4em !important;
+            text-align: center;
+            width: 100%;
+            display: block;
+            margin-bottom: 0 !important;
+            color: white !important;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+        }
+
+        .segue-subtitle {
+            text-align: center;
+            color: var(--cyan);
+            font-style: italic;
+            font-size: 1.6em;
+            margin-top: 20px;
+        }
+
+        .teacher-tip {
+            border-left: 4px solid var(--cyan);
             padding: 20px;
-            border-radius: 10px;
+            margin-top: 30px;
+            background: rgba(0, 242, 255, 0.05);
+            font-size: 0.85em;
+            color: #94a3b8;
+        }
+
+        .teacher-tip strong {
+            color: var(--cyan);
+            text-transform: uppercase;
+            font-size: 0.9em;
+        }
+
+        .img-pedagogical {
+            border-radius: 8px;
+            border: 2px solid var(--neon-border);
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .r-stretch {
+            object-fit: cover;
         }
     </style>
 </head>
@@ -103,156 +153,197 @@
 <body>
     <div class="reveal">
         <div class="slides">
+
             <!-- TITLE SLIDE -->
-            <section data-background-image="images/title_hud.png" data-background-opacity="0.3">
-                <div class="stage-badge">SESSION START</div>
-                <h1 class="glow-maroon">THE ART OF STRUCTURE</h1>
-                <h3 class="glow-blue">The 20/20 Tech Article</h3>
-                <p>B1 PET Writing | Intensive Course</p>
-                <p style="font-size: 0.6em; margin-top: 50px; color: #64748b;">[PRESS SPACE TO START]</p>
-            </section>
-
-            <!-- STAGE 1: SPAGHETTI CODE -->
-            <section data-background-image="images/spaghetti.png" data-background-opacity="0.2">
-                <div class="stage-badge">STAGE 1: THE GLITCH</div>
-                <h2 class="glow-maroon">The 'Messy Room' Problem</h2>
-                <div class="code-box">
-                    <p style="color: #ef4444;">// UNSTRUCTURED DRAFT</p>
-                    <p>"I use AI for homework. It is fast. It helps me. Sometimes it is wrong. But I like it."</p>
+            <section data-background-image="images/cyber_bg.png" data-background-opacity="0.4">
+                <div class="stage-badge">B1 INTENSIVE MASTERCLASS</div>
+                <h1 style="font-size: 4em; line-height: 0.9;">THE 20/20<br>TECH WRITER</h1>
+                <p style="font-size: 1.8em; color: var(--cyan); font-weight: 600; margin-top: 20px;">Cracking the
+                    Cambridge Article Code</p>
+                <div style="margin-top: 80px; display: flex; align-items: center; gap: 30px;">
+                    <div style="height: 2px; width: 100px; background: var(--maroon);"></div>
+                    <p style="opacity: 0.6; font-size: 0.8em; letter-spacing: 2px;">BELL LANGUAGE CENTRE | 2026</p>
                 </div>
-                <ul style="margin-top: 30px;">
-                    <li class="fragment">Estimated Score: <span class="glow-maroon">3/5</span></li>
-                    <li class="fragment">Diagnosis: <span class="glow-blue">Spaghetti Thinking</span></li>
-                    <li class="fragment">Problem: Like cooking without a recipe - messy and confusing.</li>
-                </ul>
             </section>
 
-            <!-- SEGUE 1: THE BRIDGE TO ANALYSIS -->
-            <section data-background-color="#0f172a">
-                <h3 class="glow-maroon">YOU CAN'T BUILD ON SAND</h3>
-                <p>We cannot build a great essay on a weak foundation.</p>
-                <p class="fragment" style="color: #00f2ff; margin-top: 30px;">
-                    <span style="border: 1px solid #00f2ff; padding: 10px;">ACTION REQUIRED:</span><br><br>
-                    Look at a high-performance model (20/20) to see how it's built.
-                </p>
+            <!-- PHASE 1 SEGUE -->
+            <section data-background-image="images/cyber_bg.png">
+                <h1 class="segue-title">PHASE 1:<br>THE HOOK</h1>
+                <p class="segue-subtitle">What makes a viral moment tick?</p>
             </section>
 
-            <!-- STAGE 2: REVERSE ENGINEERING -->
+            <!-- LEAD-IN: BBC DAD -->
             <section>
-                <div class="stage-badge">STAGE 2: REVERSE ENGINEERING</div>
-                <h2>Analyzing a Masterpiece</h2>
-                <p>This article scored <span class="glow-blue">20/20</span>. Let's look at the blueprint:</p>
-                <div class="code-box" style="font-size: 0.7em;">
-                    <p><span class="glow-maroon">[SITU]</span> I love to watch comedies a lot because it makes me
-                        laugh...</p>
-                    <p class="fragment"><span class="glow-maroon">[COMP]</span> In the show, famous actors must overcome
-                        challenging quests, such as...</p>
-                    <p class="fragment"><span class="glow-maroon">[RESO]</span> Laughing can help us release stress...
-                        It may also make us...</p>
-                </div>
-            </section>
-
-            <!-- SEGUE 2: EXTRACTION COMPLETE -->
-            <section data-background-color="#0f172a">
-                <h3 class="glow-blue">ANALYSIS COMPLETE</h3>
-                <p>We have identified the best parts.</p>
-                <div class="fragment" style="margin-top: 40px; border: 2px dashed var(--maroon); padding: 20px;">
-                    <p style="color: var(--maroon);">GATHERING THE TOOLS...</p>
-                    <p style="font-family: monospace;">> CHECKING THE BLUEPRINT...</p>
-                </div>
-            </section>
-
-            <!-- STAGE 3: CODE SNIPPETS -->
-            <section data-background-image="images/blueprint.png" data-background-opacity="0.2">
-                <div class="stage-badge">STAGE 3: TOOLS</div>
-                <h2>Tools for your Kit</h2>
-                <p>Use these to strengthen your writing:</p>
-                <div class="code-box">
-                    <p class="fragment glow-blue">TOOL 1: The 'Best-Of' Intro</p>
-                    <p class="fragment" style="margin-bottom: 20px;">"The [App] I use the most is..."</p>
-
-                    <p class="fragment glow-blue">TOOL 2: The 'Challenge' Detail</p>
-                    <p class="fragment" style="margin-bottom: 20px;">"Users must overcome complex issues, such as..."
-                    </p>
-
-                    <p class="fragment glow-blue">TOOL 3: The 'Two-Sided' View</p>
-                    <p class="fragment">"It allows us to X, but it may also make us Y too!"</p>
-                </div>
-            </section>
-
-            <!-- SEGUE 3: READY TO BUILD -->
-            <section data-background-color="#0f172a">
-                <h3 class="glow-maroon">TOOLS READY</h3>
-                <p>You now have the necessary components.</p>
-                <div class="fragment" style="margin-top: 30px;">
-                    <p style="color: var(--cyber-blue);">STARTING THE BLUEPRINT...</p>
-                    <p style="font-size: 0.7em; color: #64748b;">(Remember: Don't start building without a plan.)</p>
-                </div>
-            </section>
-
-            <!-- STAGE 4: SYSTEM ARCHITECTURE -->
-            <section>
-                <div class="stage-badge">STAGE 4: THE BLUEPRINT</div>
-                <h2>Dot-Dash Planning</h2>
-                <p>Draft your Complication/Challenge block:</p>
-                <div style="display: flex; gap: 40px;">
-                    <div style="flex: 1;">
-                        <h4 class="glow-blue">DOT: Main Point</h4>
-                        <p>"AI is powerful but risky."</p>
+                <div class="stage-badge">01. STARTER</div>
+                <h2>The Office Interruption</h2>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start;">
+                    <div class="glass-box">
+                        <p style="font-size: 1.1em; line-height: 1.6;">"A live world news interview. A serious topic.
+                            And then... the children arrive."</p>
+                        <div class="teacher-tip">
+                            <strong>EXPERT NOTE:</strong> This video went viral because of the
+                            <strong>contrast</strong>—the formal world vs. the chaotic reality of home.
+                        </div>
                     </div>
-                    <div style="flex: 1;" class="fragment">
-                        <h4 class="glow-maroon">DASH: Details</h4>
-                        <ul>
-                            <li>Fast essay generation</li>
-                            <li>Facts can be hallucinations</li>
+                    <div>
+                        <a href="https://www.youtube.com/watch?v=Mh4f9AYRCZY" target="_blank">
+                            <img src="https://img.youtube.com/vi/Mh4f9AYRCZY/maxresdefault.jpg" class="img-pedagogical">
+                            <p style="text-align: center; font-size: 0.7em; color: var(--cyan); margin-top: 10px;">[
+                                CLICK TO PLAY VIDEO ]</p>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PHASE 2 SEGUE -->
+            <section data-background-image="images/cyber_bg.png" data-background-color="var(--navy)">
+                <h1 class="segue-title">PHASE 2:<br>DECODING</h1>
+                <p class="segue-subtitle">Peeking behind the curtain of a perfect score.</p>
+            </section>
+
+            <!-- THE PROMPT -->
+            <section>
+                <div class="stage-badge">02. ANALYSIS</div>
+                <h2>The Challenge</h2>
+                <div class="glass-box">
+                    <p style="text-transform: uppercase; color: var(--maroon); font-weight: 800; font-size: 0.8em;">
+                        Articles wanted!</p>
+                    <h3 style="color: white; margin: 10px 0;">WHAT MAKES YOU LAUGH?</h3>
+                    <p style="font-size: 1.2em; line-height: 1.5; color: #e2e8f0;">Write an article telling us
+                        <strong>what makes you laugh and why</strong>. Is it <strong>important for people to
+                            laugh</strong>?
+                    </p>
+                    <div class="teacher-tip">
+                        <strong>TEACHER'S TIP:</strong> Underline the 3 questions. If you miss one, you fail the "Task
+                        Achievement" grade. Simple as that.
+                    </div>
+                </div>
+            </section>
+
+            <!-- THE MODEL -->
+            <section>
+                <div class="stage-badge">02. ANALYSIS</div>
+                <h2>The Perfectionist (20/20)</h2>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                    <div class="glass-box model-text" style="font-size: 0.8em;">
+                        <p><span class="q-highlight">[Q1]</span> "I love comedies... The comedy I love most is
+                            <strong>Chinese Running Man</strong>."
+                        </p>
+                        <p class="fragment" style="margin-top: 15px;"><span class="q-highlight">[Q2]</span> "Famous
+                            actors <strong>must overcome challenging quests</strong>... They tickle my funny bone!"</p>
+                        <p class="fragment" style="margin-top: 15px;"><span class="q-highlight">[Q3]</span> "Laughing
+                            helps <strong>release stress</strong>... and makes us more attractive too!"</p>
+                    </div>
+                    <div class="fragment">
+                        <h4 style="color: var(--cyan); font-size: 1em;">Why this won:</h4>
+                        <ul style="font-size: 0.8em; line-height: 1.8;">
+                            <li>Answered all 3 prompts.</li>
+                            <li>Used <strong>specific evidence</strong> (coffee beans!).</li>
+                            <li>Used <strong>modals</strong> (can, may) for opinions.</li>
                         </ul>
                     </div>
                 </div>
             </section>
 
+            <!-- PHASE 3 SEGUE -->
+            <section data-background-image="images/cyber_bg.png">
+                <h1 class="segue-title">PHASE 3:<br>BLUEPRINT</h1>
+                <p class="segue-subtitle">Great writers are actually great architects.</p>
             </section>
 
-            <!-- SEGUE 4: BLUEPRINT -->
-            <section data-background-color="#0f172a">
-                <h3 class="glow-blue">VISUALIZING THE PLAN</h3>
-                <p>Checking the plan...</p>
-            </section>
-
-            <!-- FLOWCHART SLIDE -->
-            <section data-background-image="images/flowchart.png" data-background-opacity="0.9"
-                data-background-size="contain">
-            </section>
-
-            <!-- STAGE 5: THE MISSION -->
-            <section data-background-color="#8b1538">
-                <div class="stage-badge" style="background: #0f172a;">FINAL DRAFT</div>
-                <h2 style="color: white; border-left-color: white;">TASK: TECHNOLOGY AND YOU</h2>
-                <div class="background-dim">
-                    <p style="font-weight: bold; color: #00f2ff; margin-bottom: 20px;">NOW WRITE YOUR ARTICLE:</p>
-                    <ul style="font-size: 0.9em;">
-                        <li>Which website or app do you like most?</li>
-                        <li>How often do you use it?</li>
-                        <li>Is it important for teenagers to have a computer? Why?</li>
-                    </ul>
+            <!-- ARCHITECTURE -->
+            <section>
+                <div class="stage-badge">03. STRATEGY</div>
+                <h2>The Paragraph Logic</h2>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;">
+                    <div class="glass-box">
+                        <div style="margin-bottom: 30px;">
+                            <span class="q-highlight" style="font-size: 1.4em;">1. THE TOPIC SENTENCE</span>
+                            <p style="font-size: 0.85em; margin-top: 10px;">Your Headline. Your assertion. "Computers
+                                are essential."</p>
+                        </div>
+                        <div class="fragment">
+                            <span class="q-highlight" style="font-size: 1.4em;">2. SUPPORTING DETAILS</span>
+                            <p style="font-size: 0.85em; margin-top: 10px;">The evidence. The "why". "For example,
+                                students use them for..."</p>
+                        </div>
+                    </div>
+                    <img src="images/structure.png" class="img-pedagogical">
                 </div>
-                <p class="fragment glow-blue"
-                    style="text-align: center; margin-top: 40px; font-weight: bold; font-size: 1.2em; border: 2px solid white; padding: 10px;">
-                    START WRITING NOW! <br> [TIME LIMIT: 20 MINS]
-                </p>
             </section>
+
+            <!-- PHASE 4 SEGUE -->
+            <section data-background-image="images/cyber_bg.png">
+                <h1 class="segue-title">PHASE 4:<br>THE ARSENAL</h1>
+                <p class="segue-subtitle">Level up from "Basic" to "Brilliant."</p>
+            </section>
+
+            <!-- TOOLKIT -->
+            <section>
+                <div class="stage-badge">04. THE TOOLS</div>
+                <h2>High-Score Weapons</h2>
+                <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; align-items: start;">
+                    <div class="glass-box">
+                        <ul style="font-size: 1em; line-height: 2.2; list-style: none; padding: 0;">
+                            <li class="fragment"><span class="q-highlight">Preference:</span> "The app I use most
+                                frequently is..."</li>
+                            <li class="fragment"><span class="q-highlight">Opinion:</span> "In my view, computers are
+                                essential because..."</li>
+                            <li class="fragment"><span class="q-highlight">Evidence:</span> "Furthermore, they allow us
+                                to..."</li>
+                            <li class="fragment"><span class="q-highlight">Possibility:</span> "It might make us..." /
+                                "We could also..."</li>
+                        </ul>
+                    </div>
+                    <img src="images/toolkit.png" class="img-pedagogical fragment">
+                </div>
+            </section>
+
+            <!-- PHASE 5 SEGUE -->
+            <section data-background-image="images/cyber_bg.png">
+                <h1 class="segue-title">PHASE 5:<br>EXECUTION</h1>
+                <p class="segue-subtitle">The mission starts now.</p>
+            </section>
+
+            <!-- FINAL MISSION -->
+            <section data-background-color="var(--maroon)">
+                <div class="stage-badge" style="background: var(--navy);">FINAL CHALLENGE</div>
+                <div style="display: grid; grid-template-columns: 1fr 1.2fr; gap: 40px; align-items: center;">
+                    <img src="images/mission.png" class="img-pedagogical">
+                    <div class="glass-box" style="background: rgba(0,0,0,0.3); border-color: rgba(255,255,255,0.2);">
+                        <p style="text-transform: uppercase; color: var(--cyan); font-weight: 800; font-size: 0.8em;">
+                            Articles wanted!</p>
+                        <h3 style="color: white; margin: 10px 0;">TECHNOLOGY AND YOU</h3>
+                        <p style="font-size: 1em; line-height: 1.4; color: white;">Write about <strong>which website/app
+                                you like most</strong> and how often you use it. Do you think it is <strong>important
+                                for teenagers to have a computer</strong>? Why?</p>
+
+                        <div class="fragment"
+                            style="margin-top: 40px; border: 4px solid white; padding: 25px; text-align: center; border-radius: 4px;">
+                            <h2 style="color: white; margin: 0; font-size: 2.5em; letter-spacing: 6px;">START WRITING
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
         </div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/notes/notes.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/markdown/markdown.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/highlight/highlight.min.js"></script>
+    <script async
+        src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/highlight/highlight.min.js"></script>
     <script>
         Reveal.initialize({
             hash: true,
             plugins: [RevealMarkdown, RevealHighlight, RevealNotes],
-            transition: 'convex',
-            backgroundTransition: 'zoom'
+            transition: 'slide',
+            backgroundTransition: 'fade',
+            width: 1920,
+            height: 1080,
+            margin: 0.1
         });
     </script>
 </body>
