@@ -7,13 +7,15 @@
 
     <title>B1 Writing: The 20/20 Tech Article</title>
 
+    <!-- REVEAL.JS CORE (CDN) -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/black.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/black.css" id="theme">
 
-    <!-- Google Fonts: Outfit -->
+    <!-- FONTS -->
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
 
+    <!-- CYBER-GAMER THEME (Global Vars & Components Only) -->
     <style>
         :root {
             --maroon: #ff0055;
@@ -28,109 +30,106 @@
             background-color: var(--navy);
         }
 
-        .reveal .slides {
-            text-align: left;
+        /* TYPOGRAPHY OVERRIDES */
+        .reveal {
+            font-family: 'Outfit', sans-serif;
         }
 
-        /* HEADERS */
         .reveal h1,
         .reveal h2,
         .reveal h3 {
-            font-family: 'Outfit', sans-serif !important;
             text-transform: uppercase;
             font-weight: 800;
+            margin: 0 0 20px 0;
         }
 
         .reveal h1 {
             color: white;
-            text-shadow: 2px 2px 0px var(--maroon);
-            margin: 0;
+            text-shadow: 4px 4px 0px var(--maroon);
         }
 
         .reveal h2 {
             color: var(--cyan);
-            margin-bottom: 0.5em;
         }
 
-        /* BOXES & BADGES */
+        .reveal h3 {
+            color: yellow;
+        }
+
+        .reveal p {
+            line-height: 1.4;
+        }
+
+        /* COMPONENT: GLASS BOX */
         .glass-box {
             background: var(--glass);
             border: 2px solid var(--neon-border);
             padding: 20px;
             box-shadow: 6px 6px 0px rgba(0, 242, 255, 0.2);
-            margin-top: 10px;
+            border-radius: 0;
         }
 
+        /* COMPONENT: BADGE */
         .stage-badge {
             background: var(--cyan);
             color: black;
             padding: 5px 15px;
-            font-size: 0.7em;
             font-weight: 800;
             transform: skew(-10deg);
-            margin-bottom: 20px;
             display: inline-block;
+            margin-bottom: 20px;
+            font-size: 0.6em;
         }
 
+        /* COMPONENT: TEACHER TIP */
         .teacher-tip {
             border: 2px dashed var(--maroon);
+            background: black;
             padding: 15px;
             margin-top: 15px;
-            background: black;
-            font-size: 0.8em;
+            font-size: 0.7em;
             color: white;
         }
 
-        .teacher-tip strong {
-            color: var(--maroon);
-        }
-
-        /* REVEAL UTILITIES HELPERS */
-        .grid-wrapper {
+        /* UTILITY: FLEX WRAPPER (Replaces Grid) */
+        .flex-wrapper {
             display: flex;
-            gap: 20px;
             align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+            width: 100%;
+            height: 100%;
         }
 
-        .grid-col {
+        .flex-col {
             flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
+        /* UTILITY: FOOTER */
         .footer-branding {
             position: absolute;
-            bottom: -20px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 0.6em;
+            bottom: -5%;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            font-size: 0.5em;
             letter-spacing: 2px;
             opacity: 0.5;
             color: var(--cyan);
             text-transform: uppercase;
-            width: 100%;
-            text-align: center;
         }
 
-        /* TIMER AREA */
+        /* TIMER */
         .timer-display {
             font-family: 'Courier New', monospace;
             font-size: 2em;
-            color: #fff;
-            text-shadow: 0 0 20px var(--cyan);
-            background: rgba(0, 0, 0, 0.5);
-            padding: 10px 30px;
+            color: white;
             border: 1px solid var(--cyan);
-            display: inline-block;
-            margin: 10px 0;
-        }
-
-        .timer-btn {
-            background: var(--cyan);
-            color: black;
             padding: 10px 20px;
-            font-weight: 800;
-            border: none;
-            cursor: pointer;
-            text-transform: uppercase;
+            background: rgba(0, 0, 0, 0.5);
         }
     </style>
 </head>
@@ -139,69 +138,68 @@
     <div class="reveal">
         <div class="slides">
 
-            <!-- TITLE SLIDE -->
+            <!-- SLIDE 1: TITLE (Flex Layout) -->
             <section data-background-image="images/cyber_bg.png" data-background-opacity="0.2">
-                <div class="grid-wrapper">
-                    <div class="grid-col" style="text-align: center;">
+                <div class="flex-wrapper">
+                    <div class="flex-col" style="align-items: center;">
                         <img src="images/hero_v3.png"
-                            style="border-radius: 20px; border: 3px solid var(--cyan); transform: rotate(-2deg); max-height: 400px;">
+                            style="max-height: 400px; border-radius: 20px; border: 3px solid var(--cyan); transform: rotate(-2deg); box-shadow: 0 0 30px rgba(0,242,255,0.3);">
                     </div>
-                    <div class="grid-col">
+                    <div class="flex-col" style="text-align: left;">
                         <div class="stage-badge">LEVEL UP: WRITING</div>
                         <h1 class="r-fit-text">THE 20/20<br>TECH WRITER</h1>
-                        <p style="margin: 20px 0;">
-                            <span
-                                style="background: var(--maroon); color: white; padding: 10px 20px; font-weight: 800; font-size: 1.2em; text-transform: uppercase; transform: skew(-10deg); display: inline-block;">
-                                CRACK THE CODE
-                            </span>
-                        </p>
+                        <p><span
+                                style="background: var(--maroon); padding: 5px 15px; font-weight: 800; transform: skew(-10deg); display: inline-block;">CRACK
+                                THE CODE</span></p>
                         <p
-                            style="opacity: 0.8; font-size: 0.8em; letter-spacing: 2px; border-left: 3px solid var(--cyan); padding-left: 15px;">
-                            BELL LANGUAGE CENTRE | 2026
-                        </p>
+                            style="font-size: 0.6em; border-left: 3px solid var(--cyan); padding-left: 10px; margin-top: 20px;">
+                            BELL LANGUAGE CENTRE | 2026</p>
                     </div>
                 </div>
             </section>
 
-            <!-- PHASE 1 SEGUE -->
+            <!-- SLIDE 2: SEGUE 1 (Centered Fit-Text) -->
             <section data-background-image="images/cyber_bg.png" data-background-opacity="0.1">
-                <h1 class="r-fit-text">PHASE 1:<br>WHAT MAKES A VIRAL MOMENT TICK?</h1>
+                <h1 class="r-fit-text" style="color: yellow; text-shadow: 6px 6px 0px var(--maroon);">PHASE 1:<br>WHAT
+                    MAKES A VIRAL MOMENT TICK?</h1>
             </section>
 
-            <!-- LEAD-IN: BBC DAD -->
+            <!-- SLIDE 3: WARM UP (Split: Box + Video) -->
             <section data-background-image="images/cyber_bg.png" data-background-opacity="0.1">
                 <div class="stage-badge">WARM UP</div>
                 <h2 class="r-fit-text">The Office Interruption</h2>
-                <div class="grid-wrapper">
-                    <div class="grid-col glass-box">
-                        <p><strong>"A live world news interview. A serious topic.</strong></p>
+                <div class="flex-wrapper">
+                    <div class="flex-col glass-box">
+                        <p style="font-size: 0.9em;"><strong>"A live world news interview. A serious topic.</strong></p>
                         <p style="color: var(--cyan); margin-top: 10px;">And then... the chaos begins."</p>
                         <div class="teacher-tip">
                             <strong>WHY IT WENT VIRAL:</strong> It's all about the <strong>CLASH</strong>—serious suit
-                            vs. dancing kid.
+                            vs. dancing kid. (Contrast)
                         </div>
                     </div>
-                    <div class="grid-col">
-                        <iframe data-src="https://www.youtube.com/embed/Mh4f9AYRCZY" width="100%" height="300"
-                            frameborder="0" allow="encrypted-media" allowfullscreen></iframe>
+                    <div class="flex-col">
+                        <!-- r-stretch enables Reveal to size this to available space -->
+                        <iframe class="r-stretch" data-src="https://www.youtube.com/embed/Mh4f9AYRCZY" width="100%"
+                            height="400" frameborder="0" allowfullscreen></iframe>
                     </div>
                 </div>
                 <div class="footer-branding">BELL LANGUAGE CENTRE</div>
             </section>
 
-            <!-- PHASE 2 SEGUE -->
+            <!-- SLIDE 4: SEGUE 2 -->
             <section data-background-image="images/cyber_bg.png" data-background-opacity="0.1">
-                <h1 class="r-fit-text">PHASE 2:<br>DECODING THE BOSS LEVEL</h1>
-                <p style="text-align: center; color: white;">Let's look at a 20/20 Score.</p>
+                <h1 class="r-fit-text" style="color: yellow;">PHASE 2:<br>DECODING THE BOSS LEVEL</h1>
+                <p>Let's look at a 20/20 Score.</p>
             </section>
 
-            <!-- THE PROMPT -->
+            <!-- SLIDE 5: TASK 1 (Centered Box) -->
             <section data-background-image="images/cyber_bg.png" data-background-opacity="0.1">
                 <div class="stage-badge">TASK 1: ANALYSIS</div>
                 <h2>The Challenge</h2>
-                <div class="glass-box" style="text-align: center; max-width: 800px; margin: 0 auto;">
-                    <h3 style="color: yellow;">WHAT MAKES YOU LAUGH?</h3>
+                <div class="glass-box" style="text-align: center; max-width: 80%; margin: 0 auto;">
+                    <h3 class="r-fit-text" style="color: yellow;">WHAT MAKES YOU LAUGH?</h3>
                     <p>Write an article telling us <strong>what makes you laugh and why</strong>.</p>
+                    <p>Is it <strong>important for people to laugh</strong>?</p>
                     <div class="teacher-tip">
                         <strong>PRO TIP:</strong> Check those 3 bold questions. Miss one and it's GAME OVER.
                     </div>
@@ -209,92 +207,116 @@
                 <div class="footer-branding">BELL LANGUAGE CENTRE</div>
             </section>
 
-            <!-- THE MODEL -->
+            <!-- SLIDE 6: MODEL (Split: Text + Points) -->
             <section data-background-image="images/cyber_bg.png" data-background-opacity="0.1">
                 <div class="stage-badge">TASK 1: ANALYSIS</div>
                 <h2>The Perfect 20/20</h2>
-                <div class="grid-wrapper">
-                    <div class="grid-col glass-box" style="font-family: 'Courier New', monospace; font-size: 0.8em;">
-                        <p><span style="background:yellow; color:black; padding:0 5px;">[Q1]</span> "I love comedies...
-                            especially <strong>Chinese Running Man</strong>."</p>
-                        <p style="margin-top: 15px;"><span
-                                style="background:yellow; color:black; padding:0 5px;">[Q2]</span> "Actors
-                            <strong>overcome quests</strong>... tickle my funny bone!"</p>
-                        <p style="margin-top: 15px;"><span
-                                style="background:yellow; color:black; padding:0 5px;">[Q3]</span> "Laughing
-                            <strong>releases stress</strong>... more attractive too!"</p>
+                <div class="flex-wrapper">
+                    <div class="flex-col glass-box" style="font-family: 'Courier New'; font-size: 0.7em;">
+                        <p><span style="background:yellow; color:black;">[Q1]</span> "I love comedies... especially
+                            <strong>Chinese Running Man</strong>."</p>
+                        <br>
+                        <p><span style="background:yellow; color:black;">[Q2]</span> "Actors <strong>overcome
+                                quests</strong>... tickle my funny bone!"</p>
+                        <br>
+                        <p><span style="background:yellow; color:black;">[Q3]</span> "Laughing <strong>releases
+                                stress</strong>... more attractive too!"</p>
                     </div>
-                    <div class="grid-col">
-                        <h3 style="font-size: 1.2em; color: var(--cyan);">WHY IT WINS:</h3>
-                        <ul style="font-size: 0.9em; list-style: none; padding: 0;">
+                    <div class="flex-col" style="align-items: flex-start;">
+                        <h3 style="background: black; padding: 10px; transform: rotate(-2deg);">WHY IT WINS:</h3>
+                        <ul style="font-size: 0.8em; list-style: none;">
                             <li>✅ Hits all 3 targets.</li>
                             <li>✅ Real details.</li>
                             <li>✅ Strong opinions.</li>
                         </ul>
                     </div>
                 </div>
+                <div class="footer-branding">BELL LANGUAGE CENTRE</div>
             </section>
 
-            <!-- PHASE 3 -->
+            <!-- SLIDE 7: SEGUE 3 -->
             <section data-background-image="images/cyber_bg.png" data-background-opacity="0.1">
-                <h1 class="r-fit-text">PHASE 3: THE BLUEPRINT</h1>
+                <h1 class="r-fit-text" style="color: yellow;">PHASE 3: THE BLUEPRINT</h1>
             </section>
 
-            <!-- ARCHITECTURE -->
+            <!-- SLIDE 8: LOGIC FLOW (Split: Text + Image) -->
             <section data-background-image="images/cyber_bg.png" data-background-opacity="0.1">
                 <div class="stage-badge">TASK 2: PLANNING</div>
                 <h2>The Logic Flow</h2>
-                <div class="grid-wrapper">
-                    <div class="grid-col glass-box">
-                        <div style="margin-bottom: 20px;">
-                            <span style="background: var(--cyan); color:black; padding: 2px 10px;">1. HEADLINE</span>
-                            <p style="font-size: 0.8em;">Your assertion. "Computers are essential."</p>
+                <div class="flex-wrapper">
+                    <div class="flex-col glass-box">
+                        <div style="margin-bottom: 2rem;">
+                            <span style="background: var(--cyan); color: black; padding: 2px 5px; font-weight: bold;">1.
+                                HEADLINE</span>
+                            <p style="font-size: 0.8em;">Your assertion.<br>"Computers are essential."</p>
                         </div>
                         <div>
-                            <span style="background: yellow; color:black; padding: 2px 10px;">2. EVIDENCE</span>
-                            <p style="font-size: 0.8em;">The proof. "For example, students use them..."</p>
+                            <span style="background: yellow; color: black; padding: 2px 5px; font-weight: bold;">2.
+                                EVIDENCE</span>
+                            <p style="font-size: 0.8em;">The proof.<br>"For example, students use them..."</p>
                         </div>
                     </div>
-                    <div class="grid-col">
-                        <img src="images/structure.png" class="r-stretch">
+                    <div class="flex-col">
+                        <img src="images/structure.png" class="r-stretch"
+                            style="border: 3px solid white; box-shadow: 8px 8px 0 var(--cyan);">
                     </div>
                 </div>
                 <div class="footer-branding">BELL LANGUAGE CENTRE</div>
             </section>
 
-            <!-- TOOLKIT -->
+            <!-- SLIDE 9: SEGUE 4 -->
+            <section data-background-image="images/cyber_bg.png" data-background-opacity="0.1">
+                <h1 class="r-fit-text" style="color: yellow;">PHASE 4: THE LOADOUT</h1>
+            </section>
+
+            <!-- SLIDE 10: TOOLKIT (Grid Simulated with Flex) -->
             <section data-background-image="images/cyber_bg.png" data-background-opacity="0.1">
                 <div class="stage-badge">TASK 3: TOOLBOX</div>
                 <h2 class="r-fit-text">Vocabulary Weapons</h2>
                 <div class="glass-box">
-                    <div class="grid-wrapper">
-                        <div class="grid-col">
+                    <div class="flex-wrapper" style="align-items: flex-start;">
+                        <div class="flex-col">
                             <p style="color: var(--cyan); font-weight: 800; font-size: 0.8em;">PREFERENCE:</p>
-                            <p style="font-size: 0.7em;">"The app I use most frequently is..."</p>
+                            <p style="font-size: 0.7em; margin-bottom: 30px;">"The app I use most frequently is..."</p>
+
+                            <p style="color: var(--cyan); font-weight: 800; font-size: 0.8em;">OPINION:</p>
+                            <p style="font-size: 0.7em;">"In my view, computers are essential because..."</p>
                         </div>
-                        <div class="grid-col">
+                        <div class="flex-col">
                             <p style="color: var(--cyan); font-weight: 800; font-size: 0.8em;">PROOF:</p>
-                            <p style="font-size: 0.7em;">"Furthermore, they allow us to..."</p>
+                            <p style="font-size: 0.7em; margin-bottom: 30px;">"Furthermore, they allow us to..."</p>
+
+                            <p style="color: var(--cyan); font-weight: 800; font-size: 0.8em;">POSSIBILITY:</p>
+                            <p style="font-size: 0.7em;">"It might make us..."</p>
                         </div>
                     </div>
                 </div>
                 <div class="footer-branding">BELL LANGUAGE CENTRE</div>
             </section>
 
-            <!-- FINAL MISSION -->
+            <!-- SLIDE 11: SEGUE 5 -->
+            <section data-background-image="images/cyber_bg.png" data-background-opacity="0.1">
+                <h1 class="r-fit-text" style="color: yellow;">PHASE 5: GO TIME</h1>
+            </section>
+
+            <!-- SLIDE 12: FINAL MISSION (Split: Image + Box + Timer) -->
             <section data-background-color="var(--maroon)">
                 <div class="stage-badge" style="background: black; color: white;">TASK 3: WRITING</div>
-                <div class="grid-wrapper">
-                    <div class="grid-col">
-                        <img src="images/mission.png" style="border: 3px solid black; max-height: 350px;">
+                <div class="flex-wrapper">
+                    <div class="flex-col">
+                        <img src="images/mission.png" class="r-stretch"
+                            style="border: 3px solid black; box-shadow: 10px 10px 0 black;">
                     </div>
-                    <div class="grid-col glass-box" style="background: rgba(0,0,0,0.6); border:none;">
-                        <h3 style="color: white; font-size: 1.2em;">TECHNOLOGY AND YOU</h3>
+                    <div class="flex-col glass-box"
+                        style="background: rgba(0,0,0,0.6); border: none; box-shadow: none;">
+                        <h3>TECHNOLOGY AND YOU</h3>
                         <p style="font-size: 0.8em;">Write about your favorite app and if teenagers need computers.</p>
-                        <div style="text-align: center;">
+
+                        <div style="text-align: center; margin-top: 20px;">
                             <div id="countdown" class="timer-display">20:00</div>
                             <br>
-                            <button id="timer-btn" class="timer-btn" onclick="toggleTimer()">START MISSION</button>
+                            <button id="timer-btn" onclick="toggleTimer()"
+                                style="padding: 10px 20px; font-weight: bold; background: var(--cyan); border: none; cursor: pointer; margin-top: 10px;">START</button>
                         </div>
                     </div>
                 </div>
@@ -304,25 +326,24 @@
         </div>
     </div>
 
+    <!-- SCRIPTS -->
     <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/markdown/markdown.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/highlight.js"></script>
     <script>
+        // NATIVE 960x700 RESOLUTION
         Reveal.initialize({
             hash: true,
-            plugins: [RevealMarkdown, RevealHighlight, RevealNotes],
-            controls: true,
-            progress: true,
-            center: true,
-            transition: 'convex',
             width: 960,
             height: 700,
-            margin: 0.1,
-            autoPlayMedia: true
+            margin: 0.04, // Minimal margin to maximize space
+            minScale: 0.2,
+            maxScale: 2.0,
+            plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
         });
 
-        // TIMER
+        // NATIVE TIMER LOGIC
         let timeLeft = 20 * 60;
         let timerInterval;
         let isRunning = false;
