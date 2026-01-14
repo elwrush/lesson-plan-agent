@@ -111,19 +111,23 @@
             font-size: 0.6em;
         }
 
+        /* HEADER STRAP (Cyber Pill Design) */
         .header-strap {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background: rgba(0, 242, 255, 0.1);
-            border-bottom: 2px solid var(--cyan);
-            padding: 10px 0;
+            top: 20px;
+            left: 20px;
+            background: rgba(5, 8, 17, 0.9);
+            border: 1px solid var(--cyan);
+            border-radius: 50px;
+            /* Pill shape */
+            padding: 8px 25px;
             text-align: center;
-            font-weight: 800;
-            letter-spacing: 4px;
-            font-size: 16px;
-            color: white;
+            font-family: 'Courier Prime', monospace;
+            font-weight: 700;
+            letter-spacing: 2px;
+            font-size: 14px;
+            color: var(--cyan);
+            box-shadow: 0 0 15px rgba(0, 242, 255, 0.3);
             z-index: 10;
         }
 
@@ -143,6 +147,22 @@
             height: auto;
             display: block;
             margin: 0 auto;
+        }
+
+        /* SEGUE TITLE */
+        .segue-title {
+            font-size: 3.5em !important;
+            /* Fixed size for consistency */
+            line-height: 1.1;
+            color: yellow;
+            text-transform: uppercase;
+            transform: rotate(-3deg) skew(-10deg);
+            /* Angled "Pop" */
+            text-shadow: 6px 6px 0px var(--maroon), 0 0 20px var(--cyan);
+            /* Cyber Glow */
+            margin: 0;
+            position: relative;
+            z-index: 2;
         }
 
         /* TIMER */
@@ -178,12 +198,18 @@
                                 THE CODE</span></p>
                     </div>
                 </div>
+                <aside class="notes">
+                    TEACHER NOTES:
+                    - Welcome class.
+                    - Routine Check: Phones away.
+                    - Today's Goal: Writing the PERFECT Tech Article.
+                </aside>
             </section>
 
             <!-- SLIDE 2: SEGUE -->
-            <section data-background-image="images/cyber_bg.png" data-background-opacity="0.1">
-                <h1 class="r-fit-text" style="color: yellow; text-shadow: 6px 6px 0px var(--maroon);">PHASE 1:<br>WHAT
-                    MAKES A VIRAL MOMENT TICK?</h1>
+            <section data-background-image="https://media.giphy.com/media/26tOZ42Mg6pbTUPDa/giphy.gif"
+                data-background-opacity="0.4">
+                <h1 class="segue-title">PHASE 1:<br>WHAT MAKES A VIRAL MOMENT TICK?</h1>
             </section>
 
             <!-- SLIDE 3: WARM UP (Fixed Aspect Ratio Video) -->
@@ -211,11 +237,17 @@
                         </div>
                     </div>
                 </div>
+                <aside class="notes">
+                    - Play the video (it's short).
+                    - Ask: "Why is this funny?"
+                    - Elicit: The CONTRAST between the serious BBC news and the chaotic kids.
+                </aside>
             </section>
 
             <!-- SLIDE 4: SEGUE -->
-            <section data-background-image="images/cyber_bg.png" data-background-opacity="0.1">
-                <h1 class="r-fit-text" style="color: yellow;">PHASE 2:<br>DECODING THE BOSS LEVEL</h1>
+            <section data-background-image="https://media.giphy.com/media/26tOZ42Mg6pbTUPDa/giphy.gif"
+                data-background-opacity="0.4">
+                <h1 class="segue-title">PHASE 2:<br>DECODING THE BOSS LEVEL</h1>
             </section>
 
             <!-- SLIDE 5: TASK 1 (Centered Box) -->
@@ -240,7 +272,8 @@
                 <div class="row-container">
                     <div class="col-50 glass-box" style="font-family: 'Courier Prime', monospace; font-size: 22px;">
                         <p><span style="background:yellow; color:black;">[Q1]</span> "I love comedies... especially
-                            <strong>Chinese Running Man</strong>."</p>
+                            <strong>Chinese Running Man</strong>."
+                        </p>
                         <br>
                         <p><span style="background:yellow; color:black;">[Q2]</span> "Actors <strong>overcome
                                 quests</strong>... tickles my funny bone!"</p>
@@ -261,8 +294,9 @@
             </section>
 
             <!-- SLIDE 7: SEGUE -->
-            <section data-background-image="images/cyber_bg.png" data-background-opacity="0.1">
-                <h1 class="r-fit-text" style="color: yellow;">PHASE 3: THE BLUEPRINT</h1>
+            <section data-background-image="https://media.giphy.com/media/26tOZ42Mg6pbTUPDa/giphy.gif"
+                data-background-opacity="0.4">
+                <h1 class="segue-title">PHASE 3:<br>THE BLUEPRINT</h1>
             </section>
 
             <!-- SLIDE 8: LOGIC FLOW -->
@@ -290,8 +324,9 @@
             </section>
 
             <!-- SLIDE 9: SEGUE -->
-            <section data-background-image="images/cyber_bg.png" data-background-opacity="0.1">
-                <h1 class="r-fit-text" style="color: yellow;">PHASE 4: THE LOADOUT</h1>
+            <section data-background-image="https://media.giphy.com/media/26tOZ42Mg6pbTUPDa/giphy.gif"
+                data-background-opacity="0.4">
+                <h1 class="segue-title">PHASE 4:<br>THE LOADOUT</h1>
             </section>
 
             <!-- SLIDE 10: VOCABULARY GRID -->
@@ -325,8 +360,9 @@
             </section>
 
             <!-- SLIDE 11: SEGUE -->
-            <section data-background-image="images/cyber_bg.png" data-background-opacity="0.1">
-                <h1 class="r-fit-text" style="color: yellow;">PHASE 5: GO TIME</h1>
+            <section data-background-image="https://media.giphy.com/media/26tOZ42Mg6pbTUPDa/giphy.gif"
+                data-background-opacity="0.4">
+                <h1 class="segue-title">PHASE 5:<br>GO TIME</h1>
             </section>
 
             <!-- SLIDE 12: FINAL MISSION (Timer) -->
@@ -371,6 +407,7 @@
             controls: true,
             progress: true,
             center: true,
+            transition: 'convex', // REQUESTED: COOL TRANSITION
             plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
         });
 
