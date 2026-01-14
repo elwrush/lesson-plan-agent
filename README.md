@@ -4,7 +4,7 @@ AI-powered lesson planning assistant for English language teachers, built with G
 
 ## Overview
 
-This project provides an interactive workflow for creating lesson plans using predefined lesson "shapes" (pedagogical frameworks). It integrates with Google Slides and Google Docs for materials preparation and export.
+This project provides an interactive workflow for creating lesson plans using predefined lesson "shapes" (pedagogical frameworks). It integrates with Google Docs for materials preparation and export.
 
 ## Features
 
@@ -33,13 +33,6 @@ Extracts text from images and PDFs using Gemini's multimodal vision:
 - Requires Gemini 3 Flash confirmation
 - Structured markdown output
 
-#### `designing-slides`
-Google Slides API integration for presentation creation:
-- Bell EP branded templates (maroon theme, title slide structure)
-- Expert pedagogical framing with metaphors
-- Batch API pattern for performance
-- Content addition (text, tables, formatting)
-- Answer slides and vocabulary slides
 
 #### `generating-worksheets`
 Generates branded, print-ready PDF worksheets:
@@ -93,7 +86,6 @@ Git workflow automation:
 .
 ├── skills/                    # Modular skills (Skills architecture)
 │   ├── writing-lesson-plans/
-│   ├── designing-slides/
 │   └── committing-to-github/
 ├── knowledge_base/            # Reference data
 │   ├── lesson_shapes.yaml
@@ -113,7 +105,6 @@ Git workflow automation:
 
 - Python 3.8+
 - Google Cloud Project with APIs enabled:
-  - Google Slides API
   - Google Drive API
   - Google Docs API (future)
 
@@ -147,17 +138,6 @@ Follow the `writing-lesson-plans` skill workflow:
 5. Generate lesson plan in markdown
 6. Export to Google Docs (coming soon)
 
-### Designing Slides
-
-Use the `designing-slides` scripts:
-
-```python
-from skills.designing_slides.scripts.authenticate_google import authenticate_slides
-from skills.designing_slides.scripts.create_presentation import create_presentation
-
-service = authenticate_slides()
-presentation_id = create_presentation(service, "My Lesson")
-```
 
 ## Skills Architecture
 
