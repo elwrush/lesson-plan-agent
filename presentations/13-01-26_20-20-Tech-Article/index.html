@@ -19,147 +19,90 @@
             --maroon: #ff0055;
             --cyan: #00F2FF;
             --navy: #050811;
-            --slate: #1e293b;
-            --glass: rgba(10, 10, 20, 0.9);
+            --glass: rgba(10, 10, 20, 0.95);
             --neon-border: #00F2FF;
-            --text-main: #ffffff;
         }
 
         body {
             font-family: 'Outfit', sans-serif;
             background-color: var(--navy);
-            color: var(--text-main);
         }
 
         .reveal .slides {
             text-align: left;
         }
 
-        /* GLOBAL TYPOGRAPHY */
+        /* HEADERS */
         .reveal h1,
         .reveal h2,
-        .reveal h3,
-        .reveal h4 {
-            font-family: 'Outfit', sans-serif;
+        .reveal h3 {
+            font-family: 'Outfit', sans-serif !important;
             text-transform: uppercase;
             font-weight: 800;
-            margin: 0 0 0.5em 0;
-            line-height: 1.1;
         }
 
         .reveal h1 {
             color: white;
-            text-shadow: 4px 4px 0px var(--maroon);
-            font-size: 100px;
+            text-shadow: 2px 2px 0px var(--maroon);
+            margin: 0;
         }
 
         .reveal h2 {
             color: var(--cyan);
-            font-size: 60px;
-            text-shadow: 0 0 20px rgba(0, 242, 255, 0.4);
-        }
-
-        .reveal h3 {
-            font-size: 45px;
-            color: yellow;
-        }
-
-        .reveal p,
-        .reveal li {
-            font-size: 28px;
-            line-height: 1.4;
             margin-bottom: 0.5em;
         }
 
-        /* LAYOUT COMPONENTS */
+        /* BOXES & BADGES */
         .glass-box {
             background: var(--glass);
-            border: 3px solid var(--neon-border);
-            padding: 30px;
-            box-shadow: 10px 10px 0px rgba(0, 242, 255, 0.2);
-            width: 100%;
-            box-sizing: border-box;
+            border: 2px solid var(--neon-border);
+            padding: 20px;
+            box-shadow: 6px 6px 0px rgba(0, 242, 255, 0.2);
+            margin-top: 10px;
         }
 
         .stage-badge {
             background: var(--cyan);
             color: black;
-            padding: 10px 25px;
-            font-size: 24px;
-            font-weight: 900;
+            padding: 5px 15px;
+            font-size: 0.7em;
+            font-weight: 800;
             transform: skew(-10deg);
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             display: inline-block;
         }
 
-        .two-col-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 50px;
-            align-items: center;
-            width: 100%;
-        }
-
-        .q-highlight {
-            color: black;
-            font-weight: 800;
-            background: yellow;
-            padding: 2px 10px;
-        }
-
-        /* SEGUE SLIDES */
-        .segue-title {
-            font-size: 80px !important;
-            text-align: center;
-            width: 100%;
-            color: yellow !important;
-            text-shadow: 6px 6px 0px var(--maroon);
-            transform: rotate(-2deg);
-        }
-
-        .segue-subtitle {
-            text-align: center !important;
-            color: white;
-            font-size: 40px !important;
-            margin-top: 30px;
-            font-weight: 300;
-            width: 100%;
-        }
-
         .teacher-tip {
-            border: 3px dashed var(--maroon);
-            padding: 25px;
-            margin-top: 25px;
+            border: 2px dashed var(--maroon);
+            padding: 15px;
+            margin-top: 15px;
             background: black;
-            font-size: 24px;
+            font-size: 0.8em;
+            color: white;
         }
 
         .teacher-tip strong {
             color: var(--maroon);
         }
 
-        /* IMAGES & VIDEO */
-        .img-pedagogical {
-            border: 5px solid white;
-            box-shadow: 15px 15px 0px var(--cyan);
-            max-height: 500px;
-            max-width: 100%;
-            object-fit: contain;
+        /* REVEAL UTILITIES HELPERS */
+        .grid-wrapper {
+            display: flex;
+            gap: 20px;
+            align-items: center;
         }
 
-        .video-container {
-            width: 100%;
-            aspect-ratio: 16/9;
-            border: 4px solid var(--cyan);
+        .grid-col {
+            flex: 1;
         }
 
         .footer-branding {
             position: absolute;
-            bottom: -60px;
+            bottom: -20px;
             left: 50%;
             transform: translateX(-50%);
-            font-size: 22px;
-            letter-spacing: 4px;
+            font-size: 0.6em;
+            letter-spacing: 2px;
             opacity: 0.5;
             color: var(--cyan);
             text-transform: uppercase;
@@ -167,36 +110,27 @@
             text-align: center;
         }
 
+        /* TIMER AREA */
         .timer-display {
             font-family: 'Courier New', monospace;
-            font-size: 80px;
+            font-size: 2em;
             color: #fff;
-            text-shadow: 0 0 30px var(--cyan);
-            background: rgba(0, 0, 0, 0.8);
-            padding: 20px 60px;
-            border: 4px solid var(--cyan);
+            text-shadow: 0 0 20px var(--cyan);
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px 30px;
+            border: 1px solid var(--cyan);
             display: inline-block;
-            margin: 20px 0;
+            margin: 10px 0;
         }
 
         .timer-btn {
             background: var(--cyan);
             color: black;
-            padding: 20px 40px;
-            font-weight: 900;
-            font-size: 30px;
+            padding: 10px 20px;
+            font-weight: 800;
+            border: none;
             cursor: pointer;
             text-transform: uppercase;
-            border: none;
-            transition: 0.3s;
-        }
-
-        .hero-image {
-            width: 100%;
-            border-radius: 20px;
-            border: 5px solid var(--cyan);
-            box-shadow: 0 0 50px rgba(0, 242, 255, 0.3);
-            transform: rotate(-2deg);
         }
     </style>
 </head>
@@ -207,25 +141,22 @@
 
             <!-- TITLE SLIDE -->
             <section data-background-image="images/cyber_bg.png" data-background-opacity="0.2">
-                <div class="two-col-grid" style="grid-template-columns: 0.8fr 1.2fr;">
-                    <div style="text-align: center;">
-                        <img src="images/hero_v3.png" class="hero-image">
+                <div class="grid-wrapper">
+                    <div class="grid-col" style="text-align: center;">
+                        <img src="images/hero_v3.png"
+                            style="border-radius: 20px; border: 3px solid var(--cyan); transform: rotate(-2deg); max-height: 400px;">
                     </div>
-                    <div>
+                    <div class="grid-col">
                         <div class="stage-badge">LEVEL UP: WRITING</div>
-                        <h1 style="font-size: 90px; margin-bottom: 20px;">
-                            THE 20/20<br>
-                            <span style="color: var(--cyan); text-shadow: 0 0 30px rgba(0,242,255,0.5);">TECH
-                                WRITER</span>
-                        </h1>
-                        <p style="margin-bottom: 40px;">
+                        <h1 class="r-fit-text">THE 20/20<br>TECH WRITER</h1>
+                        <p style="margin: 20px 0;">
                             <span
-                                style="background: var(--maroon); color: white; padding: 15px 40px; font-weight: 800; font-size: 45px; text-transform: uppercase; transform: skew(-10deg); display: inline-block; box-shadow: 8px 8px 0px rgba(255,255,255,0.2);">
+                                style="background: var(--maroon); color: white; padding: 10px 20px; font-weight: 800; font-size: 1.2em; text-transform: uppercase; transform: skew(-10deg); display: inline-block;">
                                 CRACK THE CODE
                             </span>
                         </p>
                         <p
-                            style="opacity: 0.8; font-size: 28px; letter-spacing: 4px; border-left: 5px solid var(--cyan); padding-left: 20px;">
+                            style="opacity: 0.8; font-size: 0.8em; letter-spacing: 2px; border-left: 3px solid var(--cyan); padding-left: 15px;">
                             BELL LANGUAGE CENTRE | 2026
                         </p>
                     </div>
@@ -234,27 +165,25 @@
 
             <!-- PHASE 1 SEGUE -->
             <section data-background-image="images/cyber_bg.png" data-background-opacity="0.1">
-                <h1 class="segue-title">PHASE 1:<br>WHAT MAKES A VIRAL MOMENT TICK?</h1>
+                <h1 class="r-fit-text">PHASE 1:<br>WHAT MAKES A VIRAL MOMENT TICK?</h1>
             </section>
 
             <!-- LEAD-IN: BBC DAD -->
             <section data-background-image="images/cyber_bg.png" data-background-opacity="0.1">
                 <div class="stage-badge">WARM UP</div>
-                <h2>The Office Interruption</h2>
-                <div class="two-col-grid">
-                    <div class="glass-box">
-                        <p style="font-weight: bold;">"A live world news interview. A serious topic.</p>
-                        <p style="color: var(--cyan); margin-top: 20px;">And then... the chaos begins."</p>
+                <h2 class="r-fit-text">The Office Interruption</h2>
+                <div class="grid-wrapper">
+                    <div class="grid-col glass-box">
+                        <p><strong>"A live world news interview. A serious topic.</strong></p>
+                        <p style="color: var(--cyan); margin-top: 10px;">And then... the chaos begins."</p>
                         <div class="teacher-tip">
-                            <strong>WHY IT WENT VIRAL:</strong> It's all about the
-                            <strong>CLASH</strong>—the serious suit vs. the dancing kid. Content writers call this
-                            "CONTRAST."
+                            <strong>WHY IT WENT VIRAL:</strong> It's all about the <strong>CLASH</strong>—serious suit
+                            vs. dancing kid.
                         </div>
                     </div>
-                    <div class="video-container">
-                        <iframe style="width: 100%; height: 100%;" data-src="https://www.youtube.com/embed/Mh4f9AYRCZY"
-                            frameborder="0" allow="encrypted-media" allowfullscreen>
-                        </iframe>
+                    <div class="grid-col">
+                        <iframe data-src="https://www.youtube.com/embed/Mh4f9AYRCZY" width="100%" height="300"
+                            frameborder="0" allow="encrypted-media" allowfullscreen></iframe>
                     </div>
                 </div>
                 <div class="footer-branding">BELL LANGUAGE CENTRE</div>
@@ -262,23 +191,19 @@
 
             <!-- PHASE 2 SEGUE -->
             <section data-background-image="images/cyber_bg.png" data-background-opacity="0.1">
-                <h1 class="segue-title">PHASE 2:<br>DECODING THE BOSS LEVEL</h1>
-                <p class="segue-subtitle">Let's look at a 20/20 Score.</p>
+                <h1 class="r-fit-text">PHASE 2:<br>DECODING THE BOSS LEVEL</h1>
+                <p style="text-align: center; color: white;">Let's look at a 20/20 Score.</p>
             </section>
 
             <!-- THE PROMPT -->
             <section data-background-image="images/cyber_bg.png" data-background-opacity="0.1">
                 <div class="stage-badge">TASK 1: ANALYSIS</div>
                 <h2>The Challenge</h2>
-                <div class="glass-box" style="max-width: 1100px; margin: 0 auto; text-align: center;">
-                    <h3 style="color: yellow; font-size: 70px; margin-bottom: 20px;">WHAT MAKES YOU LAUGH?</h3>
-                    <p style="font-size: 34px;">Write an article telling us
-                        <strong>what makes you laugh and why</strong>. Is it <strong>important for people to
-                            laugh</strong>?
-                    </p>
-                    <div class="teacher-tip" style="max-width: 800px; margin: 40px auto 0;">
-                        <strong>PRO TIP:</strong> See those 3 bold questions? If you miss one, it's <span
-                            style="color: red;">GAME OVER</span> for your score.
+                <div class="glass-box" style="text-align: center; max-width: 800px; margin: 0 auto;">
+                    <h3 style="color: yellow;">WHAT MAKES YOU LAUGH?</h3>
+                    <p>Write an article telling us <strong>what makes you laugh and why</strong>.</p>
+                    <div class="teacher-tip">
+                        <strong>PRO TIP:</strong> Check those 3 bold questions. Miss one and it's GAME OVER.
                     </div>
                 </div>
                 <div class="footer-branding">BELL LANGUAGE CENTRE</div>
@@ -288,118 +213,85 @@
             <section data-background-image="images/cyber_bg.png" data-background-opacity="0.1">
                 <div class="stage-badge">TASK 1: ANALYSIS</div>
                 <h2>The Perfect 20/20</h2>
-                <div class="two-col-grid">
-                    <div class="glass-box" style="font-family: 'Courier New', monospace;">
-                        <p><span class="q-highlight">[Q1]</span> "I love comedies... The comedy I love most is
-                            <strong>Chinese Running Man</strong>."</p>
-                        <p style="margin-top: 30px;"><span class="q-highlight">[Q2]</span> "Famous actors <strong>must
-                                overcome challenging quests</strong>... They tickle my funny bone!"</p>
-                        <p style="margin-top: 30px;"><span class="q-highlight">[Q3]</span> "Laughing helps
-                            <strong>release stress</strong>... and makes us more attractive too!"</p>
+                <div class="grid-wrapper">
+                    <div class="grid-col glass-box" style="font-family: 'Courier New', monospace; font-size: 0.8em;">
+                        <p><span style="background:yellow; color:black; padding:0 5px;">[Q1]</span> "I love comedies...
+                            especially <strong>Chinese Running Man</strong>."</p>
+                        <p style="margin-top: 15px;"><span
+                                style="background:yellow; color:black; padding:0 5px;">[Q2]</span> "Actors
+                            <strong>overcome quests</strong>... tickle my funny bone!"</p>
+                        <p style="margin-top: 15px;"><span
+                                style="background:yellow; color:black; padding:0 5px;">[Q3]</span> "Laughing
+                            <strong>releases stress</strong>... more attractive too!"</p>
                     </div>
-                    <div>
-                        <h3
-                            style="color: var(--cyan); background: black; display: inline-block; padding: 15px 30px; transform: rotate(-2deg); margin-bottom: 30px;">
-                            WHY IT WINS:</h3>
-                        <ul style="list-style: none; padding: 0;">
-                            <li style="margin-bottom: 20px;">✅ Hits all 3 targets.</li>
-                            <li style="margin-bottom: 20px;">✅ Real details.</li>
-                            <li style="margin-bottom: 20px;">✅ Strong opinions.</li>
+                    <div class="grid-col">
+                        <h3 style="font-size: 1.2em; color: var(--cyan);">WHY IT WINS:</h3>
+                        <ul style="font-size: 0.9em; list-style: none; padding: 0;">
+                            <li>✅ Hits all 3 targets.</li>
+                            <li>✅ Real details.</li>
+                            <li>✅ Strong opinions.</li>
                         </ul>
                     </div>
                 </div>
-                <div class="footer-branding">BELL LANGUAGE CENTRE</div>
             </section>
 
-            <!-- PHASE 3 SEGUE -->
+            <!-- PHASE 3 -->
             <section data-background-image="images/cyber_bg.png" data-background-opacity="0.1">
-                <h1 class="segue-title">PHASE 3:<br>THE BLUEPRINT</h1>
-                <p class="segue-subtitle">Don't build without a map.</p>
+                <h1 class="r-fit-text">PHASE 3: THE BLUEPRINT</h1>
             </section>
 
             <!-- ARCHITECTURE -->
             <section data-background-image="images/cyber_bg.png" data-background-opacity="0.1">
                 <div class="stage-badge">TASK 2: PLANNING</div>
                 <h2>The Logic Flow</h2>
-                <div class="two-col-grid">
-                    <div class="glass-box">
-                        <div style="margin-bottom: 40px;">
-                            <span class="q-highlight" style="font-size: 32px; background: var(--cyan);">1.
-                                HEADLINE</span>
-                            <p style="margin-top: 15px;">Your main point. The assertion. <br><em>"Computers are
-                                    essential."</em></p>
+                <div class="grid-wrapper">
+                    <div class="grid-col glass-box">
+                        <div style="margin-bottom: 20px;">
+                            <span style="background: var(--cyan); color:black; padding: 2px 10px;">1. HEADLINE</span>
+                            <p style="font-size: 0.8em;">Your assertion. "Computers are essential."</p>
                         </div>
                         <div>
-                            <span class="q-highlight" style="font-size: 32px; background: yellow;">2. EVIDENCE</span>
-                            <p style="margin-top: 15px;">The proof. The "because". <br><em>"For example, students use
-                                    them for..."</em></p>
+                            <span style="background: yellow; color:black; padding: 2px 10px;">2. EVIDENCE</span>
+                            <p style="font-size: 0.8em;">The proof. "For example, students use them..."</p>
                         </div>
                     </div>
-                    <div style="text-align: center;">
-                        <img src="images/structure.png" class="img-pedagogical">
+                    <div class="grid-col">
+                        <img src="images/structure.png" class="r-stretch">
                     </div>
                 </div>
                 <div class="footer-branding">BELL LANGUAGE CENTRE</div>
-            </section>
-
-            <!-- PHASE 4 SEGUE -->
-            <section data-background-image="images/cyber_bg.png" data-background-opacity="0.1">
-                <h1 class="segue-title">PHASE 4:<br>THE LOADOUT</h1>
-                <p class="segue-subtitle">Equip these weapons for higher scores.</p>
             </section>
 
             <!-- TOOLKIT -->
             <section data-background-image="images/cyber_bg.png" data-background-opacity="0.1">
                 <div class="stage-badge">TASK 3: TOOLBOX</div>
-                <h2>Vocabulary Weapons</h2>
+                <h2 class="r-fit-text">Vocabulary Weapons</h2>
                 <div class="glass-box">
-                    <div class="two-col-grid" style="gap: 80px;">
-                        <div>
-                            <p style="color: var(--cyan); font-weight: 800; font-size: 30px; margin-bottom: 10px;">
-                                PREFERENCE:</p>
-                            <p style="margin-bottom: 40px;">"The app I use most frequently is..."</p>
-
-                            <p style="color: var(--cyan); font-weight: 800; font-size: 30px; margin-bottom: 10px;">
-                                OPINION:</p>
-                            <p>"In my view, computers are essential because..."</p>
+                    <div class="grid-wrapper">
+                        <div class="grid-col">
+                            <p style="color: var(--cyan); font-weight: 800; font-size: 0.8em;">PREFERENCE:</p>
+                            <p style="font-size: 0.7em;">"The app I use most frequently is..."</p>
                         </div>
-                        <div>
-                            <p style="color: var(--cyan); font-weight: 800; font-size: 30px; margin-bottom: 10px;">
-                                PROOF:</p>
-                            <p style="margin-bottom: 40px;">"Furthermore, they allow us to..."</p>
-
-                            <p style="color: var(--cyan); font-weight: 800; font-size: 30px; margin-bottom: 10px;">
-                                POSSIBILITY:</p>
-                            <p>"It might make us..."</p>
+                        <div class="grid-col">
+                            <p style="color: var(--cyan); font-weight: 800; font-size: 0.8em;">PROOF:</p>
+                            <p style="font-size: 0.7em;">"Furthermore, they allow us to..."</p>
                         </div>
                     </div>
                 </div>
                 <div class="footer-branding">BELL LANGUAGE CENTRE</div>
             </section>
 
-            <!-- PHASE 5 SEGUE -->
-            <section data-background-image="images/cyber_bg.png" data-background-opacity="0.1">
-                <h1 class="segue-title">PHASE 5:<br>GO TIME</h1>
-                <p class="segue-subtitle">The mission starts now.</p>
-            </section>
-
             <!-- FINAL MISSION -->
             <section data-background-color="var(--maroon)">
                 <div class="stage-badge" style="background: black; color: white;">TASK 3: WRITING</div>
-                <div class="two-col-grid">
-                    <div style="text-align: center;">
-                        <img src="images/mission.png" class="img-pedagogical"
-                            style="border-color: black; box-shadow: 15px 15px 0px black;">
+                <div class="grid-wrapper">
+                    <div class="grid-col">
+                        <img src="images/mission.png" style="border: 3px solid black; max-height: 350px;">
                     </div>
-                    <div class="glass-box" style="background: rgba(0,0,0,0.6); border-color: black; box-shadow: none;">
-                        <p style="text-transform: uppercase; color: var(--cyan); font-weight: 900; font-size: 24px;">
-                            Articles wanted!</p>
-                        <h3 style="color: white; font-size: 60px; margin-bottom: 20px;">TECHNOLOGY AND YOU</h3>
-                        <p style="font-size: 30px;">Write about <strong>which website/app you like most</strong> and how
-                            often you use it. Do you think it is <strong>important for teenagers to have a
-                                computer</strong>? Why?</p>
-
-                        <div style="margin-top: 40px; text-align: center;">
+                    <div class="grid-col glass-box" style="background: rgba(0,0,0,0.6); border:none;">
+                        <h3 style="color: white; font-size: 1.2em;">TECHNOLOGY AND YOU</h3>
+                        <p style="font-size: 0.8em;">Write about your favorite app and if teenagers need computers.</p>
+                        <div style="text-align: center;">
                             <div id="countdown" class="timer-display">20:00</div>
                             <br>
                             <button id="timer-btn" class="timer-btn" onclick="toggleTimer()">START MISSION</button>
@@ -424,27 +316,21 @@
             progress: true,
             center: true,
             transition: 'convex',
-            backgroundTransition: 'convex',
-            width: 1920,
-            height: 1080,
+            width: 960,
+            height: 700,
             margin: 0.1,
-            minScale: 0.1,
-            maxScale: 1.2,
             autoPlayMedia: true
         });
 
-        // TIMER LOGIC
+        // TIMER
         let timeLeft = 20 * 60;
         let timerInterval;
         let isRunning = false;
-
         function updateTimerDisplay() {
             const minutes = Math.floor(timeLeft / 60);
             const seconds = timeLeft % 60;
-            document.getElementById('countdown').textContent =
-                `${minutes}:${seconds.toString().padStart(2, '0')}`;
+            document.getElementById('countdown').textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
         }
-
         function toggleTimer() {
             const btn = document.getElementById('timer-btn');
             if (isRunning) {
@@ -455,16 +341,8 @@
                 isRunning = true;
                 btn.textContent = 'PAUSE';
                 timerInterval = setInterval(() => {
-                    if (timeLeft > 0) {
-                        timeLeft--;
-                        updateTimerDisplay();
-                    } else {
-                        clearInterval(timerInterval);
-                        document.getElementById('countdown').textContent = "00:00";
-                        document.getElementById('countdown').style.color = "red";
-                        btn.textContent = 'MISSION COMPLETE';
-                        btn.disabled = true;
-                    }
+                    if (timeLeft > 0) { timeLeft--; updateTimerDisplay(); }
+                    else { clearInterval(timerInterval); btn.disabled = true; }
                 }, 1000);
             }
         }
