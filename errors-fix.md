@@ -400,3 +400,31 @@ This session proceeded without errors requiring fixes. The `writing-lesson-plans
 - **Issue**: Worksheet spilled to 5 pages.
 - **Fix**: Reducing writing lines and consolidating content.
 
+---
+
+## 2026-01-14 | Presentation Physics & Visual Process
+
+### "Webpage Logic" vs "Slide Physics" (The Overflow Error)
+- **Issue**: Presentation content "exploded" off the screen or overlapped.
+- **Cause**: Treating slides like responsive webpages (using `height: 100%`, flex percentages). Slides are Fixed Artboards (960x700). Fluid percentages resolve to 0 or infinity in strange contexts.
+- **Fix**: **Strict Fixed-Canvas Logic**.
+  1.  Use `row-container` with explicit pixel heights (e.g., `500px`).
+  2.  Hard-code `max-height: 400px` on ALL media (images/iframes).
+  3.  Move branding to `absolute` position (z-index 10) so it doesn't consume flow space.
+  4.  Use `r-fit-text` ONLY for titles (as it scales aggressively).
+
+### The "Code-First" Failure
+- **Issue**: Segues and layouts were ugly or broken ("poxy").
+- **Cause**: Jumping straight to HTML coding (`index.html`) without a visual plan.
+- **Fix**: **Mandatory 5-Step Gate**.
+  1.  **Visual Plan (Markdown)**: Describe the *look* first (Goal: High Visual Engagement).
+  2.  **User Approval**: Must explicitly approve the visual plan.
+  3.  **Wireframe**: Map 960x700 canvas logic in Mermaid.
+  4.  **Code**: Only now write HTML (using `REFERENCE_TEMPLATE.html`).
+  5.  **Deploy**.
+
+### GIF Backgrounds on Text
+- **Issue**: Matrix rain GIF made text unreadable ("Yuck").
+- **Lesson**: Motion backgrounds must be extremely subtle or use high-contrast text overlays. Static gradients ("Pop Style") are safer and often preferred.
+
+

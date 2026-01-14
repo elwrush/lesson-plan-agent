@@ -49,6 +49,7 @@ Rename the folder to the strict date format: `DD-MM-YY_Descriptive-Name`.
     git commit -m "feat: publish lesson [DATE]"
     git push origin main
     ```
-2.  Create a `.txt` file named **`DD-MM-YYYY-slideshow-link-[detail].txt`** containing the individual lesson URL.
-3.  **Copy** this file to the locally mapped Google Drive:
-    `G:\My Drive\A CLASSES- ED - TERM 2\M24A - M3-3A`
+2.  **Generate Link Doc**: Create an HTML file named **`DD-MM-YYYY-slideshow-link-[detail].html`** containing a large, clickable button to the live URL.
+3.  **Push to GDocs**: Use the `push_to_gdocs` skill (ADC) to upload this HTML file to the target Google Drive folder (converting it to a Google Doc).
+    > [!NOTE]
+    > **Cloudflare Pathing**: The `presentations/` folder is typically configured as the build root on Cloudflare. Therefore, the live URL should **not** include the `/presentations/` segment (e.g., Use `https://lesson-plan-agent.pages.dev/DD-MM-YY_Name/`).
