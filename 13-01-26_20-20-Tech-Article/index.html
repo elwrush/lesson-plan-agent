@@ -202,15 +202,17 @@
 </head>
 
 <body>
-    <!-- FIXED LOGO OVERLAY (outside Reveal.js transforms) - CACHE BUST: 2026-01-14T10:02 -->
-    <img src="images/ACT_transparent.png" id="logo-overlay"
-        style="position: fixed; top: 20px; right: 20px; height: 85px; z-index: 9999;">
-
     <div class="reveal">
         <div class="slides">
 
             <!-- SLIDE 1: TITLE -->
-            <section data-background-image="images/cyber_bg.png" data-background-opacity="0.2">
+            <section data-background-image="images/cyber_bg.png" data-background-opacity="0.2"
+                style="position: relative;">
+                <!-- LOGO - TOP RIGHT OF THIS SLIDE ONLY -->
+                <div style="position: absolute; top: 0; right: 0; left: 0; bottom: 0; pointer-events: none;">
+                    <img src="images/ACT_transparent.png"
+                        style="position: absolute; top: 10px; right: 10px; height: 85px;">
+                </div>
                 <div class="row-container" style="height: 500px;"> <!-- Explicit Container Height -->
                     <div class="col-40">
                         <img src="images/hero_v3.png" class="constrained-media"
