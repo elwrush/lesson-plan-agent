@@ -36,3 +36,30 @@
 ### Skill Upgrade
 - **`creating-html-presentation`**: Fully rewritten to version 2.3.
 - **Reference**: `REFERENCE_TEMPLATE.html` created and updated with new CSS (`.audio-player`).
+
+---
+
+## 2026-01-15 | Worksheet Graphics & Layout Refinement
+
+### Visual Upgrade: "Transparent Layouts" & "Defined Motifs"
+- **Goal**: Move away from blocky, whitespace-heavy images to integrated layouts.
+- **Action**:
+  -   **Trimming**: Implemented `trim_image.py` to auto-crop whitespace from generated assets.
+  -   **Transparency**: Enforced transparent PNGs for all non-rectangular motifs.
+  -   **Separators**: Standardized on "Wide Trimmed" motifs (e.g., EKG line) for section breaks.
+
+### Usability: "The Handwriting Standard"
+- **Problem**: Previous templates ignored physical space needed for handwriting.
+- **Solution**:
+  -   **Writing Tasks**: Dedicated page, Grouped Prompts, 10 Double-Spaced Lines (Dark Gray).
+  -   **Definitions**: `Word: ____________` layout (Auto + 1fr Line) with 1.5cm spacing.
+  -   **Matching**: Minimum 1cm gap between items.
+
+### Layout: "Booklet Safety"
+- **Constraint**: Printing on A3 folded (Booklet).
+- **Rule**: Content must never split across the "Page 4 -> 5" boundary (Sheet transition).
+- **Implementation**: Strict manual page breaks enforced at these boundaries to keep Tasks self-contained on a physical sheet.
+
+### Skill Update
+-   **`developing-bespoke-materials`**: Updated with strict rules for Pagination, Image Quality, and Handwriting Spacing.
+-   **`processing-images`**: Created new skill for image hygiene.

@@ -428,3 +428,35 @@ This session proceeded without errors requiring fixes. The `writing-lesson-plans
 - **Lesson**: Motion backgrounds must be extremely subtle or use high-contrast text overlays. Static gradients ("Pop Style") are safer and often preferred.
 
 
+---
+
+## 2026-01-15 | Worksheet Graphics & Layout Refinement
+
+### Typst Grid Repeat Logic
+- **Issue**: `#grid(rows: 10, line(...))` rendered only one line instead of ten.
+- **Cause**: Typst grids map content to cells 1:1. A single content item fills only the first cell.
+- **Fix**: Use `..range(10).map(_ => line(...))` to generate separate content items for each row.
+- **Lesson**: Grids do not auto-repeat content; explicit loops are required.
+
+### Meander & Image Alignment
+- **Issue**: Using `meander` with `dy` offsets for image placement was fragile and misaligned with text paragraphs.
+- **Fix**: Abandoned complex wrapping for standard block layout where possible, or placed images at `dy: 0` inside new flow contexts.
+- **Refinement**: Switched to **transparent PNGs** (via `processing-images`) to avoid ugly white boxes disrupting text flow.
+
+### Booklet Pagination Logic
+- **Issue**: Tasks breaking across the "Sheet Boundary" (e.g., Page 4 to 5) in a booklet layout.
+- **Fix**: Implemented strict **Manual Page Breaks** before tasks prone to spilling over sheet boundaries.
+- **Rule**: "Tasks must not break across the fold (4-5, 8-9)."
+
+### Handwriting Usability
+- **Error**: "Definition" tasks used cramped 2-column grids; Writing tasks had single ruled lines.
+- **Fix**:
+  -   **Definitions**: Single column (or Auto+Line), Double Spacing (`1.5cm`).
+  -   **Writing**: Grouped Prompts + 10 Double-Spaced Lines (Dark Gray).
+  -   **Gap**: Mandatory `1.5cm` gap between prompt and first line.
+
+### Nomenclature Confusion
+- **Issue**: Template referred to "Exercise 2" which didn't exist (it was "Task 2").
+- **Fix**: Updated standards to use **Spatial References** ("words above") or strict **Task X** naming.
+
+

@@ -28,7 +28,23 @@ Ask the user:
 Ask the user:
 > Are you creating these materials for **regular classes** (Bell) or the **Intensive program**?
 
-### Step 4: Development Phase
+### Step 4: Layout & Assets
+Ask the user:
+> 1. **Do you require images or diagrams** in this material? 
+>    If so, should the text **wrap around them** (using `meander`) or should they be placed in blocks?
+> 2. **Do you want to include a Name and Student ID block?** (Default is usually 'yes', but confirm).
+
+### Step 5: Design Proposal (Gated Step)
+Before proceeding to content development, **propose a specific design direction** to the user as a **single comprehensive package**. This is where you apply **Creative License**:
+- **Thematic Motifs**: Suggest graphic elements that evoke the subject matter (e.g., ECG lines for "Fight or Flight", organic shapes for nature, digital grids for technology).
+- **Title Design**: Propose a specific typographic treatment for the main header (e.g., "I'd like to design the header as a custom image to evoke a sense of speed/tension...").
+- **Asset Bundle**: Propose all motifs, icons, and title graphics as a group. **Do not generate images individually or repeatedly** without explicit user approval of the bundle to avoid rate-limiting.
+- **Font Selection**:
+    - **Display/Headers**: Suggest bold, evocative fonts or custom imagery.
+    - **Body/Reading**: **CRITICAL**: Always prioritize readability for the reading text. Suggest clean, widely-available fonts (Arial, Inter, Roboto).
+- **Wait for User Approval** of the design concept and asset bundle before moving to Step 6.
+
+### Step 6: Development Phase
 
 #### General Principles
 1.  **Header Images**:
@@ -57,13 +73,13 @@ Ask the user:
    - 🖼️ Images (use `generate_image` tool ONLY for content illustrations, not layout elements)
 3. Collaborate iteratively to develop the content
 
-### Step 5: Draft & Approval
+### Step 7: Draft & Approval
 1. Develop all materials in **Markdown format** first for content clarity, OR directly in HTML if the design is complex.
 3. **Do NOT open the file in a browser or external viewer automatically.**
 4. Instead, provide a **clickable link** in the chat for the user to open in their IDE preview.
 5. **Wait for explicit approval** before proceeding to any next steps (like Lesson Plans).
 
-### Step 6: Export & Format
+### Step 8: Export & Format
 
 #### For Materials (PDF Output)
 1. Use the **Typst-based** `generating-worksheets` skill. 
@@ -116,16 +132,45 @@ To get started, please tell me:
 - Aligned with CEFR descriptors for the target level
 - Clear instructions and rubrics where applicable
 - Consistent formatting throughout
-- **Mandatory Answer Key**: Every worksheet MUST have a complete answer key appended at the end.
+- **Mandatory Answers Key**: Every worksheet MUST have a complete answer key appended at the end.
 - **Mandatory Transcript**: If the materials involve a listening task, the full transcript MUST be included at the end (after the answer key).
+- **Internal References**: Avoid generic terms like "Exercise 2" unless specific numbers are visibly assigned. Prefer spatial references ("words above/below") or explicit Task references ("Task 2").
 
 ### Format Standards
 - **PDF Engine**: ALWAYS use **Typst**. 
 - **Headers**: Use the `#integrated_header()` function from the gold standard template.
 - **Typography**: Arial is standard for Typst worksheets.
-- **Layout**:
-    - Use the `#task_card()` component for boxed activities.
-    - Use the `#writing_lines(count: 15)` component for responses to prevent spillover.
+- **Written Response Tasks**:
+    -   **Layout**: These tasks must fit on a **single dedicated page** (use `#pagebreak()` before).
+    -   **Identity Block**: ALWAYS preface the task with the `#identity_block()` immediately after the header.
+    -   **Structure**: Group all prompts/questions at the top.
+    -   **The Gap**: Insert a spacing of `#v(1.5cm)` between the last question and the first ruled line.
+    -   **The Lines**: Provide a **single block** of dark gray lines (`stroke: 0.5pt + gray`) below.
+    -   **Spacing**: Use **Double Spacing** for the lines themselves (`row-gutter: 1.5cm`) to allow for corrections.
+    -   **Line Count**: Calculate required lines assuming **10 words per line**. (e.g., 100 words = 10 lines).
+- **Matching/List Questions**: When creating a list of matching questions (e.g., Question -> Answer box), ALWAYS use matching vertical spacing (e.g., `row-gutter: 1cm` or `0.8cm`) to allow space for handwriting. Do not tightly pack these items.
+- **Definition Tasks**: For tasks requiring written definitions, use a **Columns + Line** layout (e.g., `columns: (auto, 1fr)`), where the word is on the left and a rule extends to the right margin. Use generous vertical spacing (e.g., `row-gutter: 1.5cm`) to allow for two lines of handwriting if needed.
+- **Pagination & Duplexing**:
+    -   **Orphan Prevention**: Ensure task headers are never left alone at the bottom of a page. If a task header falls at the bottom, move it to the next page.
+    -   **Booklet Logic (Groups of 4)**: Materials are printed 2-up Double Sided (4 pages per sheet). Text flows freely between Pages 1-2, 2-3, 3-4.
+    -   **Hard Breaks**: **CRITICAL**: Tasks MUST NOT break across the sheet boundary (e.g., Page 4 to 5, or 8 to 9). Students should not have to flip a physical sheet to finish a single task. Insert an explicit `#pagebreak()` if a task risks straddling this boundary.
+- **Image Quality**:
+    -   **No Gradients**: Images must be suitable for grayscale photocopying (solid colors, clear contrast).
+    -   **Transparency**: Non-rectangular graphics must be **Transparent PNGs**.
+    -   **Trimming**: All generated images MUST be processed with the `processing-images` skill to remove whitespace.
+    -   **Aspect Ratio**: NEVER squash wide motifs. Use `width: 100%` and allow height to autosize (or use specific aspect-ratio preserving dimensions).
+### Creative License & Typography
+Don't settle for "cookie-cutter" designs. Use creative licence to make materials visually engaging and thematic:
+- **Thematic Motifs**: Look for opportunities to include stylistic elements like ECG blips, watermarks, or border styles that reflect the topic.
+- **Title Design**: 
+    - Use custom-generated images for main titles if raw text cannot capture the desired emotion.
+    - If using text, break titles into component parts with different styles (e.g., **Heavy** vs _Light_).
+- **Readability**: While headers can be experimental, **Reading Text must remain highly readable**. Do not use overly decorative or handwriting fonts for long passages of text.
+- **Font Combinations**:
+  - **Aggressive/Strong**: `Arial Black`, `Impact`, `weight: "black"`.
+  - **Speed/Movement**: `style: "italic"`, `weight: "light"`, `tracking: 0.2em`.
+  - **Technical/Report**: `Courier New`.
+- **Typst Layout Tools**: Use `#stack`, `#box`, and `align(horizon)` to create dynamic, non-linear headers.
 - **Self-Checks**: Include the `#radar_box()` or peer review checklists.
 - **Mandatory Page Breaks**: Use `#pagebreak()` between major sections or levels.
 
