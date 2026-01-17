@@ -2,19 +2,6 @@
     "name": "lesson-plan-agent",
     "compatibility_date": "2026-01-17",
     "assets": {
-        "directory": ".",
-        "exclude": [
-            ".git",
-            "node_modules",
-            "scripts",
-            "skills",
-            "knowledge_base",
-            ".gemini",
-            ".agent",
-            ".vscode",
-            ".idea",
-            "inputs",
-            "outputs"
-        ]
+        "directory": "./dist"
     }
 }

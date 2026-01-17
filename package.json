@@ -4,7 +4,9 @@
   "description": "AI-powered lesson planning assistant for English language teachers, built with Google Gemini and the Skills-based architecture.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "node scripts/build_dist.js",
+    "postinstall": "npm run build"
   },
   "repository": {
     "type": "git",
