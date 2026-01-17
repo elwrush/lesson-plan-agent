@@ -26,27 +26,15 @@
 // ==========================================
 
 // INTENSIVE HEADER BLOCK
+// INTENSIVE HEADER BLOCK
 #let intensive_header() = {
   block(
     width: 100%,
-    height: 1.5cm,
-    fill: maroon,
-    inset: (left: 0.8cm, right: 1cm),
-    radius: 0pt,
-    align(horizon + left)[
-      #stack(
-        dir: ltr,
-        spacing: 1.25em,
-        image("../../images/ACT_transparent.png", height: 0.75cm),
-        image("../../images/Bell.svg", height: 0.75cm),
-        h(0.2cm),
-        text(fill: white, size: 10.5pt, weight: "bold", tracking: 0.05em)[
-          BELL LANGUAGE CENTRE #h(0.5em) | #h(0.5em) INTENSIVE PROGRAM
-        ],
-      )
+    [
+      #image("/images/intensive-header.jpg", width: 100%)
     ],
   )
-  v(0.6cm)
+  v(0.3cm)
 }
 
 // TASK HEADER

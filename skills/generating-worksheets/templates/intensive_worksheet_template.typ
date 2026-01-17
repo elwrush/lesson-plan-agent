@@ -28,7 +28,7 @@
     width: 100%,
     [
       #image("/images/intensive-header.jpg", width: 100%)
-    ]
+    ],
   )
   v(0.3cm)
 }

@@ -19,7 +19,7 @@ Generates high-quality, print-ready PDF worksheets using **Typst**, offering sup
 ## Step 0: Context Check (MANDATORY)
 **Ask**: "Is this a **Bell** or **Intensive** worksheet?"
 - **If Bell**: Use the maroon strap header with ACT/Bell logos.
-- **If Intensive**: Use `images/intensive-header.jpg` as the full-width header image.
+- **If Intensive**: Use `images/intensive-header.jpg` as the full-width header image. **NEVER** use the maroon strap or text overlays for Intensive worksheets. The image contains all necessary branding.
 
 ## Reference Material
 - **Bell Template**: `knowledge_base/templates/grammar_repair_worksheet_gold.typ`
