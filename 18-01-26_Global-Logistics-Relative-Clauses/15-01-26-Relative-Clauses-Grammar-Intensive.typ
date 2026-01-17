@@ -108,7 +108,7 @@ _Example (ND):_ Pomegranates, which are delicious, are rich in vitamins.
 
 #stack(
   dir: ttb,
-  spacing: 0.8cm,
+  spacing: 0.4cm,
   ..t1_items
     .enumerate()
     .map(((i, item)) => grid(
@@ -132,7 +132,7 @@ _Example (ND):_ Pomegranates, which are delicious, are rich in vitamins.
 #let gapfill_exercise(items, placeholder: "__", line_length: 2.5cm) = {
   stack(
     dir: ttb,
-    spacing: 1cm,
+    spacing: 0.4cm,
     ..items
       .enumerate()
       .map(((i, item)) => {
@@ -167,6 +167,21 @@ _Example (ND):_ Pomegranates, which are delicious, are rich in vitamins.
 
 #v(0.6cm)
 
+// SINGLE SENTENCE WRITING COMPONENT (Local Definition)
+#let single_sentence_writing(items, vertical_space: 1.2cm) = {
+  stack(
+    dir: ttb,
+    spacing: 1cm,
+    ..items
+      .enumerate()
+      .map(((i, item)) => block(width: 100%, [
+        #text(weight: "bold")[#(i + 1). #item] \
+        #v(vertical_space)
+        #line(length: 100%, stroke: 0.5pt + gray)
+      ])),
+  )
+}
+
 #let t3_items = (
   "The people mostly eat fish. They live on small islands.",
   "Bottled water is more expensive than gas. It comes from other countries.",
@@ -174,17 +189,7 @@ _Example (ND):_ Pomegranates, which are delicious, are rich in vitamins.
   "The places are in the center of the country. They eat more meat.",
 )
 
-#stack(
-  dir: ttb,
-  spacing: 1cm,
-  ..t3_items
-    .enumerate()
-    .map(((i, item)) => block(width: 100%, [
-      #text(weight: "bold")[#(i + 1). #item] \
-      #v(0.2cm)
-      #line(length: 100%, stroke: 0.5pt + gray)
-    ])),
-)
+#single_sentence_writing(t3_items)
 
 #pagebreak()
 #v(0.4cm)

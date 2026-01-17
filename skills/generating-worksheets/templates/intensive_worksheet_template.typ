@@ -97,7 +97,7 @@
 #let gapfill_exercise(items, placeholder: "__", line_length: 2.5cm) = {
   stack(
     dir: ttb,
-    spacing: 1cm,
+    spacing: 0.4cm,
     ..items.enumerate().map(((i, item)) => {
       // Split the string by placeholder and rejoin with the visual line box
       let parts = item.split(placeholder)
@@ -112,6 +112,23 @@
         content
       )
     })
+  )
+}
+
+// ==========================================
+// 7. SINGLE SENTENCE WRITING (Modular)
+// ==========================================
+// Standard layout for rewrites: Question -> Vertical Space -> Full Width Line
+
+#let single_sentence_writing(items, vertical_space: 1.2cm) = {
+  stack(
+    dir: ttb,
+    spacing: 1cm,
+    ..items.enumerate().map(((i, item)) => block(width: 100%, [
+      #text(weight: "bold")[#(i + 1). #item] \
+      #v(vertical_space)
+      #line(length: 100%, stroke: 0.5pt + rgb("#E0E0E0")) // gray-line
+    ]))
   )
 }
 
