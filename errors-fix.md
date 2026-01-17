@@ -477,4 +477,20 @@ This session proceeded without errors requiring fixes. The `writing-lesson-plans
 ### Hallucinated Assets in Lesson Plan
 - **Issue**: Lesson plan procedure instructed to "Show photo of Thai student with EKG", which did not exist.
 - **Cause**: AI inventing ("hallucinating") specific visual details to make the lesson feel "real", without checking available assets.
-- **Fix**: Added strict "No Hallucinations" rule to `SKILL.md`. Procedures must only reference generic assets (e.g., "Display Title Graphic") or specific files verified in the `images/` folder.
+
+---
+
+## 2026-01-18 (Early Morning) | Cloudflare Deployment Catastrophe
+
+### "Asset Too Large" & Root 404
+- **Issue 1**: Cloudflare deployment failed with `Asset too large` (69.8 MiB > 25 MiB).
+- **Cause**: Wrangler attempted to upload the hidden `.git/` directory because `wrangler.jsonc` was set to `assets: { directory: "." }` and `.wranglerignore` was ignored or insufficient.
+- **Issue 2**: After excluding `.git`, the site deployed but returned **404**.
+- **Cause**: The `build_dist.js` script copied files to `dist/` but did not include the specific presentation subfolder content at the root. The generic `index.html` was missing.
+- **Fix**: Implemented a **"Whitelist Build Strategy"**:
+  1.  Created `scripts/build_dist.js` to explicitly copy *only* the active presentation folder contents + shared assets (`js`, `images`, `audio`) to a clean `dist/` directory.
+  2.  Targeted the specific presentation (e.g., `18-01-26_Global-Logistics...`) dynamically in the script.
+  3.  Updated `wrangler.jsonc` to deploy `dist/`.
+  4.  Added `"postinstall": "npm run build"` to `package.json` for CI automation.
+- **Rule**: **NEVER deploy the project root (`.`)**. ALWAYS build a clean `dist/` folder containing only the production assets.
+

@@ -1,63 +1,57 @@
 ---
 name: hosting-presentations
 description: >
-  Deploys HTML presentations to Cloudflare Pages and generates shareable links.
+  Deploys HTML presentations to Cloudflare Pages using a strict Whitelist Build Strategy.
   Use when the user wants to publish, host, or deploy a slideshow.
 ---
 
 # Skill: Hosting Presentations (`hosting-presentations`)
 
 ## Description
-This skill handles the publishing of HTML presentations to the **Cloudflare Pages Lesson Library**. It ensures that new lessons are added to the persistent `presentations/` folder, the index menu is updated, and the changes are pushed to GitHub for automatic deployment.
+This skill handles the publishing of HTML presentations to the **Cloudflare Pages Lesson Library**. It strictly enforces a **Whitelist Build Strategy** to prevent "Asset Too Large" errors and ensure only the active presentation is deployed.
 
-## Context
-Use this skill when:
-- An HTML presentation has been generated (e.g., in `inputs/`).
-- The user wants to "publish" or "host" the lesson.
-- The user needs a live URL for the classroom.
-
-## Prerequisites
-- **Git Repository**: Must be connected to Cloudflare Pages (`lesson-plan-agent`).
-- **Directory Structure**:
-    - `presentations/` (Root for Cloudflare)
-    - `presentations/index.html` (Menu)
-- **Local Sync Path**: `G:\My Drive\A CLASSES- ED - TERM 2\M24A - M3-3A`
+## Critical Rules
+> [!IMPORTANT]
+> **NEVER DEPLOY THE ROOT DIRECTORY (`.`)**.
+> You must ALWAYS build a clean `dist/` directory containing only the specific presentation files.
 
 ## Workflow
 
 ```mermaid
 graph TD
-    A[Start: Finished Presentation] --> B{Clean 'node_modules'?}
-    B -- Yes --> C[Remove dependency folders]
-    B -- No --> C
-    C --> D[Rename folder to DD-MM-YY_Name]
-    D --> E[Move to 'presentations/' directory]
-    E --> F[Update 'presentations/index.html']
-    F --> G[Git Add / Commit / Push]
-    G --> H[Cloudflare Auto-Deploys]
-    H --> I[Copy .txt link to G: Drive path]
+    A[Start: Finished Presentation] --> B[Identify Active Presentation Folder]
+    B --> C[Update scripts/build_dist.js]
+    C --> D[Run Local Build Test 'node scripts/build_dist.js']
+    D --> E{Build Success?}
+    E -- No --> C
+    E -- Yes --> F[Git Add/Commit/Push]
+    F --> G[Cloudflare CI Runs 'npm run build']
+    G --> H[Live URL Generated]
+    H --> I[Update link.html confirmation]
     I --> J[End]
 ```
 
-### 1. Preparation
-Ensure the presentation is lightweight (CDN links, no local `node_modules`).
+### 1. Configuration
+1.  **Locate Active Folder**: Identify the specific subfolder containing the `index.html` presentation (e.g., `18-01-26_Global-Logistics...`).
+2.  **Update Build Script**:
+    - Open `scripts/build_dist.js`.
+    - Update `PRESENTATION_DIR` to point to the active folder.
+    - Ensure `INCLUDES` contains necessary shared assets (`js`, `images`, `audio`).
 
-### 2. Standardization
-Rename the folder to the strict date format: `DD-MM-YY_Descriptive-Name`.
+### 2. Local Verification
+1.  **Run**: `node scripts/build_dist.js`
+2.  **Verify**: Check that the `dist/` folder contains:
+    - `index.html` (at the root)
+    - `images/`, `js/`, `audio/` (folders)
+    - **NO** hidden files (`.git`, `node_modules`).
 
-### 3. Integration
-1.  Move the folder into `presentations/`.
-2.  Add a generic HTML link card to `presentations/index.html`.
+### 3. Deployment
+1.  **Commit**: Commit the updated `build_dist.js` and any presentation changes.
+    - `git add scripts/build_dist.js [presentation_folder]`
+    - `git commit -m "chore: target [presentation_name] for deployment"`
+    - `git push origin main`
+2.  **Wait**: Cloudflare will detect the commit, run `npm run build` (triggering your script), and deploy the `dist/` folder.
 
-### 4. Deployment & GDoc Link
-1.  Execute the Git commands to trigger the Cloudflare build.
-    ```bash
-    git add presentations/
-    git commit -m "feat: publish lesson [DATE]"
-    git push origin main
-    ```
-2.  **Generate GDoc Button**: 
-    - Create a helper `.html` file containing a styled link button to the live Cloudflare URL (example: `https://lesson-plan-agent.pages.dev/DD-MM-YY_Name/`).
-3.  **Push to GDocs**: Run the deterministic script `python scripts/push_to_gdocs.py --file [helper.html] --name [doc_name]` to convert the button into a native Google Doc in the target folder.
-    > [!NOTE]
-    > **ADC Required**: Ensure Application Default Credentials (ADC) are active for the script to function correctly.
+### 4. confirmation
+1.  Update the `link.html` or similar helper file to point to the live worker URL (e.g., `https://lesson-plan-agent.elwrushmel.workers.dev/`).
+2.  Provide this link to the user.

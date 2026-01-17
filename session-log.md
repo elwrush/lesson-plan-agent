@@ -210,5 +210,9 @@
     - Moved script to root (`/js/slide-components.js`) and used absolute paths.
     - **Inlined JavaScript directly into `index.html`** (Best Practice for reliability).
     - Created `live.html` to bypass potential browser caching.
-- **Current Status**: Cloudflare Pages appears to be **stuck** or failing to build. It ignores new git pushes and continues to serve an old version of the site (missing the inlined script). `live.html` returns 404, confirming the deployment pipeline is halted.
-- **Action**: User restarting IDE/Environment. Recommended checking Cloudflare Dashboard for "Build Failed" or "paused" status.
+- **Deployment Failure**: Initial git push triggered "Asset too large" error (uploading `.git` folder).
+- **Resolution**:
+    - **Architecture**: Implemented a **"Whitelist Build Strategy"**.
+    - **Script**: `scripts/build_dist.js` now builds a clean `dist/` folder containing *only* the specific presentation content and shared assets.
+    - **CI**: Configured `package.json` (`postinstall`) and `wrangler.jsonc` to deploy this clean `dist/` folder.
+- **Status**: **SUCCESS**. Presentation is live and fully functional at the worker URL.
