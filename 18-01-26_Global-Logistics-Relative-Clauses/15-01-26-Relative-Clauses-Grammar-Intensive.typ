@@ -128,26 +128,39 @@ _Example (ND):_ Pomegranates, which are delicious, are rich in vitamins.
 
 #v(0.6cm)
 
+// GAPFILL COMPONENT (Local Definition for immediate stability)
+#let gapfill_exercise(items, placeholder: "__", line_length: 2.5cm) = {
+  stack(
+    dir: ttb,
+    spacing: 1cm,
+    ..items
+      .enumerate()
+      .map(((i, item)) => {
+        let parts = item.split(placeholder)
+        let content = parts
+          .intersperse(
+            box(width: line_length, height: 1em, stroke: (bottom: 0.5pt + black), baseline: 0.2em),
+          )
+          .join()
+        grid(
+          columns: (auto, 1fr),
+          gutter: 1em,
+          text(weight: "bold")[#(i + 1).], content,
+        )
+      }),
+  )
+}
+
 #let t2_items = (
-  "People #h(2cm) lived in the countryside were given a small piece of land to farm.",
-  "In the past, people lived #h(2cm) it was easy to grow their own food.",
-  "The new kinds of food #h(2cm) are popular nowadays are usually processed.",
-  "The food #h(2cm) we eat in my country is usually imported.",
-  "In hot and dry places #h(2cm) there is little rain, it is hard to grow food.",
-  "People living in the city, #h(2cm) are usually richer, do not eat as much fruit.",
+  "People __ lived in the countryside were given a small piece of land to farm.",
+  "In the past, people lived __ it was easy to grow their own food.",
+  "The new kinds of food __ are popular nowadays are usually processed.",
+  "The food __ we eat in my country is usually imported.",
+  "In hot and dry places __ there is little rain, it is hard to grow food.",
+  "People living in the city, __ are usually richer, do not eat as much fruit.",
 )
 
-#stack(
-  dir: ttb,
-  spacing: 1cm,
-  ..t2_items
-    .enumerate()
-    .map(((i, item)) => grid(
-      columns: (auto, 1fr),
-      gutter: 1em,
-      [#text(weight: "bold")[#(i + 1).]], [#eval(item, mode: "markup")],
-    )),
-)
+#gapfill_exercise(t2_items)
 
 #task_header(3, "SENTENCE JOINING")
 #text(style: "italic")[Join the sentences using a relative clause after the subject.]

@@ -89,6 +89,30 @@
     #text(fill: white, weight: "bold", size: 12pt)[ANSWER KEY (For Teacher Reference)]
   ])
   v(0.5cm)
+// ==========================================
+// 6. GAPFILL COMPONENT (Modular)
+// ==========================================
+// Requires a placeholder string in items (e.g. "__") which is replaced by a writing line.
+
+#let gapfill_exercise(items, placeholder: "__", line_length: 2.5cm) = {
+  stack(
+    dir: ttb,
+    spacing: 1cm,
+    ..items.enumerate().map(((i, item)) => {
+      // Split the string by placeholder and rejoin with the visual line box
+      let parts = item.split(placeholder)
+      let content = parts.intersperse(
+        box(width: line_length, height: 1em, stroke: (bottom: 0.5pt + black), baseline: 0.2em)
+      ).join()
+      
+      grid(
+        columns: (auto, 1fr),
+        gutter: 1em,
+        text(weight: "bold")[#(i + 1).],
+        content
+      )
+    })
+  )
 }
 
 // ==========================================
