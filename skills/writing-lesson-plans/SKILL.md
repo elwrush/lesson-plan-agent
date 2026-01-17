@@ -104,11 +104,12 @@ Wait for user approval before proceeding.
 > 3. **Use similar stage headers** - e.g., "Lead-in", "Reading for detail", "Post-reading"
 > 4. **Maintain similar timing proportions** - the model shows where to invest time
 > 5. **Consolidate activities** into logical stages rather than listing each exercise separately
+6. **Explicit Task Referencing**: Always reference specific task/exercise numbers (e.g., "Task 2: Global Reading") within the Procedure column. This ensures the lesson plan is directly anchored to the materials.
 > 
 > **Example: Shape E (Receptive Skills) model has only 3 stages:**
 > - Stage 1: Lead-in (6 min) - Multi-part warmup with prediction/discussion
 > - Stage 2: Reading for detail and specific information (22 min) - Main reading tasks
-> - Stage 3: Post-reading speaking task (2 min) - Brief personalization/discussion
+> - Stage 3: Post-reading task (2 min) - Brief personalization or 70-word response
 > 
 > **Do NOT** create 6+ granular stages for each worksheet section. Combine related activities into coherent stages that match the model.
 
@@ -120,144 +121,106 @@ Wait for user approval before proceeding.
 > Instead:
 > - **McKinsey Logic**: Use the **SCR Framework** (Situation, Complication, Resolution) to structure the lesson flow.
 > - **Dot-Dash Strategy**: Organize key points as **Dots** (Headlines) and evidence as **Dashes** (Details).
-> - **Similes over Metaphors**: When explain pedagogy, use **professional similes** rather than deep metaphors. 
+> - **Similes over Metaphors**: When explaining pedagogy, use **professional similes** rather than deep metaphors. 
 >   - *Example (Simile)*: "Like an architect sketching a plan, we must outline our ideas before writing."
 >   - *Avoid (Labored Metaphor)*: "You are the Programmer, and Paragraph 2 is your System Architecture."
 > - **Strategic Clarity**: Frame material as an expert consultant would—focused on *influence* and *clarity*.
+- **No Rewards/Dojos**: NEVER include mentions of "Dojo rewards", "stickers", or any other artificial reward systems. The focus is on intrinsic motivation and professional task engagement.
+- **No Hallucinations**: Do NOT invent visual materials (e.g., "Show photo of Thai student with EKG") unless they definitively exist in the `images/` or materials folder. Use generic references to the title/topic if unsure.
 
-### Step 8: Write Lesson Plan (HTML for GDocs)
+### Step 8: Write Lesson Plan (Typst Format)
 
-Generate the lesson plan **directly in HTML format** for native Google Docs editing. 
+Generate the lesson plan **in Typst format** for professional PDF output. Use the standardized component library.
 
 > [!IMPORTANT]
-> **Gold Standard Template**: Use `inputs/05-Social-Media-Reading/06-01-26-LP B1-Social-Media-Reading-Shape H.html` as the structural and styling reference.
-> - Use 1-cell tables for colored boxes (e.g. Differentiation).
-> - Use standard HTML tables for lesson stages.
-> - Ensure all styles are **inline** (`style="..."`).
-> - Use **relative paths** for images to ensure correct base64 embedding during push (`../../images/...`).
+> **Output Format**: Typst (`.typ`) files compiled to PDF using the `compiling-typst-docs` skill.
+> - Typst provides version control, reusability, and consistent branding.
+> - **Template Import**: Always import the components at the top:
+>   `#import "../../skills/writing-lesson-plans/templates/lesson-plan-components.typ": *`
 
 #### File Naming Convention
 Store in the **source folder** (same as materials) with this format:
 ```
-DD-MM-YYYY-LP [CEFR]-[topic]-[skill or system]-[Shape]
+DD-MM-YYYY-LP-[CEFR]-[topic]-[Shape].typ
 ```
-*(Note: Use 4-digit year as per latest user request)*
+*(Note: Use 4-digit year)*
 
-#### HTML Structure
+#### Typst Structure
 
-> [!IMPORTANT]
-> **See [REFERENCE.md#html-template](REFERENCE.md#html-template)** for the complete HTML boilerplate.
->
-> - **Gold Standard**: `inputs/05-Social-Media-Reading/06-01-26-LP B1-Social-Media-Reading-Shape H.html`
-> - Use 1-cell tables for colored boxes (e.g., Differentiation).
-> - Use standard HTML tables for lesson stages.
-> - Ensure all styles are **inline** (`style="..."`).
-> - Use **relative paths** for images: `../../images/...`
+**Template Boilerplate:**
 
-#### Color Scheme (ACT Maroon Branding)
-- Title: `#A62D26` | Table header: `#A62D26` | Stage rows: `#cb5c55` | Alternating row: `#fceceb`
+```typst
+#import "../../skills/writing-lesson-plans/templates/lesson-plan-components.typ": *
 
-#### McKinsey Logic Checks (MANDATORY)
+#set page(paper: "a4", margin: (top: 1.5cm, bottom: 2cm, x: 2cm))
+#set text(font: "Arial", size: 10pt, fill: rgb("#333333"))
+#set par(leading: 0.65em, justify: false)
 
-Before finalizing:
-1. **Horizontal Flow (The Story)**: Can you understand the lesson's narrative path by reading ONLY the stage headers?
-2. **Vertical Flow (The Proof)**: Does every activity explicitly support the lesson objective or Stage Aim?
+#lesson_header("[bell or intensive]")
 
-#### Bullet Points (Google Docs Compatible)
-- Use proper HTML lists `<ul>` and `<li>` in the Procedure column.
-- Apply margin styling: `<ul style="margin: 5pt 0 0 0; padding-left: 20px;">`
+#metadata_table((
+  teacher: "Ed Rush",
+  date: "[DD-MM-YYYY]",
+  cefr: "[Level]",
+  duration: "[XX Minutes]",
+  shape: "[X (Name)]",
+  assessment: "[N/A or CA]",
+  focus: "[Focus]",
+  materials: "[filename]",
+))
 
+#v(0.5cm)
 
-**Line Spacing:**
-- All text: `line-height: 1.15` (set on body tag)
+#main_aim_box[
+  By the end of the lesson, learners will have practiced...
+]
 
-#### After Generation
+#v(0.5cm)
 
-1. Save the HTML file to the source folder
+#differentiation_box[
+  This lesson employs a "Tiered Text" strategy, allowing students to self-select between B1, B1+, and B2 versions of the core material. This approach is grounded in *Krashen's Input Hypothesis (1982)*, which posits that language acquisition occurs when learners receive "comprehensible input" (i+1). 
+]
 
-2. **🔍 RUN VALIDATOR**: Check lesson plan for compliance
-   ```bash
-   python skills/writing-lesson-plans/scripts/validate_lesson_plan.py <lesson_plan.html>
-   ```
-   - **Checks performed**:
-     - ❌ Timing sums to total duration
-     - ❌ Pre-teach vocabulary (Shape E-H)
-     - ❌ Thai scaffolding in vocabulary
-     - ⚠️ Answer key present
-     - ⚠️ Stage structure
-   - **Fix ALL errors** before proceeding
+#v(0.5cm)
 
-3. **🚦 USER REVIEW GATE**: User reviews via IDE preview
-   - Do NOT open the file in a browser automatically.
-   - Wait for the user to review the file in their IDE.
-   - If user requests changes, edit and go back to step 2.
-   - **DO NOT proceed until user approves**
+#stage_table((
+  stage("ONE", "Lead-in", "8", "To activate schema...", [
+    - Procedure point 1...
+    - Procedure point 2...
+  ], "T-Ss / Ss-Ss"),
+))
+```
 
+#### 🔍 MANDATORY: Review & Polish
 
-#### Required Additions
+Before finalizing the plan, you **MUST** conduct a self-evaluation:
 
-> [!IMPORTANT]
-> - **Shape E (Receptive Skills)**: MUST include a "Pre-teach Vocabulary" stage immediately after Lead-in
-> - **Shape E (Listening)**: Include full transcript at the end
-> - **All lessons with exercises**: Include answer keys as footer section
+1.  **Consult the Model**: Open `knowledge_base/shapes/shape-[letter].yaml`.
+2.  **Evaluate Detail**: Does your procedure have the same level of granular detail as the `example_lesson_plan` in the model?
+3.  **Correct Truncation**: Expand procedures with specific pedagogical steps if they look too brief.
+4.  **🔍 CHECK FOR ORPHANS**: Ensure no "Stage Header" (maroon row) is left alone at the bottom of a page. 
+    - **To Fix**: If a Stage Header is orphaned, split the `stage_table` into two separate calls and insert `#pagebreak()` between them in the `.typ` file.
+5.  **Verification**: You will be judged on whether the lesson plan feels as "thick" and professional as the model.
+
+#### 🧪 Step 9: Validate (MANDATORY)
+Run the validator before finalizing:
+```powershell
+python skills/writing-lesson-plans/scripts/validate_lesson_plan.py "path/to/lesson-plan.typ" --mode [bell|intensive]
+```
+- **Rule**: If the script fails, fix the issues and re-run until it passes.
 
 #### Pre-teach Vocabulary Format (Shape E)
 
-Select **5 words** from the source text that would be challenging for learners at the given CEFR level.
-
-**Format for each word:**
+Select **5 words** from the source text.
 
 ```
-### [number]. word /phonemic script/: Thai translation
-English context sentence with **target word** highlighted.
-Thai context sentence with **คำแปล** highlighted.
+### 1. word /phonetic/: English context sentence (implies meaning).
+Thai translation: Thai context sentence (implies meaning).
 ```
-
-**Complete Example:**
-
-```
-### 1. postpone /pəʊstˈpəʊn/: เลื่อน
-They decided to **postpone** the meeting until next week.
-พวกเขาตัดสินใจ**เลื่อน**การประชุมไปสัปดาห์หน้า
-
-### 2. behavior /bɪˈheɪvjər/: พฤติกรรม
-Teachers should always model good **behavior** in the classroom.
-ครูควรเป็นแบบอย่างของ**พฤติกรรม**ที่ดีในห้องเรียนเสมอ
-
-### 3. interrupt /ˌɪntəˈrʌpt/: ขัดจังหวะ
-It's not polite to **interrupt** people when they're talking.
-การ**ขัดจังหวะ**คนอื่นตอนพวกเขากำลังพูดไม่สุภาพ
-
-### 4. appropriate /əˈprəʊpriət/: เหมาะสม
-Wearing formal clothes is **appropriate** for a job interview.
-การแต่งกายอย่างเป็นทางการ**เหมาะสม**สำหรับการสัมภาษณ์งาน
-
-### 5. acceptable /əkˈseptəbl/: ยอมรับได้
-Using your phone during class is not **acceptable**.
-การใช้โทรศัพท์ในระหว่างเรียนไม่**ยอมรับได้**
-```
-
-### Step 9: Export & Archiving
-
-Once the lesson plan is approved:
-1.  **Push to GDocs**: Use the `push_to_gdocs` skill (via ADC) to create the cloud version.
-2.  **Save Locally**: Copy the final HTML file to the local Google Drive path based on lesson type:
-    - **Intensive**: `G:\My Drive\A CLASSES- ED - TERM 2\INTENSIVE - SHORTCUT FROM HERE`
-    - **Regular Bell**: `G:\My Drive\A CLASSES- ED - TERM 2\M24A - M3-3A`
-    *(Naming: `DD-MM-YYYY-LP-[CEFR]-[Topic].html`)*
 
 ---
 
 ## Reference Files
 
-For full lesson shape details and examples, see:
 - [REFERENCE.md](REFERENCE.md) - Shape summaries
-- [knowledge_base/shapes/](file:///c:/PROJECTS/LESSONS%20AND%20SLIDESHOWS%202/knowledge_base/shapes/) - Complete shape definitions (modular files)
-  - Shapes A-G: Traditional lesson frameworks
-  - Shapes H-J: SCR (Situation-Complication-Resolution) frameworks for Thai middle schoolers
-
----
-
-## Output Example
-
-See [REFERENCE.md](REFERENCE.md) for a complete lesson plan example.
+- [knowledge_base/shapes/](file:///c:/PROJECTS/LESSONS%20AND%20SLIDESHOWS%202/knowledge_base/shapes/) - Complete shape definitions

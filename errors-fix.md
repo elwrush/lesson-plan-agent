@@ -315,12 +315,6 @@ This session proceeded without errors requiring fixes. The `writing-lesson-plans
 - **Fix**: Added `'fields': 'pageBackgroundFill.solidFill.color'` to the request dictionary.
 - **Lesson**: Always specify `fields` for `updatePageProperties` requests in the Google Slides API.
 
-### Google Slides API `updatePageProperties` Error
-- **Issue**: `HttpError 400` with message `At least one field must be listed in 'fields'`.
-- **Cause**: The `updatePageProperties` request (used for background color) requires a `fields` parameter to specify which properties to update, unlike some other requests which infer it.
-- **Fix**: Added `'fields': 'pageBackgroundFill.solidFill.color'` to the request dictionary.
-- **Lesson**: Always specify `fields` for `updatePageProperties` requests in the Google Slides API.
-
 ## 2026-01-05
 
 ### UnicodeEncodeError in Console Output (Windows)
@@ -430,7 +424,7 @@ This session proceeded without errors requiring fixes. The `writing-lesson-plans
 
 ---
 
-## 2026-01-15 | Worksheet Graphics & Layout Refinement
+## 2026-01-15 (Morning) | Worksheet Graphics & Layout Refinement
 
 ### Typst Grid Repeat Logic
 - **Issue**: `#grid(rows: 10, line(...))` rendered only one line instead of ten.
@@ -454,9 +448,33 @@ This session proceeded without errors requiring fixes. The `writing-lesson-plans
   -   **Definitions**: Single column (or Auto+Line), Double Spacing (`1.5cm`).
   -   **Writing**: Grouped Prompts + 10 Double-Spaced Lines (Dark Gray).
   -   **Gap**: Mandatory `1.5cm` gap between prompt and first line.
+  -   **Spatial References**: Use "words above" or strict Task X naming.
 
-### Nomenclature Confusion
-- **Issue**: Template referred to "Exercise 2" which didn't exist (it was "Task 2").
-- **Fix**: Updated standards to use **Spatial References** ("words above") or strict **Task X** naming.
+---
 
+## 2026-01-15 (Midday) | Typst Lesson Planning & Cleanup
 
+### Typst Stage Header Orphaned
+- **Issue**: Stage header (maroon row) appeared alone at the bottom of the page.
+- **Cause**: Typst tables don't automatically keep headers with rows when forced to break by content.
+- **Fix**: Split the `stage_table` into two separate calls in the `.typ` file and insert a manual `#pagebreak()` between them.
+- **Rule**: "Stage Heading + Procedure MUST share a page."
+
+### Unclosed Raw Text in Component Template
+- **Issue**: Typst compiler error `error: unclosed raw text`.
+- **Cause**: Accidental triple backticks (```) left at the end of the `lesson-plan-components.typ` file after an edit.
+- **Fix**: Deleted the stray backticks.
+
+### Relative Image Paths in Shared Components
+- **Issue**: `lesson_header()` failed to find `bell-header.jpg` (`file not found`).
+- **Cause**: Path was `../../images/`, which works for root but fails when the component is imported by a file 3 levels deep (`inputs/folder/file.typ`).
+- **Fix**: Corrected path to `../../../images/` in the shared component template.
+
+### Differentiated Input Branding
+- **Issue**: Rationale box showed "Optimal Input" or "Pedagogical Rationale: Optimal Input".
+- **Fix**: Standardized the component to always render **Differentiated Input** (Bold) then **Pedagogical Rationale: Differentiated Input & Learner Autonomy** (Italic).
+
+### Hallucinated Assets in Lesson Plan
+- **Issue**: Lesson plan procedure instructed to "Show photo of Thai student with EKG", which did not exist.
+- **Cause**: AI inventing ("hallucinating") specific visual details to make the lesson feel "real", without checking available assets.
+- **Fix**: Added strict "No Hallucinations" rule to `SKILL.md`. Procedures must only reference generic assets (e.g., "Display Title Graphic") or specific files verified in the `images/` folder.

@@ -13,7 +13,7 @@
         csv: |
           Stage,Aim,Procedure,Time,Interaction
           1,To lead-in,"- Mini WB quiz about Nelson Dellis, the memory athlete.- 1 mini WB per student. Ss negotiate and agree on the answers. Everybody writes.
-             Award points.",3,T-Ss
+             Check answers.",3,T-Ss
       - header: Clarifying target language – present perfect and simple past
         csv: |
           Stage,Aim,Procedure,Time,Interaction
@@ -166,7 +166,7 @@
           3,To speaking practice (pron),"- Press the chicken buzzer to get Ss to sit in circles.- Hand
             out the A3 finger slaps game.- Elicit the animals from each group.- Ss
             have to say the animal name, the other Ss race to touch with their finger.-
-            The first student to touch the animal will get a point and become the teacher.-
+             The first student to touch the animal becomes the teacher.-
             Monitor and assist.- Feedback on output from the Ss.",0,Ss-Ss
       - header: Picture Dictionary (Form)
         csv: |
@@ -196,8 +196,8 @@
           Stage,Aim,Procedure,Time,Interaction
           1,To lead-in,"- Part 1 – Mini WB. 1 per student. Ss work in teams to answer
             the question "How many languages are spoken in the world?" (approximately
-            7,000). Tell Ss that the team that gets the closest answer will get 1 dojo.
-            1 min. Feedback.- Part 2 – Display the following sentence on PP. "By the
+             7,000). Tell Ss that the team that gets the closest answer wins.
+             1 min. Feedback.- Part 2 – Display the following sentence on PP. "By the
             end of the century, 3,500 will have disappeared". In pairs, Ss decide if
             the sentence is true or false and why (it's true). 1 min. Feedback. In
             new pairs, Ss tell each other 3 reasons why this is a bad thing. 2 min.
@@ -215,8 +215,8 @@
             detail + CA – tell ss to open their books to page 111. Hand out the worksheet.
             Tell Ss to read the text again to decide if the sentences are true or false
             and to correct the false ones. Tell Ss that this will be a CA. Elicit
-            rules. 8 min. Then, Ss swap worksheets and check each other's score. Collect
-            scores.",22,Ss-Ss
+             rules. 8 min. Then, Ss swap worksheets and check each other's work. Collect
+             work.",22,Ss-Ss
       - header: Post-reading speaking task
         csv: |
           Stage,Aim,Procedure,Time,Interaction
@@ -237,7 +237,7 @@
       - header: Lead-in
         csv: |
           Stage,Aim,Procedure,Time,Interaction
-          1,To lead-in,"- Elicit from Ss what they learned yesterday (connecting words, topic and supporting sentences).- Tell Ss that today we will follow-up on this topic.- Ss work in teams. 1 mini WB per student. Tell them that yesterday they studied 7 connecting words.- They have 1 minute to come up with as many connecting words as possible and that the number of words they get correct will be number of dojos they get. 1 min.- Feedback. Award points.",4,Ss-Ss
+          1,To lead-in,"- Elicit from Ss what they learned yesterday (connecting words, topic and supporting sentences).- Tell Ss that today we will follow-up on this topic.- Ss work in teams. 1 mini WB per student. Tell them that yesterday they studied 7 connecting words.- They have 1 minute to come up with as many connecting words as possible. 1 min.- Feedback.",4,Ss-Ss
       - header: Writing task (process writing) – CA – Display Work -
         csv: |
           Stage,Aim,Procedure,Time,Interaction

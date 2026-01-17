@@ -63,3 +63,142 @@
 ### Skill Update
 -   **`developing-bespoke-materials`**: Updated with strict rules for Pagination, Image Quality, and Handwriting Spacing.
 -   **`processing-images`**: Created new skill for image hygiene.
+
+---
+
+## 2026-01-15 (Midday) | Typst-Only Workflow & HTML Decommissioning
+
+### Key Technical Achievement: Typst Standardization
+- **Pivot**: Successfully completed transition to **100% Typst-only** workflow for professional PDF lesson plans.
+- **Decommissioning**: Fully removed legacy HTML-to-GDocs pipelines, WeasyPrint-related scripts, and the `pushing-to-gdocs` skill.
+- **Centralization**: All lesson plan UI components (Headers, Metadata, Stage Tables) now live in a single library: `skills/writing-lesson-plans/templates/lesson-plan-components.typ`.
+
+### Workflow Optimization: "The Orphan Fix"
+- **Standard**: Implemented a mandatory "Self-Audit for Orphans" in the workflow.
+- **Implementation**: If a Stage Heading is orphaned, the `stage_table` is split into two blocks with a manual `#pagebreak()` in between.
+- **Validation**: Updated `validate_lesson_plan.py` to be 100% Typst-focused (removing HTML parsing logic).
+
+### Branding & Pedagogy
+- **Naming**: Formally adopted **"Differentiated Input"** as the standard terminology for student text choice, replacing "Optimal Input".
+- **Density**: Validated "Fight or Flight" (Shape E) for detail density against the model YAML, ensuring procedures are "thick" and professional.
+- **Ethics**: Implemented strict rules against **"Dojo Rewards"** (Intrinsic motivation only) and **"Hallucinated Assets"** (Lesson plans must only reference existing files).
+
+### Housekeeping: Decommissioning
+- **Action**: Deleted `design-slides` workflow and confirmed removal of legacy `designing-slides` skill artifacts. This is replaced by the modern `creating-html-presentation` standard.
+
+---
+
+## 2026-01-15 (Afternoon) | Presentation Workflow Violations Identified
+
+### Critical Issue: Skill Non-Compliance
+- **Problem**: During creation of "Relative Clauses" presentation, multiple violations of the `creating-html-presentation` skill workflow were identified.
+- **Root Cause**: Agent did not strictly follow the 5-step gated workflow defined in `skills/creating-html-presentation/SKILL.md`.
+
+### Violations Detected:
+1. **Missing Answer Slides**: Initial version did not include answer key slides (required by pedagogical standards).
+2. **Content Overflow**: Font sizes too large, causing text to overflow slide boundaries (violated Fixed Canvas Logic).
+3. **Incomplete Interleaving**: Answers were not properly interleaved after each task slide.
+
+### Corrective Actions Taken:
+- Added 3 answer key slides (Task 1, 2, 3 answers).
+- Reduced font sizes across all slides for proper fit within 960x700 canvas.
+- Compressed table layouts and shortened text where necessary.
+
+### Mandatory Reminder for Future Sessions:
+⚠️ **ALWAYS REVIEW `skills/creating-html-presentation/SKILL.md` BEFORE CREATING PRESENTATIONS**
+- The skill contains critical workflow gates and quality standards.
+- Do NOT skip the Visual Plan approval step.
+- Do NOT assume answer slides are optional.
+- Do NOT use fluid layouts or percentage-based heights.
+
+### Action Item:
+- Future agents must explicitly confirm they have read the skill file before proceeding with presentation creation.
+
+---
+
+## 2026-01-16 | Full Skill Audit & Global Documentation Skills
+
+### Major Achievement: Project-Wide Skill Compliance Audit
+- **Action**: Evaluated all 8 project skills against `knowledge_base/using-skills.md` standards.
+- **Result**: All skills now fully compliant with:
+  - YAML frontmatter (name + description)
+  - Third-person descriptions
+  - Gerund naming convention
+  - Deterministic validator scripts
+  - Explicit workflow gates
+
+### Skills Fixed:
+| Skill | Issue | Fix |
+|:---|:---|:---|
+| `generating-worksheets` | Missing Bell/Intensive header logic | Added Step 0 context check + Intensive template |
+| `using-meander` | No fallback strategy | Added Troubleshooting + Fallback sections |
+| `hosting-presentations` | Missing YAML frontmatter | Added frontmatter, fixed naming mismatch |
+| `writing-lesson-plans` | Validator not mandated | Added Step 9: Validate (MANDATORY) |
+| `developing-bespoke-materials` | No validation step | Added Step 5.5 delegating to child validators |
+
+### Deleted:
+- `writing-bespoke-materials` (legacy HTML/WeasyPrint sub-skill) — superseded by parent skill.
+
+### New Global Skills Created:
+1. **`fetching-docs-context7`**: Retrieves LLM-optimized documentation from Context7 API.
+2. **`crawling-official-docs`**: Scrapes official doc sites via Firecrawl API.
+
+### Global Skill Validator Updated:
+- Added `fetching-` and `crawling-` to recognized gerund patterns.
+- All new skills validated and passing.
+
+---
+
+## 2026-01-16 (Afternoon) | Interactive Audio Timers & Web Component Architecture
+
+### Key Technical Achievement: Immersive Audio Feedback
+- **Problem**: Classroom timers were purely visual, requiring constant teacher monitoring.
+- **Solution**: Integrated a synchronized audio feedback system:
+  - **`blip.mp3`**: Rhythmic tick every second for urgency.
+  - **`30-seconds.mp3`**: Voice warning at the wrap-up mark.
+  - **`bell.mp3`**: Deep meditation chime for task completion.
+- **Implementation**: Global audio singletons for performance, synchronized with the timer heartbeat.
+
+### Architectural Pivot: Native Web Components (`<timer-pill>`)
+- **Problem**: Legacy `initTimers` procedural logic was verbose (40+ lines of HTML per slide) and prone to initialization errors.
+- **Solution**: Refactored the timer into a **Native Web Component** (`TimerPill`).
+- **Impact**:
+  - **Declarative Syntax**: `<timer-pill duration="5"></timer-pill>` replaces complex nested divs.
+  - **Encapsulated Logic**: State, audio, and display are self-managed within the component class.
+  - **Code Reduction**: **97.5% reduction** in per-slide HTML boilerplate.
+
+### Modular Documentation & Quality Control
+- **Created `COMPONENTS.md`**: Single source of truth for 20+ documented CSS classes and components.
+- **Created `DECISION_TREE.md`**: Logic gates for implementation decisions (Text vs. Image vs. Layout).
+- **Established `docs/` Folder**: Curated Reveal.js documentation for Layout and Backgrounds.
+- **Workflow Update**: Step 5 now mandates "Required Reading" of these new resources to prevent common errors (font overflow, class misuse).
+
+### Validator Upgrade: "The Enforcement Layer"
+- **Enhancement**: Substantial upgrades to `validate_presentation.py`:
+  - Enforces `.inset-media` or `.constrained-media` on all images.
+  - Mandates `.slide-canvas` wrapper for layout stability.
+  - Verifies audio dependencies (`audio/*.mp3`) for timer functionality.
+  - Checks for "Answer Interleaving" (Answer slide must follow Task slide within 3 slides).
+  - Detects missing timers on task-bearing slides.
+
+### Strategic Evaluation: Vanilla vs. React
+- **Action**: Evaluated Reach-based wrappers (`revealjs-react`, etc.) vs. the current Native Web Component approach.
+- **Decision**: **STAY WITH VANILLA/NATIVE**.
+- **Reasoning**:
+  - Native Components provide 90% of React's DX (declarative tags) with **0% build overhead**.
+  - No `node_modules` or build pipeline required for teachers to preview slides.
+  - Simpler for LLM agents to generate correct, valid HTML.
+
+### Compliance & Pedagogical Strengthening
+- **Gate 2 Fix**: Added explicit **STOP AND WAIT** command for Audience selection (Middle vs. High School).
+- **Tone Standardization**: Added a "Tone Comparison Table" showing exactly how slide titles, instructions, and motivation differ between audiences.
+- **Result**: Auditor confirmed the skill is now **100% compliant** with the Antigravity Skills standard.
+
+### Audit Result:
+- **Presentation Verified**: `18-Jan-Reading/index.html` was audited using the new validator. It identified 21 critical issues, validating the power of the new enforcement system.
+
+### Decommissioning: Branding Logos
+- **Action**: Fully removed all Bell/Intensive logo logic from `SKILL.md` and `validate_presentation.py`.
+- **Reason**: User requirement—"These slides should not have a Bell logo [or Intensive logo] at all, ever."
+- **Status**: Presentations are now 100% unbranded/clean by default.
+

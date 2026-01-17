@@ -44,6 +44,14 @@ Before proceeding to content development, **propose a specific design direction*
     - **Body/Reading**: **CRITICAL**: Always prioritize readability for the reading text. Suggest clean, widely-available fonts (Arial, Inter, Roboto).
 - **Wait for User Approval** of the design concept and asset bundle before moving to Step 6.
 
+### Step 5.5: 🧪 Validation (Delegated)
+**Note**: This orchestration skill delegates validation to its output skills:
+- **Typst Worksheets**: Use `generating-worksheets/scripts/validate_worksheet.py`
+- **HTML Materials**: Use `creating-html-presentation/scripts/validate_presentation.py`
+- **Lesson Plans**: Use `writing-lesson-plans/scripts/validate_lesson_plan.py`
+
+You MUST run the appropriate validator after generating any output.
+
 ### Step 6: Development Phase
 
 #### General Principles
@@ -86,7 +94,7 @@ Before proceeding to content development, **propose a specific design direction*
 2. **Gold Standard**: ALWAYS reference `knowledge_base/templates/grammar_repair_worksheet_gold.typ`.
 3. Create a `.typ` template in `skills/generating-worksheets/templates/`.
 4. Compile using the Typst CLI (see `generating-worksheets/SKILL.md`).
-5. **FORBIDDEN**: Do not use HTML fragments or WeasyPrint for printable worksheets.
+5. **FORBIDDEN**: Do not use HTML fragments for printable worksheets. Use Typst only.
 6. **IDE PREVIEW**: Provide a clickable link in the chat for the user to review the PDF within the IDE. Do NOT use `Start-Process` or `os.startfile` on PDF files.
 7. Open the resulting PDF locally for user validation before publishing.
 

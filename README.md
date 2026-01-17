@@ -30,9 +30,9 @@ Creates custom educational materials tailored to CEFR levels and skill types:
 
 #### `generating-worksheets`
 Generates branded, print-ready PDF worksheets:
-- Jinja2-based templating system
+- Typst-based templating system
 - Bell/Intensive dual branding support
-- Playwright HTML-to-PDF conversion
+- Native PDF rendering (no browser required)
 - Custom headers and quotes
 
 #### `publishing-worksheets`

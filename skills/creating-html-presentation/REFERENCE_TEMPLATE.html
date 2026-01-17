@@ -31,36 +31,53 @@
             background-color: var(--navy);
         }
 
-        /* TYPOGRAPHY */
-        .reveal h1,
-        .reveal h2,
-        .reveal h3 {
+        /* TYPOGRAPHY: MANDATORY SCALING */
+        .reveal h1 {
+            font-size: 80pt;
+            /* Hero Title */
             text-transform: uppercase;
             font-weight: 800;
             margin: 0 0 20px 0;
-        }
-
-        .reveal h1 {
             color: white;
             text-shadow: 4px 4px 0px var(--maroon);
         }
 
         .reveal h2 {
+            font-size: 45pt;
+            /* Slide Heading */
             color: var(--cyan);
+            text-transform: uppercase;
+            font-weight: 800;
+            border-bottom: 4px solid var(--cyan);
+            display: inline-block;
+            margin-bottom: 30px;
         }
 
         .reveal h3 {
+            font-size: 35pt;
+            /* Sub-heading */
             color: yellow;
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .reveal p,
+        .reveal li {
+            font-size: 30pt;
+            /* Standard Body */
+            line-height: 1.2;
         }
 
         /* LAYOUT UTILITIES (FIXED CANVAS APPROACH) */
         .slide-canvas {
-            width: 100%;
-            height: 100%;
+            width: 960px;
+            height: 700px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            position: relative;
         }
 
         /* Explicit Row Containers - NO percentages that resolve to 0 */
@@ -140,13 +157,46 @@
             color: white;
         }
 
-        /* MEDIA HANDLING */
-        img.constrained-media,
-        iframe.constrained-media {
+        /* MEDIA HANDLING: THE INSET STANDARD */
+        .inset-media {
+            border: 4px solid white;
+            box-shadow: 10px 10px 0px rgba(0, 0, 0, 0.5);
+            max-height: 400px;
             max-width: 100%;
-            height: auto;
+            object-fit: contain;
             display: block;
             margin: 0 auto;
+        }
+
+        .reveal .inset-media img {
+            border: none;
+            box-shadow: none;
+            margin: 0;
+            max-height: 392px;
+            /* Accounting for 4px border top/bottom */
+        }
+
+        /* TABLES: THE PRESENTATION STANDARD */
+        .slide-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 5px;
+            font-size: 28px;
+        }
+
+        .slide-table th {
+            background: var(--maroon);
+            color: white;
+            padding: 15px;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .slide-table td {
+            background: var(--glass);
+            border: 1px solid var(--neon-border);
+            padding: 15px;
+            color: white;
         }
 
         /* SEGUE TITLE */
@@ -198,6 +248,23 @@
             font-size: 0.8em;
             letter-spacing: 1px;
         }
+
+        /* THE ARCHITECTURAL BACKER */
+        .reveal .background-architecture {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--navy);
+            /* Layered Pattern: Grid + Diagonal Slopes */
+            background-image:
+                linear-gradient(rgba(0, 242, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 242, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(45deg, rgba(255, 0, 85, 0.03) 25%, transparent 25%, transparent 50%, rgba(255, 0, 85, 0.03) 50%, rgba(255, 0, 85, 0.03) 75%, transparent 75%, transparent);
+            background-size: 50px 50px, 50px 50px, 100px 100px;
+            z-index: -1;
+        }
     </style>
 </head>
 
@@ -206,19 +273,19 @@
         <div class="slides">
 
             <!-- SLIDE 1: TITLE -->
-            <section data-background-image="images/cyber_bg.png" data-background-opacity="0.2">
-                <!-- LOGO ONLY -->
+            <section>
+                <div class="background-architecture"></div>
                 <img src="images/ACT_transparent.png"
                     style="position: absolute; top: 30px; left: 30px; height: 80px; z-index: 10;">
 
                 <div class="row-container" style="height: 500px;">
                     <div class="col-40">
-                        <img src="images/hero_v3.png" class="constrained-media"
-                            style="max-height: 400px; transform: rotate(-2deg); border: 3px solid var(--cyan); box-shadow: 0 0 30px rgba(0,242,255,0.3);">
+                        <img src="images/hero_v3.png" class="inset-media"
+                            style="transform: rotate(-2deg); border-color: var(--cyan);">
                     </div>
                     <div class="col-60" style="text-align: left; padding-left: 20px;">
                         <div class="stage-badge">LEVEL UP: WRITING</div>
-                        <h1 class="r-fit-text">THE 20/20<br>TECH WRITER</h1>
+                        <h1 style="font-size: 60pt;">THE 20/20<br>TECH WRITER</h1>
                         <p><span
                                 style="background: var(--maroon); padding: 5px 15px; font-weight: 800; transform: skew(-10deg); display: inline-block;">CRACK
                                 THE CODE</span></p>
@@ -226,13 +293,19 @@
                 </div>
             </section>
 
-            <!-- SLIDE 2: SEGUE -->
+            <!-- SLIDE 2: SEGUE (Abstract Gradient) -->
             <section data-background-gradient="radial-gradient(circle, #2a0a18 0%, #050811 100%)">
                 <h1 class="r-fit-text segue-title">PHASE 1:<br>WHAT MAKES A VIRAL MOMENT TICK?</h1>
             </section>
 
-            <!-- SLIDE 3: WARM UP (Fixed Aspect Ratio Video) -->
-            <section data-background-image="images/cyber_bg.png" data-background-opacity="0.1">
+            <!-- SLIDE 3: WARM UP (Fixed Aspect Ratio Video + Abstract Backer) -->
+            <section data-background-color="#050811">
+                <!-- Pattern for consistency -->
+                <div
+                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+                background-image: repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(255,255,255,0.02) 20px, rgba(255,255,255,0.02) 40px); pointer-events: none;">
+                </div>
+
                 <div class="stage-badge">WARM UP</div>
                 <h2 class="r-fit-text">The Office Interruption</h2>
 
@@ -249,7 +322,7 @@
                     <div class="col-50">
                         <!-- Aspect Ratio lock for Youtube -->
                         <div
-                            style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border: 2px solid var(--cyan);">
+                            style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border: 2px solid var(--cyan); box-shadow: 10px 10px 0 black;">
                             <iframe src="https://www.youtube.com/embed/Mh4f9AYRCZY"
                                 style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" frameborder="0"
                                 allowfullscreen></iframe>
@@ -380,6 +453,27 @@
                 <h1 class="r-fit-text segue-title">PHASE 5:<br>GO TIME</h1>
             </section>
 
+            <!-- EXAMPLE: ANSWER SLIDE (VISUAL PIVOT: GREEN) -->
+            <section data-background-color="#052a10">
+                <div class="slide-canvas">
+                    <div class="glass-box" style="border-color: #22c55e;">
+                        <h3 style="color: #22c55e;">MODEL ANSWER</h3>
+                        <p class="text-body">"The car <strong>which</strong> I bought last week is very fast."</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- EXAMPLE: FINAL TASK (VISUAL PIVOT: MAROON) -->
+            <section data-background-color="#2a0a0a">
+                <div class="slide-canvas">
+                    <div class="stage-badge">FINAL MISSION</div>
+                    <h2>BOSS LEVEL</h2>
+                    <div class="glass-box">
+                        <p class="text-body">Apply all grammar weapons to solve the final case study.</p>
+                    </div>
+                </div>
+            </section>
+
             <!-- SLIDE 12: FINAL MISSION (Timer) -->
             <section data-background-color="var(--maroon)">
                 <div class="stage-badge" style="background: black; color: white;">TASK 3: WRITING</div>
@@ -394,10 +488,7 @@
                         <p style="font-size: 20px;">Write about your favorite app and if teenagers need computers.</p>
 
                         <div style="text-align: center; margin-top: 30px;">
-                            <div id="countdown" class="timer-display">20:00</div>
-                            <br>
-                            <button id="timer-btn" onclick="toggleTimer()"
-                                style="padding: 10px 20px; font-weight: bold; background: var(--cyan); border: none; cursor: pointer; margin-top: 15px;">START</button>
+                            <timer-pill duration="20"></timer-pill>
                         </div>
                     </div>
                 </div>
@@ -461,52 +552,85 @@
             hash: true,
             width: 960,
             height: 700,
-            margin: 0.1,
-            minScale: 0.2,
-            maxScale: 2.0,
-            controls: true,
-            progress: true,
-            center: true,
-            transition: 'convex',
-            mermaid: {
-                theme: 'dark',
-                themeVariables: {
-                    darkMode: true,
-                    background: '#050811',
-                    primaryColor: '#00F2FF',
-                    primaryTextColor: '#fff',
-                    lineColor: '#ff0055',
-                    mainBkg: '#050811',
-                    nodeBorder: '#00F2FF'
-                }
-            },
-            plugins: [RevealMarkdown, RevealHighlight, RevealNotes, RevealMermaid]
+            transition: 'slide',
+            backgroundTransition: 'fade',
+            center: true
         });
 
-        // TIMER LOGIC
-        let timeLeft = 20 * 60;
-        let timerInterval;
-        let isRunning = false;
-        function updateTimerDisplay() {
-            const minutes = Math.floor(timeLeft / 60);
-            const seconds = timeLeft % 60;
-            document.getElementById('countdown').textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
-        }
-        function toggleTimer() {
-            const btn = document.getElementById('timer-btn');
-            if (isRunning) {
-                clearInterval(timerInterval);
-                btn.textContent = 'RESUME';
-                isRunning = false;
-            } else {
-                isRunning = true;
-                btn.textContent = 'PAUSE';
-                timerInterval = setInterval(() => {
-                    if (timeLeft > 0) { timeLeft--; updateTimerDisplay(); }
-                    else { clearInterval(timerInterval); btn.disabled = true; }
-                }, 1000);
+        // AUDIO ASSETS
+        const blipSfx = new Audio('audio/blip.mp3');
+        const bellSfx = new Audio('audio/bell.mp3');
+        const warningSfx = new Audio('audio/30-seconds.mp3');
+
+        // NATIVE WEB COMPONENT: <timer-pill>
+        class TimerPill extends HTMLElement {
+            constructor() {
+                super();
+                this.duration = parseInt(this.getAttribute('duration')) || 5;
+                this.timeLeft = this.duration * 60;
+                this.timer = null;
+            }
+
+            connectedCallback() {
+                this.render();
+                this.updateDisplay();
+                this.querySelector('.start-btn').onclick = () => this.toggle();
+            }
+
+            render() {
+                this.innerHTML = `
+                    <div class="timer-pill">
+                        <div class="timer-display">00:00</div>
+                        <button class="start-btn">START</button>
+                    </div>
+                `;
+            }
+
+            updateDisplay() {
+                const m = Math.floor(this.timeLeft / 60).toString().padStart(2, '0');
+                const s = (this.timeLeft % 60).toString().padStart(2, '0');
+                this.querySelector('.timer-display').textContent = `${m}:${s}`;
+            }
+
+            toggle() {
+                const btn = this.querySelector('.start-btn');
+                const pill = this.querySelector('.timer-pill');
+                const display = this.querySelector('.timer-display');
+
+                if (this.timer) {
+                    clearInterval(this.timer);
+                    this.timer = null;
+                    btn.textContent = 'START';
+                    btn.classList.remove('pause');
+                } else {
+                    pill.style.borderColor = 'var(--gold)';
+                    btn.textContent = 'PAUSE';
+                    btn.classList.add('pause');
+                    this.timer = setInterval(() => {
+                        if (this.timeLeft > 0) {
+                            this.timeLeft--;
+                            this.updateDisplay();
+
+                            // 30-second warning
+                            if (this.timeLeft === 30) warningSfx.play();
+
+                            // Pulse Blip
+                            blipSfx.currentTime = 0;
+                            blipSfx.play();
+                        } else {
+                            clearInterval(this.timer);
+                            this.timer = null;
+                            display.style.color = '#ef4444';
+                            pill.style.borderColor = '#ef4444';
+                            btn.textContent = 'DONE';
+                            btn.disabled = true;
+                            bellSfx.play();
+                        }
+                    }, 1000);
+                }
             }
         }
+        customElements.define('timer-pill', TimerPill);
     </script>
 </body>
 

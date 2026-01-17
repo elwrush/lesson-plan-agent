@@ -1,0 +1,43 @@
+The **Typst Meander package** (version 0.3.0 or later) provides advanced text wrapping around images using the `reflow` function, supporting arbitrary shapes and multiple obstacles.[1][2]
+
+Here is a complete, working example from the official Meander documentation that wraps justified lorem ipsum text around five colored box "images" positioned at different locations (top-left, top-right, etc.). Copy-paste this into a Typst document:
+
+```typst
+#let my-img-1 = box(width: 7cm, height: 7cm, fill: orange)
+#let my-img-2 = box(width: 5cm, height: 3cm, fill: blue)
+#let my-img-3 = box(width: 8cm, height: 4cm, fill: green)
+#let my-img-4 = box(width: 5cm, height: 5cm, fill: red)
+#let my-img-5 = box(width: 4cm, height: 3cm, fill: yellow)
+
+#import "@preview/meander:0.3.0"
+
+#meander.reflow({
+  import meander: *
+  
+  // Place obstacles (images) at specific positions
+  placed(top + left, my-img-1)
+  placed(top + right, my-img-2)
+  placed(horizon + right, my-img-3)
+  placed(bottom + left, my-img-4)
+  placed(bottom + left, dx: 32%, my-img-5)
+  
+  // Define the wrapping container(s)
+  container()
+  
+  // Thread content through the container
+  content[
+    #set par(justify: true)
+    #lorem(430)
+  ]
+})
+```
+
+**Key elements:**
+- `placed(position, content)`: Positions images as obstacles (e.g., `top + left`; use `dx/dy` for offsets).[1][2]
+- `container()`: Creates the text-flow boundary (add `width` or `margin` for multi-column layouts).[2]
+- `content[]`: Inserts text that automatically wraps around obstacles.[1][2]
+- Replace `box()` with real images: `#image("path/to/img.jpg", width: 7cm)`.[8]
+
+For irregular shapes (e.g., circle), override `boundary` with `contour.grid()` or `contour.margin()` as shown in advanced examples.[2] Install via Typst Universe: `@preview/meander:0.3.0`.[2]
+
+**Alternatives:** `wrap-it` package offers simpler left/right or top/bottom wrapping but lacks Meander's flexibility for complex/multi-obstacle layouts.[3][6] Native Typst support is planned but unavailable.[4][7]

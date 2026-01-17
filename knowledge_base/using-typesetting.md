@@ -1,19 +1,15 @@
 # Using Typst for PDF Report Generation
 
-A guide to developing professional PDF reports using Typst + Jinja2 templating. This approach replaces HTML→WeasyPrint pipelines with faster, more reliable typesetting.
+A guide to developing professional PDF reports using Typst + Jinja2 templating.
 
 ## Why Typst?
 
-| Approach | Pros | Cons |
-|----------|------|------|
-| HTML→WeasyPrint | Familiar syntax | Slow, CSS quirks, poor layout control |
-| **Typst** | Fast (~100ms/page), precise layout, native PDF | Learning curve, less documentation |
-
 **Key advantages:**
-- **Speed**: 10-50x faster than WeasyPrint
+- **Speed**: Extremely fast (~100ms/page)
 - **Precision**: `breakable: false` prevents orphaned content
 - **Native PDF**: No browser engine required
 - **Live preview**: VS Code extension available
+- **SVG Support**: Native SVG rendering for logos and graphics
 
 ---
 

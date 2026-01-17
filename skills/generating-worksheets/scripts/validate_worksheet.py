@@ -1,163 +1,144 @@
 """
-Worksheet HTML Validator
-Checks worksheet content fragments for compliance with generating-worksheets skill requirements.
+Worksheet Validator for Typst Templates
+========================================
+Validates worksheets against branding and layout rules.
 
-Usage: python validate_worksheet.py <worksheet.html>
+Usage:
+    python validate_worksheet.py <path/to/worksheet.typ> --mode [bell|intensive]
 """
 
-import sys
+import argparse
+import os
 import re
-from pathlib import Path
+import subprocess
+import sys
 
-class WorksheetValidator:
-    def __init__(self, html_content, filename=""):
-        self.html = html_content
-        self.filename = filename
-        self.errors = []
-        self.warnings = []
+def validate_worksheet(typ_path, mode):
+    print(f"🔍 Validating {typ_path} in '{mode}' mode...")
     
-    def validate(self):
-        """Run all validation checks."""
-        self._check_single_column()
-        self._check_page_break_before_answers()
-        self._check_orphan_prevention_css()
-        self._check_duplicate_headers()
-        self._check_page_break_placement()
-        
-        return len(self.errors) == 0
+    if not os.path.exists(typ_path):
+        print(f"❌ CRITICAL: File not found: {typ_path}")
+        return False
+
+    with open(typ_path, 'r', encoding='utf-8') as f:
+        content = f.read()
+
+    issues = []
+    warnings = []
+
+    # =========================================
+    # 1. HEADER VALIDATION
+    # =========================================
     
-    def _check_single_column(self):
-        """Check for two-column layout CSS which is forbidden."""
-        two_col_patterns = [
-            r'column-count\s*:\s*2',
-            r'columns\s*:\s*2',
-            r'display\s*:\s*flex.*flex-wrap',
-            r'display\s*:\s*grid.*grid-template-columns'
-        ]
-        
-        for pattern in two_col_patterns:
-            if re.search(pattern, self.html, re.IGNORECASE):
-                self.errors.append(
-                    "❌ Two-column layout CSS detected. Per skill requirements, "
-                    "worksheet text must ALWAYS flow in a single column."
-                )
-                break
+    # Check for Bell assets
+    has_bell_logo = "Bell.svg" in content or "ACT_transparent.png" in content
+    has_bell_text = "BELL LANGUAGE CENTRE" in content
     
-    def _check_page_break_before_answers(self):
-        """Verify mandatory page break before Answer Key section."""
-        # Find Answer Key section
-        answer_key_match = re.search(
-            r'(class=["\']answer-key["\']|>Answer Key<|>ANSWER KEY<)',
-            self.html,
-            re.IGNORECASE
-        )
-        
-        if answer_key_match:
-            # Look for page-break div in the 500 chars before Answer Key
-            position = answer_key_match.start()
-            preceding_html = self.html[max(0, position-500):position]
-            
-            if not re.search(r'class=["\']page-break["\']', preceding_html, re.IGNORECASE):
-                self.errors.append(
-                    "❌ CRITICAL: No page break found before Answer Key section. "
-                    "Per skill requirements, Answer Key MUST start on a new page. "
-                    "Add: <div class=\"page-break\">&nbsp;</div>"
-                )
+    # Check for Intensive header
+    has_intensive_header = "intensive-header.jpg" in content
     
-    def _check_orphan_prevention_css(self):
-        """Check for required orphan prevention CSS rules."""
-        required_rules = [
-            ('table.*break-inside', 'table { break-inside: auto; }'),
-            ('tr.*break-inside', 'tr { break-inside: avoid; }'),
-            ('thead.*display.*table-header-group', 'thead { display: table-header-group; }'),
-        ]
-        
-        missing_rules = []
-        for pattern, rule in required_rules:
-            if not re.search(pattern, self.html, re.IGNORECASE | re.DOTALL):
-                missing_rules.append(rule)
-        
-        if missing_rules:
-            self.warnings.append(
-                f"⚠️ Missing orphan prevention CSS. Recommended to add:\n   " + 
-                "\n   ".join(missing_rules)
-            )
+    if mode == "bell":
+        if not has_bell_logo:
+            warnings.append("⚠️ Branding Warning: Bell logos (Bell.svg, ACT_transparent.png) not found.")
+        if has_intensive_header:
+            issues.append("❌ Branding Violation: 'intensive-header.jpg' found in a BELL worksheet.")
     
-    def _check_duplicate_headers(self):
-        """Check for duplicate header images in content fragments."""
-        header_patterns = [
-            r'<img[^>]*intensive-header\.jpg',
-            r'<img[^>]*bell-header\.jpg',
-            r'class=["\']header-img["\']'
-        ]
-        
-        for pattern in header_patterns:
-            if re.search(pattern, self.html, re.IGNORECASE):
-                self.errors.append(
-                    "❌ Content fragment contains header image. "
-                    "Headers are provided by the master template. "
-                    "Remove the header image from the content fragment."
-                )
-                break
+    elif mode == "intensive":
+        if has_bell_logo or has_bell_text:
+            issues.append("❌ Branding Violation: Bell logos or 'BELL LANGUAGE CENTRE' text found in INTENSIVE worksheet. Use intensive-header.jpg instead.")
+        if not has_intensive_header:
+            warnings.append("⚠️ Branding Warning: 'intensive-header.jpg' not found. Is the header correct?")
+
+    # =========================================
+    # 2. WRITING LINES VALIDATION
+    # =========================================
     
-    def _check_page_break_placement(self):
-        """Check for poorly placed page breaks."""
-        # Page break inside a paragraph
-        if re.search(r'<p[^>]*>.*<div class=["\']page-break["\'].*</p>', self.html, re.DOTALL):
-            self.warnings.append(
-                "⚠️ Page break found inside a paragraph. Move to between paragraphs."
-            )
-        
-        # Page break inside a table
-        if re.search(r'<table[^>]*>.*<div class=["\']page-break["\'].*</table>', self.html, re.DOTALL):
-            self.warnings.append(
-                "⚠️ Page break found inside a table. Move to before or after the table."
-            )
+    # Check for writing_lines calls and their counts
+    writing_line_matches = re.findall(r'writing_lines\s*\(\s*count\s*:\s*(\d+)\s*\)', content)
     
-    def print_report(self):
-        """Print validation report."""
-        print("\n" + "="*60)
-        print("WORKSHEET VALIDATION REPORT")
-        if self.filename:
-            print(f"File: {self.filename}")
-        print("="*60 + "\n")
-        
-        if self.errors:
-            print("🚫 VALIDATION FAILED\n")
-            for error in self.errors:
-                print(error)
-                print()
+    for match in writing_line_matches:
+        count = int(match)
+        if count > 15:
+            issues.append(f"❌ Layout Violation: writing_lines(count: {count}) exceeds the 15-line limit. Risk of spillover.")
+        elif count > 12:
+            warnings.append(f"⚠️ Layout Warning: writing_lines(count: {count}) is high. Verify it fits on one page.")
+
+    # =========================================
+    # 3. IMAGE PATH VALIDATION
+    # =========================================
+    
+    # Find all image paths
+    image_matches = re.findall(r'image\s*\(\s*["\']([^"\']+)["\']', content)
+    base_dir = os.path.dirname(typ_path)
+    project_root = os.path.abspath(os.path.join(base_dir, "..", ".."))  # Assumes standard structure
+    
+    for img_path in image_matches:
+        # Resolve path
+        if img_path.startswith("/"):
+            # Absolute from project root
+            full_path = os.path.join(project_root, img_path.lstrip("/"))
         else:
-            print("✅ VALIDATION PASSED\n")
+            # Relative to file
+            full_path = os.path.normpath(os.path.join(base_dir, img_path))
         
-        if self.warnings:
-            print("⚠️ WARNINGS:\n")
-            for warning in self.warnings:
-                print(warning)
-                print()
-        
-        print("="*60 + "\n")
+        if not os.path.exists(full_path):
+            issues.append(f"❌ Broken Image: '{img_path}' does not exist at {full_path}")
 
-
-def validate_file(filepath):
-    """Validate an HTML worksheet file."""
-    path = Path(filepath)
-    with open(path, 'r', encoding='utf-8') as f:
-        html_content = f.read()
+    # =========================================
+    # 4. PAGEBREAK CHECK
+    # =========================================
     
-    validator = WorksheetValidator(html_content, path.name)
-    is_valid = validator.validate()
-    validator.print_report()
+    pagebreak_count = content.count("#pagebreak()")
+    task_count = len(re.findall(r'task_card|task_header', content))
     
-    return is_valid
+    if task_count > 1 and pagebreak_count < task_count - 1:
+        warnings.append(f"⚠️ Pagination Warning: {task_count} tasks found but only {pagebreak_count} pagebreaks. Risk of spillover.")
+
+    # =========================================
+    # 5. OPTIONAL: COMPILE CHECK
+    # =========================================
+    
+    # Try to compile and check for errors
+    try:
+        result = subprocess.run(
+            ["typst", "compile", typ_path, "--root", project_root],
+            capture_output=True,
+            text=True,
+            timeout=30
+        )
+        if result.returncode != 0:
+            issues.append(f"❌ Compilation Error: {result.stderr.strip()}")
+    except FileNotFoundError:
+        warnings.append("⚠️ Typst CLI not found. Skipping compilation check.")
+    except subprocess.TimeoutExpired:
+        warnings.append("⚠️ Compilation timed out.")
+
+    # =========================================
+    # REPORTING
+    # =========================================
+    
+    print("\n--- VALIDATION REPORT ---")
+    if warnings:
+        for w in warnings:
+            print(w)
+            
+    if issues:
+        for i in issues:
+            print(i)
+        print(f"\n🚫 FAILED: {len(issues)} critical issues found.")
+        return False
+    else:
+        print("\n✅ PASSED: No critical issues found.")
+        return True
 
 
-if __name__ == '__main__':
-    if len(sys.argv) < 2:
-        print("Usage: python validate_worksheet.py <worksheet.html>")
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Validate Typst worksheet against branding and layout rules.")
+    parser.add_argument("file", help="Path to the .typ worksheet file")
+    parser.add_argument("--mode", choices=["bell", "intensive"], required=True, help="Branding mode")
+    
+    args = parser.parse_args()
+    
+    success = validate_worksheet(args.file, args.mode)
+    if not success:
         sys.exit(1)
-    
-    filepath = sys.argv[1]
-    is_valid = validate_file(filepath)
-    
-    sys.exit(0 if is_valid else 1)

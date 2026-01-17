@@ -1,0 +1,20 @@
+{
+  "results": [
+    {
+      "id": "/epicericee/typst-marge",
+      "title": "Marge",
+      "description": "Marge is a Typst package that provides easy-to-use, powerful, and smart margin notes with extensive customization options and automatic overlap and overflow protection.",
+      "branch": "main",
+      "lastUpdateDate": "2025-09-28T13:45:31.347Z",
+      "state": "finalized",
+      "totalTokens": 496,
+      "totalSnippets": 3,
+      "stars": 15,
+      "trustScore": 7.4,
+      "benchmarkScore": 66.3,
+      "versions": [],
+      "score": 0.5919155,
+      "vip": false
+    }
+  ]
+}
