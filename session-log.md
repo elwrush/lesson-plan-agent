@@ -202,3 +202,13 @@
 - **Reason**: User requirement—"These slides should not have a Bell logo [or Intensive logo] at all, ever."
 - **Status**: Presentations are now 100% unbranded/clean by default.
 
+
+### 2026-01-18: Presentation Deployment Troubleshooting
+- **Issue**: "Global Logistics" presentation deployment failed to load external `slide-components.js` due to path resolution errors and Cloudflare MIME type mismatches (returning 404 HTML for JS files).
+- **Attempted Fixes**:
+    - Corrected relative paths (`../skills/...`).
+    - Moved script to root (`/js/slide-components.js`) and used absolute paths.
+    - **Inlined JavaScript directly into `index.html`** (Best Practice for reliability).
+    - Created `live.html` to bypass potential browser caching.
+- **Current Status**: Cloudflare Pages appears to be **stuck** or failing to build. It ignores new git pushes and continues to serve an old version of the site (missing the inlined script). `live.html` returns 404, confirming the deployment pipeline is halted.
+- **Action**: User restarting IDE/Environment. Recommended checking Cloudflare Dashboard for "Build Failed" or "paused" status.
