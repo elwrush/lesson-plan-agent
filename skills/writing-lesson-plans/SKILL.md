@@ -125,6 +125,7 @@ Wait for user approval before proceeding.
 >   - *Example (Simile)*: "Like an architect sketching a plan, we must outline our ideas before writing."
 >   - *Avoid (Labored Metaphor)*: "You are the Programmer, and Paragraph 2 is your System Architecture."
 > - **Strategic Clarity**: Frame material as an expert consultant would—focused on *influence* and *clarity*.
+- **Thematic Consistency**: **CRITICAL**. Ensure the "Situation" (topic/theme) remains consistent across stages. Avoid "pedagogical whiplash" (e.g., moving from a Lead-in about Art to a Diagnostic about Weather). The Initial Test in Shape C and the Lead-in in all shapes MUST be thematically linked to the core target language context.
 - **No Rewards/Dojos**: NEVER include mentions of "Dojo rewards", "stickers", or any other artificial reward systems. The focus is on intrinsic motivation and professional task engagement.
 - **No Hallucinations**: Do NOT invent visual materials (e.g., "Show photo of Thai student with EKG") unless they definitively exist in the `images/` or materials folder. Use generic references to the title/topic if unsure.
 

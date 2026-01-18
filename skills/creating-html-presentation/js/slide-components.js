@@ -252,7 +252,7 @@ const COMPONENT_STYLES = `
         color: var(--text-accent);
         text-transform: uppercase;
         transform: rotate(-3deg) skew(-10deg);
-        text-shadow: 6px 6px 0px var(--secondary), 0 0 20px var(--primary);
+        text-shadow: 0 0 20px var(--text-accent), 0 0 40px var(--primary), 6px 6px 0px rgba(0,0,0,0.5);
         margin: 0;
         padding: 20px;
         position: relative;
@@ -355,15 +355,16 @@ class SlideTitle extends HTMLElement {
  */
 class SlideSegue extends HTMLElement {
     connectedCallback() {
-        requestAnimationFrame(() => {
-            const title = this.getAttribute('title') || 'SEGUE';
-            this.innerHTML = `
-                <div class="slide-canvas">
-                    <h1 class="segue-title" style="font-size: 80px !important; text-shadow: 6px 6px 0px var(--secondary), 0 0 20px var(--primary) !important;">${title}</h1>
-                </div>
-            `;
-            if (window.Reveal) Reveal.layout();
-        });
+        const title = this.getAttribute('title') || 'SEGUE';
+        const section = this.closest('section');
+        if (section) section.setAttribute('data-background-gradient', 'radial-gradient(circle, #2d3436 0%, #000000 100%)');
+
+        this.innerHTML = `
+            <div class="slide-canvas">
+                <h1 class="segue-title" style="font-size: 80px !important;">${title}</h1>
+            </div>
+        `;
+        if (window.Reveal) Reveal.layout();
     }
 }
 
@@ -557,7 +558,7 @@ class TimerPill extends HTMLElement {
             // START
             this.btn.textContent = 'PAUSE';
             this.btn.classList.add('pause');
-            AudioFX.blip.play().catch(e => console.log("Audio play failed", e)); // Start blip
+            AudioFX.blip.play().catch(e => console.log("Audio play failed", e)); // Blip on start
 
             this.timer = setInterval(() => {
                 if (this.timeLeft > 0) {
@@ -569,8 +570,9 @@ class TimerPill extends HTMLElement {
                         AudioFX.warning.play().catch(e => console.error(e));
                     }
 
-                    // Blip on every second in last 10 seconds
-                    if (this.timeLeft < 10 && this.timeLeft > 0) {
+                    // Blip only during final 29 seconds (29 to 1)
+                    if (this.timeLeft <= 29 && this.timeLeft >= 1) {
+                        AudioFX.blip.currentTime = 0;
                         AudioFX.blip.play().catch(() => { });
                     }
 
@@ -589,6 +591,82 @@ class TimerPill extends HTMLElement {
     }
 }
 
+/**
+ * <grammar-transform before="..." after="..." highlight="...">
+ * Auto-animated grammar transformation component
+ * Shows before/after sentence with smooth morphing animation
+ * 
+ * Usage:
+ * <grammar-transform 
+ *   before="Michelangelo, who was a brilliant sculptor, carved..."
+ *   after="Michelangelo, a brilliant sculptor, carved..."
+ *   highlight="who was">
+ * </grammar-transform>
+ */
+class GrammarTransform extends HTMLElement {
+    connectedCallback() {
+        const before = this.getAttribute('before') || '';
+        const after = this.getAttribute('after') || '';
+        const highlight = this.getAttribute('highlight') || '';
+        const title = this.getAttribute('title') || 'Grammar Transformation';
+
+        // Create two auto-animated sections
+        const beforeSlide = document.createElement('section');
+        beforeSlide.setAttribute('data-auto-animate', '');
+        beforeSlide.setAttribute('data-auto-animate-duration', '1.5');
+        beforeSlide.setAttribute('data-auto-animate-easing', 'ease-in-out');
+        beforeSlide.setAttribute('data-background-gradient', 'radial-gradient(circle, #311B92 0%, #1A0F3E 100%)');
+
+        const afterSlide = document.createElement('section');
+        afterSlide.setAttribute('data-auto-animate', '');
+        afterSlide.setAttribute('data-auto-animate-duration', '1.5');
+        afterSlide.setAttribute('data-auto-animate-easing', 'ease-in-out');
+        afterSlide.setAttribute('data-background-gradient', 'radial-gradient(circle, #311B92 0%, #1A0F3E 100%)');
+
+        // Highlight the part to be removed in the before slide
+        let beforeHTML = before;
+        if (highlight) {
+            beforeHTML = before.replace(
+                highlight,
+                `<span data-id="remove" style="color: #ef4444; font-weight: bold; text-decoration: underline;">${highlight}</span>`
+            );
+        }
+
+        beforeSlide.innerHTML = `
+            <h2>${title}</h2>
+            <div style="margin-top: 60px;">
+                <p data-id="sentence" style="font-size: 36px; font-style: italic; text-align: center;">
+                    ${beforeHTML}
+                </p>
+            </div>
+            <p style="font-size: 24px; margin-top: 40px; color: #ef4444;">⬇ Watch the underlined words disappear ⬇</p>
+            <aside class="notes">
+                **Advice**: Point out the highlighted part - this is what we'll remove. Advance slowly to show the animation.
+                **Next**: Auto-animate to show the transformation.
+            </aside>
+        `;
+
+        afterSlide.innerHTML = `
+            <h2>${title}</h2>
+            <div style="margin-top: 60px;">
+                <p data-id="sentence" style="font-size: 36px; font-style: italic; text-align: center; color: var(--text-accent);">
+                    ${after}
+                </p>
+            </div>
+            <p style="font-size: 32px; margin-top: 40px; color: var(--text-accent);">✓ We removed: <strong>${highlight}</strong></p>
+            <aside class="notes">
+                **Advice**: The sentence morphs smoothly over 1.5 seconds - the highlighted part disappears!
+                **Next**: Continue with explanation.
+            </aside>
+        `;
+
+        // Replace this element with the two sections
+        this.parentNode.insertBefore(beforeSlide, this);
+        this.parentNode.insertBefore(afterSlide, this);
+        this.remove();
+    }
+}
+
 // Register Components
 customElements.define('slide-title', SlideTitle);
 customElements.define('slide-segue', SlideSegue);
@@ -597,5 +675,6 @@ customElements.define('slide-answer', SlideAnswer);
 customElements.define('slide-split', SlideSplit);
 customElements.define('slide-media', SlideMedia);
 customElements.define('timer-pill', TimerPill);
+customElements.define('grammar-transform', GrammarTransform);
 
 console.log('✅ Modular Slide Components Loaded');

@@ -510,3 +510,37 @@ This session proceeded without errors requiring fixes. The `writing-lesson-plans
 - **Cause**: SSL certificates take 1-2 minutes to provision for new projects.
 - **Fix**: Wait 1-2 minutes, or use the production URL (without deployment hash prefix).
 
+
+---
+
+## 2026-01-18 | Appositives Worksheet Refinements
+
+### The "Fake PNG" Checkerboard Trap
+- **Issue**: AI-generated images (Mona Lisa) had "baked-in" gray/white checkerboards instead of true transparency.
+- **Cause**: Image generator simulated transparency in a flat opaque file.
+- **Fix**: Created `remove_checkerboard.py` (now in `processing-images/scripts`) which samples the checkerboard colors and strips them to alpha transparency.
+
+### Printer-Safe Branding (Intensive)
+- **Issue**: Header image was clipped or inconsistent; maroon straps and text overlays were applied incorrectly.
+- **Constraint**: Intensive worksheets MUST use only the full-width `intensive-header.jpg`.
+- **Fix**: 
+  1. Center the header image using `align(center)`.
+  2. Provide at least **0.5cm of top padding** (avoid aggressive `dy: -1.5cm`).
+  3. NEVER use `integrated_header()` or maroon straps for Intensive.
+
+### Photocopier Survival (Line Visibility)
+- **Issue**: Light gray ruled lines (#E0E0E0) become invisible or "noisy" on old school photocopiers.
+- **Fix**: Mandate **Dark Gray (#333333)** for all handwriting lines and horizontal separators.
+
+### Typst "Orphan" Header Prevention
+- **Issue**: Task headers sitting alone at the bottom of a page.
+- **Fix**: Wrap the header and its introductory text in a `#block(breakable: false)`. This forces the group to move to the next page together if they don't fit.
+
+### Typst Syntax Robustness
+- **Issue**: `warning: no text within stars` when using `**` or `*` near punctuation/nesting.
+- **Fix**: Prefer Typst functional styling: `#strong[text]` and `#emph[text]` over Markdown-style stars.
+
+### Pedagogical Whiplash (Thematic Inconsistency)
+- **Issue**: Lead-in focused on Art (Mona Lisa), but Diagnostic test shifted to Bangkok Weather.
+- **Cause**: Generic diagnostic examples created "pedagogical whiplash," breaking the lesson's storyline.
+- **Fix**: Mandate **Thematic Consistency** in `writing-lesson-plans/SKILL.md`. All diagnostic and practice items must be linked to the core "Situation" or theme established in the Lead-in.

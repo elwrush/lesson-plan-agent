@@ -84,8 +84,16 @@ You MUST run the appropriate validator after generating any output.
 ### Step 7: Draft & Approval
 1. Develop all materials in **Markdown format** first for content clarity, OR directly in HTML if the design is complex.
 3. **Do NOT open the file in a browser or external viewer automatically.**
-4. Instead, provide a **clickable link** in the chat for the user to open in their IDE preview.
-5. **Wait for explicit approval** before proceeding to any next steps (like Lesson Plans).
+4. **MANDATORY PDF LINK GATE**: You MUST provide a **clickable link** to the generated file (PDF or HTML) in the chat immediately after generation. Use the `file:///` protocol for absolute paths.
+5. **Wait for explicit approval** of the visual material before proceeding to any next steps (like Lesson Plans).
+
+### Step 7.5: 🛑 MANDATORY PDF LINK (READ CAREFULLY)
+> [!CRITICAL]
+> **YOU MUST NOT PROCEED TO LESSON PLANNING UNTIL THE USER HAS SEEN THE LINK.**
+> 
+> **Action**: Post the clickable `file:///` link to the PDF/HTML file.
+> 
+> **Why**: The user needs to visually verify the layout, branding, and images before you invest time in the pedagogy.
 
 ### Step 8: Export & Format
 
@@ -153,7 +161,7 @@ To get started, please tell me:
     -   **Identity Block**: ALWAYS preface the task with the `#identity_block()` immediately after the header.
     -   **Structure**: Group all prompts/questions at the top.
     -   **The Gap**: Insert a spacing of `#v(1.5cm)` between the last question and the first ruled line.
-    -   **The Lines**: Provide a **single block** of dark gray lines (`stroke: 0.5pt + gray`) below.
+    -   **The Lines**: Provide a **single block** of dark gray lines (`stroke: 0.5pt + rgb("#4D4D4D")`) below. **CRITICAL**: Never use light gray for ruled lines.
     -   **Spacing**: Use **Double Spacing** for the lines themselves (`row-gutter: 1.5cm`) to allow for corrections.
     -   **Line Count**: Calculate required lines assuming **10 words per line**. (e.g., 100 words = 10 lines).
 - **Matching/List Questions**: When creating a list of matching questions (e.g., Question -> Answer box), ALWAYS use matching vertical spacing (e.g., `row-gutter: 1cm` or `0.8cm`) to allow space for handwriting. Do not tightly pack these items.
@@ -165,6 +173,7 @@ To get started, please tell me:
 - **Image Quality**:
     -   **No Gradients**: Images must be suitable for grayscale photocopying (solid colors, clear contrast).
     -   **Transparency**: Non-rectangular graphics must be **Transparent PNGs**.
+    -   **No Fake Checkerboards**: **CRITICAL**. You MUST remove "fake" gray-and-white checkerboard patterns from images before use. Run the removal script in the `processing-images` skill if detected. 
     -   **Trimming**: All generated images MUST be processed with the `processing-images` skill to remove whitespace.
     -   **Aspect Ratio**: NEVER squash wide motifs. Use `width: 100%` and allow height to autosize (or use specific aspect-ratio preserving dimensions).
 ### Creative License & Typography

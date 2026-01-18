@@ -2,7 +2,9 @@ name: Shape C - Test-Teach-Test Presentation of Language
 description: Learners are tested on language first, teacher clarifies problematic items, then further practice follows.
 
 pedagogical_justification: |
-  Here the idea is that learners are tested on their knowledge of the language before moving on to clarification. The teacher monitors the task carefully to see what problems the students have and then clarifies (checking meaning, form and pronunciation) as necessary – i.e. any new language or items the students had problems with. In other words, if there are 15 pieces of vocabulary in the test, the teacher would most likely not clarify every item – only problematic ones. This is followed by further practice. The main aim here will usually reflect the clarification and practice aims reflected in the previous two lesson types.
+  Learners are tested on their knowledge of the language before moving on to clarification. The teacher monitors the task to see what problems the students have and clarifies (meaning, form, pronunciation) only problematic items. This is followed by further practice.
+  
+  **CRITICAL: THEMATIC CONSISTENCY**. To avoid "pedagogical whiplash," the Diagnostic (Initial Test) stage MUST be thematically linked to the "Situation" established in the Lead-in. Do not use generic examples (e.g., weather) if the lesson context is specific (e.g., art).
 
 main_aim_format: |
   By the end of the lesson, learners will be better able to use [target language] in the context of [topic].

@@ -88,9 +88,9 @@ Use this skill to create the visual backbone of a lesson. Slides must:
 4.  **Wait** for the user to confirm the Palette ID (e.g., "Use #5").
 
 **MANDATORY RULES (The Fixed Canvas):**
--   **Headers**: Must ALWAYS be white (`color: white !important`) with strong shadows for projector contrast.
--   **Segue Slides**: Must ALWAYS use a **high-contrast dark gradient** background (not palette-dependent).
-    -   *Code*: `radial-gradient(circle, #1a1a2e 0%, #0f0f1a 100%)`
+-   **Segue Slides**: Must ALWAYS use a **vibrant dark radial gradient** and a **neon glow** on the title.
+    -   *Background Code*: `radial-gradient(circle, #2d3436 0%, #000000 100%)`
+    -   *Title Glow*: `text-shadow: 0 0 20px var(--text-accent), 0 0 40px var(--primary), 6px 6px 0px rgba(0,0,0,0.5);`
     
 ### Step 1.5: 📦 Asset Strategy & Sourcing (MANDATORY GATE)
 **Goal**: Define and source the exact media assets needed.
@@ -120,6 +120,28 @@ You MUST ask:
     2.  **Source**: Pixabay (Download) or YouTube (Embed). **NO GENERATION**.
 
 **Output**: A list of approved assets to use in Step 2.
+
+---
+
+### Step 1.6: 🔊 Audio Setup (MANDATORY - AUTOMATIC)
+**Goal**: Copy standard timer audio files to the presentation folder.
+
+**CRITICAL**: **EVERY** presentation uses timers and requires these 3 audio files. This step is **NOT OPTIONAL**.
+
+**Action (Auto-run)**:
+```bash
+Copy-Item "audio/blip.mp3" "inputs/[presentation-folder]/audio/blip.mp3"
+Copy-Item "audio/30-seconds.mp3" "inputs/[presentation-folder]/audio/30-seconds.mp3"  
+Copy-Item "inputs/18-Jan-Reading/audio/bell.mp3" "inputs/[presentation-folder]/audio/bell.mp3"
+```
+
+**Verification**:
+- ✅ Confirm all 3 files exist in `inputs/[presentation-folder]/audio/`
+- ✅ File sizes > 0
+
+**Why This Matters**: Timer sounds break EVERY TIME if this step is skipped. This is now a mandatory pre-flight check.
+
+---
 
 ### Step 2: 📝 The Visual Plan (Markdown)
 **Goal**: Map every single slide, **INCLUDING ANSWER KEYS**.
@@ -153,6 +175,7 @@ Now, write the `index.html`.
 3.  **For Reveal.js features**: Check `docs/reveal-layout.md` and `docs/reveal-backgrounds.md`.
 
 **Pre-Flight Checklist**:
+- ✅ **CRITICAL**: Use CDN links for Reveal.js: `https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css` (NOT `../../js/reveal.js/dist/reveal.css`)
 - ✅ Check `images/` folder for real file extensions (`.jpg`, `.png`, `.svg`)
 - ✅ Verify `audio/` folder exists with `blip.mp3`, `30-seconds.mp3`, `bell.mp3`
 - ✅ Confirm lesson plan specifies timer durations for tasks
@@ -238,7 +261,8 @@ Now, write the `index.html`.
     - **Middle School**: Use "Hook & Play" language. Tasks are "Missions" or "Quests".
     - **High School**: Use "Utility & Achievement" language. Tasks are "Case Studies" or "Strategic Analysis".
 - **Tone**: **Warm & Authoritative**. (Never infantilizing, even for Middle School).
-- **Scaffolding**: You MUST use the `<div class="teacher-tip">` box for hints.
+- **Scaffolding**: You MUST use the `<div class="teacher-tip">` box for **pedagogical hints only** (e.g., "Check understanding," "Monitor pronunciation").
+- **CRITICAL**: **NEVER** put procedural instructions (e.g., "Give students 5 minutes to review") in teacher-tip boxes. These belong in `<aside class="notes">` only.
 
 **Tone Comparison Table**:
 | Context | Middle School (Pop & Verve) | High School (Expert/Academic) |
@@ -306,12 +330,12 @@ Now, write the `index.html`.
     - **Small Body**: `24pt`.
     - **Teacher Tips**: `18pt`.
 
-### 🎨 Design Philosophy: "Abstract Continuity"
+### 🎨 Design Philosophy: "Vibrant Depth"
 - **NO IMAGE BACKERS**: Do not use photos as backgrounds.
-- **THE ARCHITECTURAL BACKER**: Every slide must have a multi-layered CSS background.
-    - **Layer 1**: A solid dark base or deep gradient.
-    - **Layer 2**: A CSS-driven pattern (Grid, Dots, or Sloped Stripes) at `0.1` opacity.
-    - **Layer 3**: A subtle vignette or glow.
+- **THE RADIAL BACKER**: Every slide must have a multi-layered CSS background.
+    - **Layer 1**: A vibrant radial gradient (e.g., `radial-gradient(circle, #311B92 0%, #1A0F3E 100%)`).
+    - **Layer 2**: A subtle vignette or glow.
+- **GLOWING SEGUES**: Segue titles must use a multi-layered text shadow to create a "neon" effect.
 - **IMAGES AS INSETS**: Images must be focal points, wrapped in a frame (border + shadow).
 
 ### 🧱 Layout Classes (Use These EXACTLY)
@@ -326,3 +350,72 @@ Now, write the `index.html`.
 - **Visibility**: Always place in the bottom-center or a clearly visible `.glass-box`.
 - **Logic**: Use the `reveal-timer.js` pattern (Start/Pause functionality).
 - **Duration**: Match the Lesson Plan (Default: 4 or 6 minutes).
+- **Audio Behavior (MANDATORY)**:
+  - **Blip on Start**: Plays when START button is pressed
+  - **Final 29 Seconds**: Blip plays every second from 29 down to 1 (not during longer periods)
+  - **30-Second Warning**: Warning sound plays at exactly 30 seconds remaining
+  - **Bell on Finish**: Bell sound plays when timer reaches 0
+- **Audio Files Required**: `blip.mp3`, `30-seconds.mp3`, `bell.mp3` (auto-copied in Step 1.6)
+
+---
+
+### 🎬 Auto-Animate for Grammar Lessons (GOLD STANDARD)
+
+**When to Use**: Grammar lessons showing **transformations** (e.g., sentence reduction, tense changes, voice changes).
+
+**How It Works**:
+1. Add `data-auto-animate` to two consecutive `<section>` elements
+2. Use `data-id="unique-id"` on elements you want to morph
+3. Reveal.js automatically animates the transformation
+
+**Manual Implementation**:
+```html
+<!-- Before -->
+<section data-auto-animate 
+         data-auto-animate-duration="1.5" 
+         data-auto-animate-easing="ease-in-out"
+         data-background-color="var(--bg-dark)">
+    <h2>Sentence Reduction</h2>
+    <p data-id="sentence" style="font-size: 36px;">
+        Michelangelo, <span data-id="remove" style="color: #ef4444; text-decoration: underline;">who was</span> a brilliant sculptor, carved...
+    </p>
+    <p style="font-size: 24px; color: #ef4444;">⬇ Watch the underlined words disappear ⬇</p>
+</section>
+
+<!-- After -->
+<section data-auto-animate 
+         data-auto-animate-duration="1.5" 
+         data-auto-animate-easing="ease-in-out"
+         data-background-color="var(--bg-dark)">
+    <h2>Sentence Reduction</h2>
+    <p data-id="sentence" style="font-size: 36px; color: var(--text-accent);">
+        Michelangelo, a brilliant sculptor, carved...
+    </p>
+    <p style="font-size: 32px; color: var(--text-accent);">✓ We removed: <strong>who was</strong></p>
+</section>
+```
+
+**CRITICAL Settings**:
+- `data-auto-animate-duration="1.5"`: Animation takes 1.5 seconds (default is too fast at 0.4s)
+- `data-auto-animate-easing="ease-in-out"`: Smooth acceleration/deceleration
+- `data-id="sentence"`: Matches elements between slides for morphing
+- Visual cue: "⬇ Watch the underlined words disappear ⬇" prepares students
+
+**Reusable Component** (Recommended):
+```html
+<grammar-transform 
+    title="From Relative Clause to Appositive"
+    before="Michelangelo, who was a brilliant sculptor, carved the statue of David."
+    after="Michelangelo, a brilliant sculptor, carved the statue of David."
+    highlight="who was">
+</grammar-transform>
+```
+
+**Use Cases**:
+- ✅ **Appositives** (reducing relative clauses)
+- ✅ **Tense Changes** (present → past)
+- ✅ **Active → Passive Voice**
+- ✅ **Word Order** (questions, inversions)
+- ✅ **Adding/Removing Clauses**
+
+**Why This Matters**: Visual morphing makes grammar transformations **dramatically clearer** than static before/after comparisons.

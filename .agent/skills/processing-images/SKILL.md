@@ -11,8 +11,9 @@ To ensure images used in Typst or other documents are visually clean, print-frie
 ## The Constraints
 1.  **No Gradients**: Backgrounds must be solid (preferably white/transparent) for clear photocopying.
 2.  **Transparent PNGs**: Any non-rectangular graphic (icons, motifs) must have a transparent background.
-3.  **Trimmed Whitespace**: Generated images often have huge unnecessary margins. These MUST be trimmed to the content bounding box to avoid destroying document flow.
-4.  **Aspect Ratio**: Never distort aspect ratios (squashing) to fit a space. Use specific image dimensions or `width: 100%, height: auto`.
+3.  **No Fake Checkerboards**: **CRITICAL**. Some images have a "fake" gray-and-white checkerboard pattern baked into the pixels. You MUST remove this before placing in Typst.
+4.  **Trimmed Whitespace**: Generated images often have huge unnecessary margins. These MUST be trimmed to the content bounding box to avoid destroying document flow.
+5.  **Aspect Ratio**: Never distort aspect ratios (squashing) to fit a space. Use specific image dimensions or `width: 100%, height: auto`.
 
 ## The Tool: `.agent/skills/processing-images/scripts/trim_image.py`
 Use this script to auto-process images.
@@ -44,6 +45,13 @@ Separators should be ultra-wide.
     python .agent/skills/processing-images/scripts/trim_image.py "images/separator_raw.jpg" "images/separator.png" --padding 0 --threshold 220 --transparent
     ```
 3.  In Typst: `#image("images/separator.png", width: 100%)` (let height flow naturally).
+
+#### 3. Removing Fake Checkerboards
+If an image has a "baked-in" checkerboard (gray/white squares):
+```bash
+python .agent/skills/processing-images/scripts/remove_checkerboard.py "images/fake_png.png" "images/clean_output.png"
+```
+Then proceed to trim the whitespace if necessary.
 
 ## Typst Integration
 - **Titles**: Use the trimmed PNG. Limit width to avoid domination (e.g., `width: 8cm`).
