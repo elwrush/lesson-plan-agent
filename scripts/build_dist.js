@@ -5,8 +5,9 @@ const PROJECT_ROOT = path.join(__dirname, '..');
 const DIST_DIR = path.join(PROJECT_ROOT, 'dist');
 
 // Define which presentations to include in the build
+// We are using the validated source from inputs/QAD-Fight-or-Flight
 const presentations = [
-    { source: 'slideshow-fight-or-flight', target: '18-01-26_Fight-or-Flight' }
+    { source: 'inputs/QAD-Fight-or-Flight', target: '18-01-26_Fight-or-Flight' }
 ];
 
 // Ensure dist exists and is clean
@@ -24,11 +25,11 @@ presentations.forEach(pres => {
         fs.mkdirSync(destPath, { recursive: true });
         fs.cpSync(srcPath, destPath, { recursive: true });
 
-        // Also ensure images/brain_alarm.png specifically exists there
+        // CHECK: Ensure brain_alarm exists in the destination
         if (fs.existsSync(path.join(destPath, 'images/brain_alarm.png'))) {
-            console.log("Success: brain_alarm.png found in dist destination.");
+            console.log("Verified: brain_alarm.png present in dist.");
         } else {
-            console.error("CRITICAL ERROR: brain_alarm.png NOT FOUND in dist destination!");
+            console.error("FAILURE: brain_alarm.png missing from dist!");
             process.exit(1);
         }
     } else {
@@ -36,5 +37,13 @@ presentations.forEach(pres => {
         process.exit(1);
     }
 });
+
+// Also copy shared skills assets
+const skillsJs = path.join(PROJECT_ROOT, 'skills/creating-html-presentation/js');
+if (fs.existsSync(skillsJs)) {
+    const destJs = path.join(DIST_DIR, 'skills/creating-html-presentation/js');
+    fs.mkdirSync(destJs, { recursive: true });
+    fs.cpSync(skillsJs, destJs, { recursive: true });
+}
 
 console.log('Build complete.');
