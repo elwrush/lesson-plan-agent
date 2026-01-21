@@ -262,13 +262,57 @@
   #block(fill: rgb("#FFF9C4"), inset: 15pt, radius: 4pt, width: 100%)[
     *Differentiation Check - Which track are you on?*
     #v(0.5em)
-    #checkbox("B1 Standard Track: Focus on the article topic, the place, and your opinion.") \
+    #checkbox("B1 Standard Track: Focus on the article topic and basic details.") \
     #v(0.5em)
-    #checkbox("B2 Advanced Track: Focus on *why* it is unusual, character motivation, and description.")
+    #checkbox("B2 Advanced Track: Focus on *why* it is unusual, describe the material, and explain.")
   ]
 ]
 
-#v(1cm)
+#v(0.5cm)
+
+// WRITING TASK QUESTIONS
+#grid(
+  columns: (1fr, 1fr),
+  gutter: 0.8cm,
+  block(
+    stroke: (left: 3pt + rgb("#0284C7")),
+    fill: rgb("#F0F9FF"),
+    inset: 12pt,
+    radius: (top-right: 4pt, bottom-right: 4pt),
+  )[
+    #text(weight: "bold", fill: rgb("#0C4A6E"), size: 11pt)[B1 Writing Task]
+    #v(0.3em)
+    #text(weight: "bold", size: 10pt)[Articles wanted: Your favorite stories!]
+    #v(0.3em)
+    #text(
+      size: 9pt,
+    )[Write an article telling us what you like to read the most: books, manga, comics, or something else?]
+    #v(0.3em)
+    #text(size: 9pt)[• Do you think it's good to read a lot? Why?]
+    #v(0.3em)
+    #text(size: 8pt, style: "italic")[The best articles will be published next month.]
+  ],
+  block(
+    stroke: (left: 3pt + rgb("#7C3AED")),
+    fill: rgb("#F5F3FF"),
+    inset: 12pt,
+    radius: (top-right: 4pt, bottom-right: 4pt),
+  )[
+    #text(weight: "bold", fill: rgb("#5B21B6"), size: 11pt)[B2 Writing Task]
+    #v(0.3em)
+    #text(weight: "bold", size: 10pt)[Articles wanted: Unusual Stories!]
+    #v(0.3em)
+    #text(size: 9pt)[We're looking for articles about unusual material you have read: books, mangas, or anything else.]
+    #v(0.3em)
+    #text(size: 9pt)[• Have you, or a friend, ever read anything that you thought was really unusual?]
+    #v(0.2em)
+    #text(size: 9pt)[• Describe the reading material and explain why it was so unusual.]
+    #v(0.3em)
+    #text(size: 8pt, style: "italic")[The best articles will be published in our next issue.]
+  ],
+)
+
+#v(0.5cm)
 
 #block(stroke: 1pt + maroon, radius: 4pt, inset: 20pt, width: 100%)[
   #align(center)[#text(size: 14pt, weight: "bold", fill: maroon)[MY PLAN]]

@@ -397,3 +397,121 @@
 - **Issue**: User reported hallucinated material in `inputs/19-Jan-2026-Appositives` slideshow; content does not correspond with the worksheet.
 - **Action Required**: Undertake repair work immediately upon next logon.
 - **Status**: Pending.
+
+---
+
+## 2026-01-21 | CA Writing Worksheet Crisis (Typst Pagination)
+
+### Critical Issue: Uncontrollable Page Spillover
+- **Context**: Creating a simple 3-page CA Writing worksheet for B1/B2 articles.
+- **Requirements**:
+  - Page 1: B1 task (header, prompt, student info line, ruled lines) - **must fit on ONE page**
+  - Page 2: B2 task (header, prompt, student info line, ruled lines)
+  - Page 3: B2 continuation (full page of ruled lines)
+
+### Root Cause Analysis
+1. **Cumulative Spacing**: Multiple `v()` calls, paragraph spacing (`par.spacing`), and `line()` elements compound unpredictably.
+2. **1.5em Line Spacing**: Using relative units (`em`) instead of absolute units makes total height unpredictable.
+3. **No Typst Page Bounds Query**: Cannot programmatically ask "how much space is left on this page?"
+4. **Trial-and-Error Approach**: Kept adjusting line counts blindly without measuring actual content height.
+
+### Failed Approaches
+| Attempt | Problem |
+|:---|:---|
+| `tiling`/`pattern` for ruled lines | Typst tiling requires absolute units, not percentages; also deprecated to `tiling` |
+| 22 lines → 14 lines → 12 lines | Still spilling; never calculated actual space used by headers |
+| Reducing margins and fonts | Broke visual formatting, made lines too cramped for handwriting |
+| Multiple full rewrites | Each introduced new formatting regressions |
+
+### Correct Approach (To Apply After Restart)
+1. **Calculate Available Height Precisely**:
+   - A4 = 297mm
+   - Margins: top 1.5cm + bottom 2cm = 3.5cm = 35mm
+   - Usable: 262mm
+   
+2. **Measure Header + Content Block**:
+   - Header bar: ~15mm
+   - Maroon underline + spacing: ~8mm
+   - Title block: ~15mm
+   - Task text (3-4 lines): ~40mm
+   - Student info: ~8mm
+   - "Your Article:" label: ~6mm
+   - **Total fixed content: ~92mm**
+   - **Remaining for lines: 170mm**
+
+3. **Calculate Line Count**:
+   - At 7mm per line (good for handwriting): 170 / 7 = **24 lines maximum** for task pages
+   - Full continuation page: 262 / 7 = **37 lines maximum**
+
+4. **Use Absolute Units**:
+   - Replace `v(1.5em)` with `v(7mm)` for predictable spacing
+   - Test with **18 lines** on task pages (conservative buffer)
+   - Test with **34 lines** on continuation page
+
+### Key File
+- `inputs/21-Jan-CA-Writing-Task-2a/22-01-2026-B1-B2-Articles-CA-Writing.typ`
+
+### Lesson Learned
+- **Never guess line counts** - calculate from page dimensions
+- **Use absolute units** (mm, cm, pt) not relative (em, %)
+- **Test compile after EVERY change** - don't batch multiple adjustments
+- **Preserve working formatting** - when fixing pagination, don't touch fonts/margins/spacing simultaneously
+
+---
+
+## 2026-01-21 | Typst Dynamic Space-Filling, Appositives Repair & Skill Architecture Fixes
+
+### Key Technical Achievement: Context-Aware Line Filling
+- **Problem**: Manual line counting (`for i in range(N)`) caused spillover when headers changed size. Printing 2-up (A5 effective) made fixed spacing too cramped for handwriting.
+- **Solution**: Implemented **Typst Context System** for dynamic space calculation:
+  ```typst
+  #context {
+    let current-pos = here().position()
+    let available = page.height - page.margin.bottom - current-pos.y
+    fill-space-with-lines(available - 0.5cm)
+  }
+  ```
+- **2-Up Print Rule**: Use **1.1cm** line spacing. When scaled 2-up on A4, this becomes ~7.8mm (optimal for handwriting).
+- **Result**: "Orphan-proof" worksheets that perfectly fill every page regardless of header size.
+
+### Skill & Template Updates
+- **`generating-worksheets/SKILL.md`**: Added dynamic space-filling logic to Design Standards.
+- **`knowledge_base/templates/grammar_repair_worksheet_gold.typ`**: Refactored to use `#writing_lines_dynamic()`.
+- **`errors-fix.md`**: Documented breakthrough under "Dynamic Space-Filling (Typst 0.11+)".
+
+### Appositives Slideshow Repair
+- **Issue**: Slideshow contained hallucinated content not matching worksheet.
+- **Fixes Applied**:
+  - Task 1: Fixed 4 answers to match worksheet exactly
+  - Task 2: Replaced 3 hallucinated answers with correct 7 answers
+- **Deployment**: `https://lesson-slideshows.pages.dev/19-Jan-2026-Appositives/`
+
+### Critical Slideshow Architecture Fixes
+
+#### Issue 1: Content Hallucination/Truncation
+- **Root Cause**: No verification step. Agent reads worksheet once, generates from memory.
+- **Fix**: Added **Step 0.6: Source Content Extraction Gate** to `creating-html-presentation/SKILL.md`
+  1. Agent extracts ALL content from worksheet into a checklist BEFORE coding
+  2. Presents count for user verification ("X tasks, Y questions")
+  3. After coding, every checkbox must be ticked
+- **Template**: Added Content Checklist Template to `REFERENCE.md`
+
+#### Issue 2: Vertical Stacking Causes Hidden Content
+- **Problem**: Slides stack content top-to-bottom in narrow columns, hiding timers below 700px canvas.
+- **Fix**: Added **HORIZONTAL-FIRST LAYOUT RULE** to skill
+  - Task slides MUST use `.row-container` with 50/50 splits
+  - Glass boxes must be 700-800px wide minimum
+  - Pre-Build Checklist for visual verification
+- **Patterns**: Added to `REFERENCE.md` → "Horizontal Layout Patterns"
+
+### Skill Compliance Refactoring
+- **Problem**: `creating-html-presentation/SKILL.md` had 536 lines (limit: 500)
+- **Action**: Moved heavy code examples to `REFERENCE.md`:
+  - Content Checklist Template
+  - Auto-Animate patterns
+  - Horizontal Layout patterns (banned/required)
+- **Result**: 492 lines - **PASSED** validator
+
+### Known Issues (Deferred)
+- **Dashboard Broken Links**: Clicking cards on `lesson-slideshows.pages.dev` causes recursive URL appending. Direct links unaffected. Fix later in `build_dist.js`.
+

@@ -159,3 +159,24 @@ Override these in your presentation's `<style>` block. See `PALETTES.md` for 10 
 
 > [!NOTE]
 > Headers are always white for projector contrast. See `PALETTES.md` for the Header Contrast Rule.
+
+### Attribution Standard
+**Strict Rule**: Image credits must be:
+- Placed immediately `under` the image.
+- Font size: `8pt` (subtle).
+- Color: `rgba(255,255,255,0.5)` (low contrast).
+- NEVER dominate the slide.
+
+```html
+<div class="media-wrapper">
+    <img src="...">
+    <div class="attribution">Image by User from Pixabay</div>
+</div>
+```
+
+### Backgrounds
+**Native Gradients**: Avoid flat colors. Use visual interest:
+```css
+background: radial-gradient(circle at center, #2a2a2a 0%, #000000 100%);
+box-shadow: inset 0 0 100px rgba(0,0,0,0.9);
+```

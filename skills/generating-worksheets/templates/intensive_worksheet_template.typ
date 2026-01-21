@@ -89,30 +89,32 @@
     #text(fill: white, weight: "bold", size: 12pt)[ANSWER KEY (For Teacher Reference)]
   ])
   v(0.5cm)
+}
+
 // ==========================================
 // 6. GAPFILL COMPONENT (Modular)
 // ==========================================
 // Requires a placeholder string in items (e.g. "__") which is replaced by a writing line.
 
-#let gapfill_exercise(items, placeholder: "__", line_length: 2.5cm) = {
-  stack(
-    dir: ttb,
-    spacing: 0.4cm,
-    ..items.enumerate().map(((i, item)) => {
-      // Split the string by placeholder and rejoin with the visual line box
-      let parts = item.split(placeholder)
-      let content = parts.intersperse(
-        box(width: line_length, height: 1em, stroke: (bottom: 0.5pt + black), baseline: 0.2em)
-      ).join()
-      
-      grid(
-        columns: (auto, 1fr),
-        gutter: 1em,
-        text(weight: "bold")[#(i + 1).],
-        content
-      )
-    })
-  )
+#let gapfill_exercise(items, placeholder: "GAPFILL", line_length: 2.5cm) = {
+  let count = 0
+  for item in items {
+    count += 1
+    grid(
+      columns: (auto, 1fr),
+      gutter: 1em,
+      text(weight: "bold")[#count.],
+      {
+        let parts = item.split(placeholder)
+        parts
+          .intersperse(
+            box(width: line_length, height: 1em, stroke: (bottom: 0.5pt + black), baseline: 0.2em),
+          )
+          .join()
+      },
+    )
+    v(0.4cm)
+  }
 }
 
 // ==========================================
@@ -121,15 +123,16 @@
 // Standard layout for rewrites: Question -> Vertical Space -> Full Width Line
 
 #let single_sentence_writing(items, vertical_space: 1.2cm) = {
-  stack(
-    dir: ttb,
-    spacing: 1cm,
-    ..items.enumerate().map(((i, item)) => block(width: 100%, [
-      #text(weight: "bold")[#(i + 1). #item] \
+  let count = 0
+  for item in items {
+    count += 1
+    block(width: 100%, [
+      #text(weight: "bold")[#count. #item] \
       #v(vertical_space)
       #line(length: 100%, stroke: 0.5pt + rgb("#E0E0E0")) // gray-line
-    ]))
-  )
+    ])
+    v(1cm)
+  }
 }
 
 // ==========================================

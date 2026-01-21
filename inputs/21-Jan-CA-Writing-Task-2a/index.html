@@ -62,6 +62,11 @@
             text-shadow: 0 0 40px var(--primary);
         }
 
+        .title-subtitle span {
+            font-size: 40pt !important;
+            padding: 10px 30px !important;
+        }
+
         /* Segue Glow Effect */
         .segue-title {
             text-shadow: 0 0 20px var(--primary), 0 0 40px var(--secondary), 6px 6px 0px rgba(0, 0, 0, 0.5);
@@ -126,10 +131,7 @@
 
         /* Larger Badge Text */
         /* Larger Badge Text (32pt for max visibility) */
-        slide-split .stage-badge,
-        slide-task .stage-badge,
-        slide-answer .stage-badge,
-        slide-title .stage-badge {
+        .reveal .stage-badge {
             font-size: 32pt !important;
             font-weight: 800;
             letter-spacing: 2px;
@@ -253,7 +255,7 @@
                     what makes a story great. **Next**: Lead-in Discussion. </aside>
             </section>
             <!-- SLIDE 3: LEAD-IN -->
-            <section><slide-split title="GENRES" badge="TASK 1: WARM UP"><img
+            <section><slide-split title="GETTING STARTED" badge="WARM UP"><img
                         src="images/pixabay_7912249_kimono_geisha_pop_art_asia_manga_anime_design_japan_pop_art_pop_art_asia_manga_m.jpg"
                         class="inset-media">
                     <div class="glass-box">
@@ -270,7 +272,7 @@
                     class ! **Next**: Model Analysis introduction. </aside>
             </section>
             <!-- SLIDE 4: MODEL ANALYSIS THE HOOK -->
-            <section><slide-split title="MODEL ANALYSIS" badge="TASK 2: ANALYSIS"><img
+            <section><slide-split title="DECONSTRUCTING THE MODEL" badge="TASK 1: ANALYSIS"><img
                         src="images/pixabay_2567915_happy_holidays_women_talking_laugh_happy_friends_casual_outdoors_people.jpg"
                         class="inset-media">
                     <div class="glass-box">
@@ -285,7 +287,7 @@
                     **Next**: Answer for the Hook. </aside>
             </section>
             <!-- SLIDE 5: ANSWER HOOK -->
-            <section data-background-color="var(--bg-dark)"><slide-answer title="TASK 2: ANSWER">
+            <section data-background-color="var(--bg-dark)"><slide-answer title="TASK 1: HOOK ANSWER">
                     <div class="glass-box" style="text-align: center;">
                         <p class="r-fit-text">"Are you looking for a laugh?" </p>
                     </div>
@@ -296,20 +298,21 @@
                     **Next**: Features Task. </aside>
             </section>
             <!-- SLIDE 6: FEATURES TASK -->
-            <section><slide-task title="DECODING THE STORY" badge="TASK 3: FEATURES" timer="5">
+            <section><slide-task title="DECONSTRUCTING THE MODEL" badge="TASK 1: FEATURES" timer="5">
                     <div class="row-container">
                         <div class="col-40"><img
                                 src="images/pixabay_211075_clockwork_gear_historical_clockwork_clockwork_clockwork_clockwork_clockwork.jpg"
                                 class="inset-media"></div>
                         <div class="col-60">
                             <div class="glass-box">
-                                <p class="text-md">Find 3 more features in the text:</p>
-                                <ol class="text-md">
-                                    <li><span class="highlight">Personal Opinion</span>("I love...")
+                                <p class="text-md">Find these features in the text:</p>
+                                <ul class="text-md">
+                                    <li><span class="highlight">The Connection (Style)</span>: Direct Address ("you/we")
                                     </li>
-                                    <li><span class="highlight">Direct Address</span>("You/We")</li>
-                                    <li><span class="highlight">Linking Words</span>("Because")</li>
-                                </ol>
+                                    <li><span class="highlight">The Opinion (Content)</span>: Strong Opinions ("I
+                                        love...")</li>
+                                    <li><span class="highlight">The Glue (Cohesion)</span>: 2 Linking Words</li>
+                                </ul>
                             </div>
                         </div>
                     </div>
@@ -318,22 +321,21 @@
                     find the specific phrases. **Next**: Features Answers. </aside>
             </section>
             <!-- SLIDE 7: FEATURES ANSWERS -->
-            <section data-background-color="var(--bg-dark)"><slide-answer title="TASK 3: ANSWERS">
+            <section data-background-color="var(--bg-dark)"><slide-answer title="TASK 1: FEATURE ANSWERS">
                     <div class="glass-box">
                         <ul class="text-md" style="list-style: none;">
-                            <li>✅ <span class="highlight">Opinion:</span>"I enjoy watching..."
+                            <li>✅ <span class="highlight">The Connection:</span> "Make US feel better..."
                             </li>
-                            <li>✅ <span class="highlight">Direct:</span>"Make US feel better..."
+                            <li>✅ <span class="highlight">The Opinion:</span> "I love to watch...", "I enjoy..."
                             </li>
-                            <li>✅ <span class="highlight">Link:</span>"Because it makes me
-                                laugh." </li>
+                            <li>✅ <span class="highlight">The Glue:</span> "Because", "It may also..." </li>
                         </ul>
                     </div>
                 </slide-answer></section>
             <!-- SLIDE 8: SEGUE 2 -->
             <section data-background-gradient="var(--grad-segue)"><slide-segue title="PHASE 2: VOCAB UPGRADE">
                     <p class="text-md" style="color: var(--primary); font-weight: 600;">
-                        LEVEL UP YOUR WORDS FOR B2 SUCCESS</p>
+                        TASK 2: LEVEL UP YOUR WORDS</p>
                 </slide-segue></section>
             <!-- SLIDE 9: VOCAB PREP -->
             <section>
@@ -410,6 +412,33 @@
                 <aside class="notes">Context: "The intricate plot had so many twists nobody could guess the end."
                 </aside>
             </section>
+            <!-- SLIDE 12.1: VOCAB BRAINSTORM -->
+            <section>
+                <slide-task title="VOCABULARY CHALLENGE" badge="VOCAB BONUS" timer="3">
+                    <div class="row-container">
+                        <div class="col-40">
+                            <img src="images/pixabay_4203628_storytelling_fantasy_imagination_story_storyteller_literature_kids_children_magi.jpg"
+                                class="inset-media">
+                        </div>
+                        <div class="col-60">
+                            <div class="glass-box">
+                                <p class="text-md highlight">Think of TWO more words...</p>
+                                <p class="text-sm">...that you could use to describe YOUR story.</p>
+                                <p class="text-sm mt-20">Write them in the <span class="highlight">Vocabulary box</span>
+                                    on your worksheet now.</p>
+                                <ul class="text-xs mt-20">
+                                    <li>Think about: Emotion, Atmosphere, or Character.</li>
+                                    <li>Try to use a B2 "Level Up" word if you can!</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </slide-task>
+                <aside class="notes">
+                    **Advice**: This is a quick brainstorm before the planning phase. Encourage students to look at the
+                    "Vocabulary for Stories" section on their worksheet.
+                </aside>
+            </section>
             <!-- SLIDE 13: SEGUE 3 -->
             <section data-background-gradient="var(--grad-segue)">
                 <slide-segue title="PHASE 3: THE BLUEPRINT">
@@ -426,7 +455,7 @@
                             <h3 style="color: white;">Standard (B1)
                             </h3>
                             <p class="text-sm">~100 Words. Focus on
-                                the topic and the place.</p>
+                                the topic and basic details.</p>
                         </div>
                         <div style="border-top: 1px solid var(--primary); padding-top: 20px;">
                             <h3 class="highlight">Advanced (B2)</h3>
@@ -436,8 +465,73 @@
                         </div>
                     </div>
                 </slide-split></section>
+            <!-- SLIDE 14.1: B1 QUESTION -->
+            <section>
+                <div class="slide-canvas">
+                    <div class="stage-badge">B1 MISSION</div>
+                    <div class="glass-box centered" style="border-color: var(--primary);">
+                        <p class="text-md highlight">B1 Students:</p>
+                        <p class="text-sm">Here is the question you will be writing about tomorrow. <br><strong>Write it
+                                down now!</strong></p>
+
+                        <div
+                            style="background: rgba(255,255,255,0.05); padding: 25px; border-radius: 8px; border-left: 4px solid var(--primary); margin-top: 20px; text-align: left;">
+                            <p class="text-sm"
+                                style="margin-bottom: 10px; color: var(--text-accent); font-weight: 800;">Articles
+                                wanted: Your favorite stories!</p>
+                            <p class="text-xs">Write an article telling us what you like to read the most: books, manga,
+                                comics, or something else?</p>
+                            <ul class="text-xs" style="margin-top: 10px;">
+                                <li>Do you think it’s good to read a lot? Why?</li>
+                            </ul>
+                            <p class="text-xs" style="margin-top: 10px; font-style: italic; opacity: 0.8;">The best
+                                articles answering these questions will be published next month.</p>
+                        </div>
+                        <div style="margin-top: 30px;">
+                            <timer-pill duration="2"></timer-pill>
+                        </div>
+                    </div>
+                </div>
+                <aside class="notes">
+                    **Advice**: Ensure all B1 students have copied the exact wording of the prompts. This is their CA
+                    task!
+                </aside>
+            </section>
+            <!-- SLIDE 14.2: B2 MISSION -->
+            <section>
+                <div class="slide-canvas">
+                    <div class="stage-badge">B2 MISSION</div>
+                    <div class="glass-box centered" style="border-color: var(--secondary);">
+                        <p class="text-md highlight">B2 Students:</p>
+                        <p class="text-sm">Here is your advanced challenge. <br><strong>Prepare your strategy
+                                now!</strong></p>
+
+                        <div
+                            style="background: rgba(255,255,255,0.05); padding: 25px; border-radius: 8px; border-left: 4px solid var(--secondary); margin-top: 20px; text-align: left;">
+                            <p class="text-sm" style="margin-bottom: 10px; color: var(--secondary); font-weight: 800;">
+                                Articles wanted: Unusual Stories!</p>
+                            <p class="text-xs">We’re looking for articles about unusual material you have read: books,
+                                mangas, or anything else.</p>
+                            <ul class="text-xs" style="margin-top: 10px;">
+                                <li>Have you, or a friend, ever read anything that you thought was really unusual?</li>
+                                <li>Tell us about it – describe the reading material and explain why was it so unusual.
+                                </li>
+                            </ul>
+                            <p class="text-xs" style="margin-top: 10px; font-style: italic; opacity: 0.8;">The best
+                                articles will be published in our next issue.</p>
+                        </div>
+                        <div style="margin-top: 30px;">
+                            <timer-pill duration="2"></timer-pill>
+                        </div>
+                    </div>
+                </div>
+                <aside class="notes">
+                    **Advice**: B2 students need to focus on the 'Why' and the characters. Encourage them to be critics,
+                    not just storytellers.
+                </aside>
+            </section>
             <!-- SLIDE 15: PLANNING -->
-            <section><slide-task title="THE BLUEPRINT" badge="TASK 4: PLANNING" timer="5">
+            <section><slide-task title="THE BLUEPRINT" badge="TASK 4: PLANNING" timer="2">
                     <div class="row-container">
                         <div class="col-40"><img
                                 src="images/pixabay_7567746_notepad_writing_writer_write_notebook_paper_office_thinking_casual_man_freelance.jpg"

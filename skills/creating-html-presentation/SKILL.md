@@ -80,6 +80,26 @@ Use this skill to create the visual backbone of a lesson. Slides must:
         -   **Yes**: Proceed (User acknowledges 'No Source' mode).
         -   **No**: **STOP** and wait for files.
 
+### Step 0.6: 📋 SOURCE CONTENT EXTRACTION (CRITICAL ANTI-HALLUCINATION GATE)
+
+> [!CRITICAL]
+> **MANDATORY. Failure causes 30+ minutes of repair work.**
+
+**Goal**: Create a deterministic checklist of ALL worksheet content.
+
+**Action**:
+1. Read **Lesson Plan** completely. Note all stages.
+2. Read **Worksheet** completely. Extract:
+   - Task names (exactly as written)
+   - All questions/prompts (copy exact wording)
+   - All correct answers (from answer key)
+3. Generate a **Content Extraction Checklist** (see `REFERENCE.md` → "Content Checklist Template")
+4. **STOP**: Present checklist to user with count ("X tasks, Y questions")
+5. **Wait for confirmation** before proceeding.
+
+**Why**: Without this checklist, agent WILL hallucinate or truncate content.
+
+
 ### Step 1: 🎨 Gated Palette Selection (MANDATORY GATE)
 **Goal**: Define the exact color palette from the modular system.
 
@@ -427,77 +447,45 @@ Now, write the `index.html`.
 - **Task 3 (Multiple Choice)**: Global/Professional imagery.
 - **Task 4 (Transformation)**: Abstract/Conceptual imagery.
 
+### 🚫 HORIZONTAL-FIRST LAYOUT RULE (ANTI-VERTICAL-STACKING)
+
+> [!CRITICAL]
+> **NEVER center-stack content vertically on content-heavy slides.**
+> Vertical stacking causes content to overflow below the 700px canvas.
+
+**Layout Requirements by Slide Type:**
+
+| Slide Type | Layout | Structure |
+|:-----------|:-------|:----------|
+| Task Instructions | 50/50 Split | Left: Image, Right: Glass box with timer |
+| Answer Slides | 50/50 or Full | Left: Image OR centered 800px glass box |
+| Reading/Content | 40/60 Split | Left: Small image, Right: Wide text |
+| Segue/Title | Centered OK | Only for short phase titles |
+
+**Pre-Build Checklist:**
+- [ ] Every content slide uses `.row-container`?
+- [ ] All text visible within 700px height?
+- [ ] Timers inside `.glass-box`, not floating?
+- [ ] Glass box at least 700px wide?
+
+> **Code Examples**: See `REFERENCE.md` → "Horizontal Layout Patterns"
+
+
 
 ---
 
-### 🎬 Auto-Animate for Grammar Lessons (GOLD STANDARD)
+### 🎬 Auto-Animate for Grammar Lessons
 
-**When to Use AUTO-ANIMATE**:
-✅ **USE** when:
-- Showing **sentence transformations** (e.g., rewrites using synonyms, paraphrasing)
-- Demonstrating **grammar changes** (tense, voice, clause reduction)
-- Revealing **before/after** comparisons where words change position or disappear
-- The visual plan explicitly says "Auto-Animate"
+**When to Use**: Showing sentence transformations, grammar changes, before/after comparisons.
+**When NOT to Use**: Static answers, vocabulary definitions, multiple-choice questions.
 
-❌ **DO NOT USE** when:
-- Just revealing an answer (use standard answer slides instead)
-- Showing static vocabulary definitions
-- Displaying multiple-choice questions
-- The transformation is conceptual, not textual (e.g., explaining a process)
+**How It Works**: Add `data-auto-animate` to two consecutive `<section>` elements with matching `data-id` attributes.
 
-**How It Works**:
-1. Add `data-auto-animate` to two consecutive `<section>` elements
-2. Use `data-id="unique-id"` on elements you want to morph
-3. Reveal.js automatically animates the transformation
+**Critical Settings**:
+- `data-auto-animate-duration="1.5"` (default 0.4s is too fast)
+- `data-auto-animate-easing="ease-in-out"`
 
-**Manual Implementation**:
-```html
-<!-- Before -->
-<section data-auto-animate 
-         data-auto-animate-duration="1.5" 
-         data-auto-animate-easing="ease-in-out"
-         data-background-color="var(--bg-dark)">
-    <h2>Sentence Reduction</h2>
-    <p data-id="sentence" style="font-size: 36px;">
-        Michelangelo, <span data-id="remove" style="color: #ef4444; text-decoration: underline;">who was</span> a brilliant sculptor, carved...
-    </p>
-    <p style="font-size: 24px; color: #ef4444;">⬇ Watch the underlined words disappear ⬇</p>
-</section>
+**Use Cases**: Appositives, tense changes, active→passive, word order inversions.
 
-<!-- After -->
-<section data-auto-animate 
-         data-auto-animate-duration="1.5" 
-         data-auto-animate-easing="ease-in-out"
-         data-background-color="var(--bg-dark)">
-    <h2>Sentence Reduction</h2>
-    <p data-id="sentence" style="font-size: 36px; color: var(--text-accent);">
-        Michelangelo, a brilliant sculptor, carved...
-    </p>
-    <p style="font-size: 32px; color: var(--text-accent);">✓ We removed: <strong>who was</strong></p>
-</section>
-```
+> **Code Examples**: See `REFERENCE.md` → "Auto-Animate Patterns"
 
-**CRITICAL Settings**:
-- `data-auto-animate-duration="1.5"`: Animation takes 1.5 seconds (default is too fast at 0.4s)
-- `data-auto-animate-easing="ease-in-out"`: Smooth acceleration/deceleration
-- `data-id="sentence"`: Matches elements between slides for morphing
-- Visual cue: "⬇ Watch the underlined words disappear ⬇" prepares students
-
-**Reusable Component** (Recommended):
-```html
-<grammar-transform 
-    title="From Relative Clause to Appositive"
-    before="Michelangelo, who was a brilliant sculptor, carved the statue of David."
-    after="Michelangelo, a brilliant sculptor, carved the statue of David."
-    highlight="who was">
-</grammar-transform>
-```
-
-**Use Cases**:
-- ✅ **Appositives** (reducing relative clauses)
-- ✅ **Tense Changes** (present → past)
-- ✅ **Active → Passive Voice**
-- ✅ **Word Order** (questions, inversions)
-- ✅ **Adding/Removing Clauses**
-
-**Why This Matters**: Visual morphing makes grammar transformations **dramatically clearer** than static before/after comparisons.

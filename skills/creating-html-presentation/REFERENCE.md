@@ -121,3 +121,122 @@ customElements.define('timer-pill', TimerPill);
 /* USAGE:
 <timer-pill duration="5"></timer-pill>
 */
+
+---
+
+## Content Checklist Template
+
+Use this format for Step 0.6 (Source Content Extraction):
+
+```markdown
+## Source Content Extraction Checklist
+
+### From Lesson Plan:
+- [ ] Stage 1: [name] - [key activity]
+- [ ] Stage 2: [name] - [key activity]
+...
+
+### From Worksheet:
+#### Task 1: [exact title]
+- [ ] Question 1: "[exact wording]"
+  - Answer: "[exact answer from key]"
+- [ ] Question 2: "[exact wording]"
+  - Answer: "[exact answer from key]"
+...
+
+### Total Counts:
+- Tasks: X
+- Questions: Y
+- Answers to create: Y (1 slide per answer)
+```
+
+---
+
+## Auto-Animate Patterns
+
+### Before/After Sentence Transformation
+```html
+<!-- Before -->
+<section data-auto-animate 
+         data-auto-animate-duration="1.5" 
+         data-auto-animate-easing="ease-in-out"
+         data-background-color="var(--bg-dark)">
+    <h2>Sentence Reduction</h2>
+    <p data-id="sentence" style="font-size: 36px;">
+        Michelangelo, <span data-id="remove" style="color: #ef4444; text-decoration: underline;">who was</span> a brilliant sculptor, carved...
+    </p>
+    <p style="font-size: 24px; color: #ef4444;">⬇ Watch the underlined words disappear ⬇</p>
+</section>
+
+<!-- After -->
+<section data-auto-animate 
+         data-auto-animate-duration="1.5" 
+         data-auto-animate-easing="ease-in-out"
+         data-background-color="var(--bg-dark)">
+    <h2>Sentence Reduction</h2>
+    <p data-id="sentence" style="font-size: 36px; color: var(--text-accent);">
+        Michelangelo, a brilliant sculptor, carved...
+    </p>
+    <p style="font-size: 32px; color: var(--text-accent);">✓ We removed: <strong>who was</strong></p>
+</section>
+```
+
+### Reusable Grammar Transform Component
+```html
+<grammar-transform 
+    title="From Relative Clause to Appositive"
+    before="Michelangelo, who was a brilliant sculptor, carved the statue of David."
+    after="Michelangelo, a brilliant sculptor, carved the statue of David."
+    highlight="who was">
+</grammar-transform>
+```
+
+---
+
+## Horizontal Layout Patterns
+
+### ❌ BANNED: Narrow Centered Stacking
+```html
+<section>
+    <h2>Title</h2>
+    <div class="glass-box" style="width: 500px; margin: 0 auto;">
+        <p>Content 1</p>
+        <p>Content 2</p>
+        <p>Content 3</p>
+        <p>Content 4</p>  <!-- HIDDEN! -->
+        <timer-pill></timer-pill>  <!-- HIDDEN! -->
+    </div>
+</section>
+```
+
+### ✅ CORRECT: Horizontal Split (Task Slide)
+```html
+<section>
+    <div class="row-container">
+        <div class="col-50">
+            <img src="images/task.jpg" class="inset-media">
+        </div>
+        <div class="col-50">
+            <div class="glass-box">
+                <h3>Task Title</h3>
+                <p>Instructions...</p>
+                <timer-pill duration="5"></timer-pill>
+            </div>
+        </div>
+    </div>
+</section>
+```
+
+### ✅ CORRECT: Wide Glass Box (Multi-Content)
+```html
+<section>
+    <h2>B2 Mission</h2>
+    <div class="glass-box" style="width: 800px; margin: 0 auto;">
+        <div style="display: flex; gap: 20px;">
+            <div style="flex: 1;">Content A</div>
+            <div style="flex: 1;">Content B</div>
+        </div>
+        <timer-pill duration="2"></timer-pill>
+    </div>
+</section>
+```

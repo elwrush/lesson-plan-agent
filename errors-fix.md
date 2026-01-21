@@ -258,6 +258,13 @@ This session proceeded without errors requiring fixes. The `writing-lesson-plans
 - **Issue**: Syntax errors from apostrophes in slide bullet text (e.g., `'Don\'t'` causing unterminated strings)
 - **Root Cause**: Escaped quotes inside triple-nested Python list structures
 - **Fix**: Use double quotes for strings containing apostrophes: `"Don't"` instead of escape sequences
+### Breakthrough: Dynamic Space-Filling (Typst 0.11+)
+- **Problem**: Manual line counting (`for i in range(20)...`) is fragile. Content additions above lines cause spillover, and printing 2-up (A5 effectively) makes standard spacing too small for handwriting.
+- **Solution**: Use **Context-Aware Math**.
+  - **Logic**: `page.height - bottom_margin - here().position().y` = exact usable space.
+  - **2-Up Rule**: Use **1.1cm** line spacing. When scaled 2-up on A4, this becomes ~7.8mm, which is the sweet spot for handwriting.
+  - **Full Page Rule**: Use `#layout(size => { fill-space-with-lines(size.height) })` for continuation pages.
+- **Result**: "Orphan-proof" worksheets that perfectly fill every page regardless of header size.
 - **Prevention**: When copying working examples, maintain their quote style patterns
 
 ### Credentials Path from Subdirectories
@@ -652,4 +659,38 @@ This session proceeded without errors requiring fixes. The `writing-lesson-plans
 - **Issue**: Split layouts broke silently because `.col-50` wasn't defined in the `<style>` block.
 - **Fix**: Added `.col-50 { flex: 0 0 50%; max-width: 50%; }` to CSS.
 - **Rule**: Before using any `.col-*` class, verify it exists in the HTML's `<style>` or in `COMPONENTS.md`.
+
+---
+
+## 2026-01-21 | Critical Slideshow Architecture Fixes
+
+### CRITICAL: Content Hallucination/Truncation
+- **Issue**: Agent invents or omits worksheet content, requiring 30+ minutes of manual repair per slideshow.
+- **Root Cause**: No verification step. Agent reads worksheet once, then generates from memory.
+- **Fix**: Added **Step 0.6: Source Content Extraction Gate** to `creating-html-presentation/SKILL.md`:
+  1. Agent MUST extract ALL content from worksheet into a checklist BEFORE coding
+  2. Checklist includes exact task names, question wording, and answers
+  3. Agent presents count ("X tasks, Y questions") for user verification
+  4. After coding, every checkbox must be ticked
+- **Impact**: Deterministic mapping from worksheet to slides - no more invention.
+
+### CRITICAL: Vertical Stacking Causes Hidden Content
+- **Issue**: Slides stack content top-to-bottom in narrow columns, causing timers and lower content to be hidden below the 700px canvas.
+- **Visual**: Content crammed in center column with wasted horizontal space.
+- **Fix**: Added **HORIZONTAL-FIRST LAYOUT RULE** to `creating-html-presentation/SKILL.md`:
+  - Task slides MUST use `.row-container` with 50/50 splits
+  - Glass boxes must be at least 700-800px wide
+  - BANNED: Narrow centered stacking (`width: 500px; margin: 0 auto`)
+  - REQUIRED: Horizontal expansion using flex or grid
+- **Pre-Build Checklist** added:
+  - [ ] Does every content slide use `.row-container`?
+  - [ ] Is all text visible within 700px height?
+  - [ ] Are timers inside `.glass-box`, not floating?
+  - [ ] Is glass box at least 700px wide?
+
+### Dashboard Broken Links (Deferred)
+- **Issue**: Clicking cards on `lesson-slideshows.pages.dev` causes recursive URL appending (`/folder/folder/folder/`).
+- **Status**: Deferred. Direct links via Google Docs workflow unaffected.
+- **TODO**: Fix relative link logic in `build_dist.js` dashboard generation.
+
 

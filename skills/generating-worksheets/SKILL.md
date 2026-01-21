@@ -43,10 +43,24 @@ Generates high-quality, print-ready PDF worksheets using **Typst**, offering sup
 
 4. **Design & Layout Standards (CRITICAL)**:
    - **Native Graphics**: Use Typst's native `stack`, `circle`, `line`, and `gradient` for headers. **DO NOT** use external decorative images or simple/naff placeholders. 
-   - **Writing Lines**: 
-     - **Dynamic Alignment**: ALWAYS use `#box(width: 1fr, repeat("."))` for leaders and writing lines.
-     - **Justification**: Set `#set par(justify: false)` for worksheets with leaders to prevent unsightly text stretching.
-     - **Color**: Use **Dark Gray (#666666)** or darker (#4D4D4D) for all lines to ensure visibility in photocopies. **NEVER** use light gray (#E0E0E0).
+    - **Writing Lines**: 
+      - **Dynamic Filling (Pro Standard)**: For full-page OR remaining-space ruled lines, ALWAYS use the `#context` system to fill exact available space.
+      ```typst
+      #let line-spacing = 0.85cm
+      #let rule-line = line(length: 100%, stroke: 0.5pt + gray-line)
+      #let fill-space-with-lines(available-height) = {
+        let count = int(available-height / line-spacing)
+        if count > 0 { stack(spacing: line-spacing, ..range(count).map(_ => rule-line)) }
+      }
+      // Usage:
+      #context {
+        let current-pos = here().position()
+        let available = page.height - page.margin.bottom - current-pos.y
+        fill-space-with-lines(available - 0.5cm) // 0.5cm buffer
+      }
+      ```
+      - **Fixed Leaders**: Use `#box(width: 1fr, repeat("."))` for leaders and inline writing lines.
+      - **Color**: Use **Dark Gray (#666666)** or darker for all lines. **NEVER** use light gray.
    - **Typography**: Minimum font size is **11pt** for student facings text.
 
 5. **Compile PDF**:
@@ -89,3 +103,4 @@ The Typst template uses a functional component approach:
 - `#task_card()`: Boxed prompt with level and context.
 - `#radar_box()`: Self-correction checklist.
 - `#writing_lines(count: 15)`: Fixed-height writing area using `repeat(".")`.
+- `#fill-space-with-lines(height)`: Dynamic line stacking (see Writing Lines section for logic).

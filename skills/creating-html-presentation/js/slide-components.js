@@ -525,12 +525,13 @@ class SlideMedia extends HTMLElement {
 class TimerPill extends HTMLElement {
     constructor() {
         super();
-        this.duration = parseInt(this.getAttribute('duration')) || 5;
-        this.timeLeft = this.duration * 60;
         this.timer = null;
     }
 
     connectedCallback() {
+        this.duration = parseInt(this.getAttribute('duration')) || 5;
+        this.timeLeft = this.duration * 60;
+
         this.innerHTML = `
             <div class="timer-pill">
                 <div class="timer-display">${this.formatTime(this.timeLeft)}</div>

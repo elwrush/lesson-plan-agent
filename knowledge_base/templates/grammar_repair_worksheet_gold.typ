@@ -22,7 +22,7 @@
 // BRAND COLORS
 #let maroon = rgb("#8B1538")
 #let slate-dark = rgb("#334155")
-#let gray-line = rgb("#E0E0E0")
+#let gray-line = rgb("#666666") // Darker for photocopy safety
 
 // ==========================================
 // 1. COMPONENTS
@@ -127,12 +127,27 @@
   )
 }
 
-// WRITING LINES (Strict count to avoid spillover)
-#let writing_lines(count: 15) = {
-  v(0.4cm)
-  for _ in range(count) {
-    line(length: 100%, stroke: 0.5pt + slate-dark)
-    v(0.55cm)
+// --- DYNAMIC SPACE FILLING ---
+#let line-spacing = 1.1cm // Standard for 2-up print scaling
+#let rule-line = line(length: 100%, stroke: 0.5pt + slate-dark)
+
+#let fill-space-with-lines(available-height) = {
+  let count = int(available-height / line-spacing)
+  if count > 0 {
+    stack(
+      spacing: line-spacing,
+      ..range(count).map(_ => rule-line),
+    )
+  }
+}
+
+#let writing_lines_dynamic() = {
+  context {
+    let current-pos = here().position()
+    let available = page.height - page.margin.bottom - current-pos.y
+    let buffer = 0.5cm
+    v(buffer)
+    fill-space-with-lines(available - buffer)
   }
 }
 
@@ -188,7 +203,7 @@
 
 #radar_box(("Used 'First', 'Then', 'Finally'?", "Checked is/am/are?"))
 
-#writing_lines(count: 15)
+#writing_lines_dynamic()
 
 // --- PAGE 3: LEVEL B1 ---
 #pagebreak()
@@ -204,7 +219,7 @@
 
 #radar_box(("Explained the 'Trap'?", "Articles (a/an/the)?", "Plurals ending in 's'?"))
 
-#writing_lines(count: 15)
+#writing_lines_dynamic()
 
 // --- PAGE 4: LEVEL B2 ---
 #pagebreak()
@@ -220,4 +235,4 @@
 
 #radar_box(("Complex transitions used?", "Correct word forms?"))
 
-#writing_lines(count: 15)
+#writing_lines_dynamic()
