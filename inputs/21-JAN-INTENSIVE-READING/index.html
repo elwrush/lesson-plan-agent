@@ -227,7 +227,7 @@
                     <div style="border: 2px solid var(--primary); height: 400px; box-shadow: 0 0 30px black;">
                         <iframe src="https://www.youtube.com/embed/MCOnsoZRUMw" style="width: 100%; height: 100%;"
                             frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
                             allowfullscreen></iframe>
                     </div>
 
@@ -526,34 +526,41 @@
             <!-- STRATEGY SLIDE: T/F/NG -->
             <section data-background-gradient="radial-gradient(circle, #2d3436 0%, #000000 100%)">
                 <slide-task title="STRATEGY: T / F / NG" badge="CRITICAL SKILL">
-                    <div style="width: 100%; text-align: left; margin: 0 auto;">
-                        <div
-                            style="display: grid; grid-template-columns: 1fr 2fr; gap: 20px; align-items: center; margin-bottom: 20px;">
-                            <h3 style="color: #22c55e;">TRUE</h3>
-                            <p class="text-sm">The text says the <strong>same</strong> thing (synonyms).</p>
+                    <div class="row-container" style="align-items: stretch; gap: 40px;">
+                        <!-- LEFT: DEFINITIONS -->
+                        <div class="col-60" style="text-align: left;">
+                            <div
+                                style="display: grid; grid-template-columns: 120px 1fr; gap: 10px; align-items: center; margin-bottom: 25px;">
+                                <h3 style="color: #22c55e; margin:0; text-align:right;">TRUE</h3>
+                                <p class="text-sm" style="margin:0;">The text says the <strong>same</strong> thing.</p>
+                            </div>
+                            <div
+                                style="display: grid; grid-template-columns: 120px 1fr; gap: 10px; align-items: center; margin-bottom: 25px;">
+                                <h3 style="color: #ef4444; margin:0; text-align:right;">FALSE</h3>
+                                <p class="text-sm" style="margin:0;">The text says the <strong>opposite</strong>.</p>
+                            </div>
+                            <div
+                                style="display: grid; grid-template-columns: 120px 1fr; gap: 10px; align-items: center;">
+                                <h3 style="color: #ecc94b; margin:0; text-align:right;">NG</h3>
+                                <p class="text-sm" style="margin:0;">The text <strong>does not say</strong> yes or no.
+                                </p>
+                            </div>
                         </div>
-                        <div
-                            style="display: grid; grid-template-columns: 1fr 2fr; gap: 20px; align-items: center; margin-bottom: 20px;">
-                            <h3 style="color: #ef4444;">FALSE</h3>
-                            <p class="text-sm">The text says the <strong>opposite</strong> or contradicts it.</p>
-                        </div>
-                        <div
-                            style="display: grid; grid-template-columns: 1fr 2fr; gap: 20px; align-items: center; margin-bottom: 20px;">
-                            <h3 style="color: #ecc94b;">NOT GIVEN</h3>
-                            <p class="text-sm">The text <strong>does not say</strong> yes or no. (Don't guess!)</p>
-                        </div>
-                        <hr style="border-color: var(--primary); opacity: 0.3; margin: 30px 0;">
 
-                        <div
-                            style="border: 2px solid var(--primary); background: rgba(255, 179, 0, 0.1); padding: 20px; border-radius: 10px; text-align: center;">
-                            <p class="text-sm" style="margin: 0; color: white;">
-                                <strong>EXAMPLE:</strong><br>
-                                <span style="color: #999;">Text:</span> "Rice is popular." <br>
-                                <span style="color: #999;">Question:</span> "Everyone eats rice." <br>
-                                ⬇ <br>
-                                <strong style="color: #ecc94b; font-size: 1.2em;">NOT GIVEN</strong> <br>
-                                <span style="font-size: 0.8em;">(Popular ≠ Everyone)</span>
-                            </p>
+                        <!-- RIGHT: EXAMPLE BOX -->
+                        <div class="col-40" style="display: flex; flex-direction: column; justify-content: center;">
+                            <div
+                                style="border: 2px dashed var(--primary); background: rgba(255, 179, 0, 0.05); padding: 30px; border-radius: 15px; text-align: center;">
+                                <p class="text-sm" style="margin: 0; color: white; line-height: 1.6;">
+                                    <strong style="color:var(--primary); font-size:1.2em;">EXAMPLE</strong><br>
+                                    <hr style="border-color:#444; margin: 15px 0;">
+                                    <span style="color: #999;">Text:</span> "Rice is popular."<br>
+                                    <span style="color: #999;">Q:</span> "Everyone eats rice."<br>
+                                    ⬇<br>
+                                    <strong style="color: #ecc94b; font-size: 1.4em;">NOT GIVEN</strong><br>
+                                    <span style="font-size: 0.7em; font-style:italic;">(Popular ≠ Everyone)</span>
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </slide-task>
