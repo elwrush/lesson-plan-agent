@@ -28,10 +28,9 @@ graph TD
         Commit --> Pages[GitHub Pages Auto-Build]
     end
     
-    Pages --> CalcURL[3. Calculate Live URL]
+    GitHub --> CalcURL[3. Calculate Live URL]
     CalcURL --> Sync[4. Sync Live URL to .typ Plan]
-    Sync --> GDocs[5. Push Link to Google Docs]
-    GDocs --> Finish([🏁 Live Slideshow & Updated Plan])
+    Sync --> Finish([🏁 Live Slideshow & Updated Plan])
     
     %% Semantic Requirements
     SyncNode[sync_lesson_plan_url.py] -.->|Regex Replace| Sync
@@ -54,21 +53,6 @@ Use the `/commit` workflow to push the changes to GitHub.
 
 ### 3. Synchronize Lesson Plan URL (CRITICAL)
 Calculate the live URL and update the Typst source file. This step ensures that the PDF output of the lesson plan is functionally linked.
-
-**Pattern**: `https://elwrush.github.io/lesson-plan-agent/[FOLDER-NAME]/`
-
-**Command**:
-// turbo
-```powershell
-python skills/deploying-to-github-pages/scripts/sync_lesson_plan_url.py "inputs/[FOLDER]/[FILENAME].typ" "https://elwrush.github.io/lesson-plan-agent/[FOLDER]/"
-```
-
-### 4. Push to Google Docs
-Convert the link to a Google Doc for easy sharing via Google Drive.
-// turbo
-```powershell
-$env:PYTHONIOENCODING='utf-8'; python scripts/push_to_gdocs.py --file "inputs/[FOLDER]/slideshow_link.html" --name "[Title] Slideshow Link"
-```
 
 ## Reference
 - [sync_lesson_plan_url.py](scripts/sync_lesson_plan_url.py) - Script for regex-based URL replacement.

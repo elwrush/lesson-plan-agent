@@ -26,10 +26,3 @@ Run the sync script to update the `#slideshow_link` in your `.typ` file:
 ```powershell
 python skills/deploying-to-github-pages/scripts/sync_lesson_plan_url.py "inputs/[FOLDER]/[FILENAME].typ" "https://elwrush.github.io/lesson-plan-agent/[FOLDER]/"
 ```
-
-### 3. Google Docs Link
-// turbo
-Create a shareable link in Google Drive:
-```powershell
-$env:PYTHONIOENCODING='utf-8'; python scripts/push_to_gdocs.py --file "inputs/[FOLDER]/slideshow_link.html" --name "[Title] Slideshow Link"
-```
