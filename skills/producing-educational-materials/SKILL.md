@@ -86,7 +86,7 @@ All worksheets MUST use the global `@local/bell-sheets:0.1.0` package.
 ### Step 6: Rendering & Validation
 1. **Compile**:
    ```powershell
-   typst compile "path/to/source.typ" "outputs/DD-MM-YYYY-[LEVEL]-[TITLE].pdf" --root "."
+   typst compile "path/to/source.typ" "inputs/[folder]/published/DD-MM-YYYY-[LEVEL]-[TITLE].pdf" --root "."
    ```
 2. **Validate**:
    ```powershell

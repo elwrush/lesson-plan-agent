@@ -15,7 +15,7 @@ This skill generates vibrant, high-energy HTML presentations using **Reveal.js**
 > [!CRITICAL]
 > **ROOT FOLDER BAN**: You are STRICTLY FORBIDDEN from creating any lesson files (PDFs, Typst, Images, HTML) in the Project Root (`C:\PROJECTS\LESSONS AND SLIDESHOWS 2\`).
 > 
-> **Canonical Location**: ALL files MUST be created inside a dedicated subfolder in `inputs/` (e.g., `inputs/28-01-2026-B1-Match-Girl-E/`). This applies to the Lesson Plan, Slideshow, Images, worksheets, and assets.
+> **Canonical Location**: ALL files MUST be created inside a dedicated subfolder in `inputs/` (e.g., `inputs/28-01-2026-B1-Match-Girl-E/`). This applies to the Lesson Plan, Slideshow, Images, worksheets, and assets. Completed and approved materials should be moved to a `published/` sub-subdirectory.
 
 > [!CRITICAL]
 > **PREREQUISITE**: You MUST NOT generate a presentation until the corresponding Lesson Plan has been EXPLICITLY APPROVED by the user.
@@ -190,6 +190,7 @@ Run the python script. It will:
 2.  Load Jinja2 templates from `templates/`.
 3.  Render `index.html`.
 4.  Copy required assets (`audio/`, shared JS).
+5.  **Save Output**: The script will save `index.html` to the lesson folder. For final publication, ensure it resides in (or is mirrored to) the `published/` subfolder if requested by the user.
 
 ### Step 5: 🧪 Validation
 Run the existing validators to ensure the output is perfect.

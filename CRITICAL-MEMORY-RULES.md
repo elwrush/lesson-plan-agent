@@ -67,6 +67,16 @@ The agent MUST follow the Skills-based architecture instead of freeforming:
 5. ✅ Wait for explicit approval
 6. ✅ Update errors-fix.md if new issues emerge
 
+## 5. Project Organization & Tidiness (Jan 29, 2026)
+
+- **Root Folder**: Must remain clean. Only core project files (`README.md`, `package.json`, `.gitignore`, `session-log.md`, `errors-fix.md`, `CRITICAL-MEMORY-RULES.md`) and essential project directories (`skills/`, `inputs/`, `scripts/`, `data/`, `archive/`, `temp/`, `images/`, `knowledge_base/`, `presentations/`, `dist/`, `audio/`, `videos/`, `js/`, `assets/`) should reside here.
+- **Root Ban**: Do NOT create new lesson files or one-off scripts directly in the root folder.
+- **Script Storage**: All top-level utility and automation scripts MUST be stored in the `/scripts` directory. Skill-specific scripts MUST remain within their respective skill's `/scripts` subfolder.
+- **Lesson Co-location**: All lesson-specific materials (plans, worksheets, presentations, assets) MUST be co-located in their own directory under `/inputs/`.
+- **The 'published' Rule**: Completed and validated worksheets, lesson plans, and slideshows should be written to a subfolder called `published/` within the lesson directory (e.g., `inputs/28-01-26_Lesson/published/`).
+- **No 'outputs' Folder**: The legacy `outputs/` folder is decommissioned. DO NOT write any files to a top-level `outputs/` directory.
+- **Extraneous Files**: Temporary, test, or one-off files should be moved to `/temp/`. Legacy logs, audits, or session-specific summaries should go to `/archive/`. Datasets and shared persistent assets go to `/data/` or `/assets/`.
+
 ---
 
 **THESE RULES MUST BE ADDED TO USER GLOBAL MEMORY**

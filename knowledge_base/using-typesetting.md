@@ -171,7 +171,7 @@ if __name__ == "__main__":
             {'label': 'Homework', 'value': 88},
         ]
     }
-    generate_report(sample_data, PROJECT_ROOT / "outputs/example.pdf")
+    generate_report(sample_data, PROJECT_ROOT / "inputs/LESSON-FOLDER/published/example.pdf")
 ```
 
 ---
@@ -449,14 +449,16 @@ pip install jinja2 pypdf
 
 ```
 project/
-├── templates/
-│   ├── feedback_report.typ
-│   └── cohort_analysis.typ
+├── inputs/
+│   └── [folder]/
+│       ├── published/
+│       │   ├── feedback_report.pdf
+│       │   └── cohort_analysis.pdf
+│       └── images/
+│           └── logo.jpg
 ├── scripts/
 │   ├── generate_feedback.py
 │   └── generate_cohort.py
-├── outputs/
-│   └── REPORTS/
 └── images/
     └── logo.jpg
 ```

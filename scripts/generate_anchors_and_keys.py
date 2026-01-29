@@ -1,9 +1,30 @@
 
 import random
 
+def generate_balanced_key(num_items):
+    """Generates a randomized key with balanced distribution and no more than 2 consecutive identical answers."""
+    while True:
+        key = [random.randint(0, 3) for _ in range(num_items)]
+        
+        # Check distribution (at least one of each option if enough items)
+        counts = [key.count(i) for i in range(4)]
+        if num_items >= 4 and any(c == 0 for c in counts):
+            continue
+            
+        # Check for more than 2 consecutive identical answers
+        consecutive = False
+        for i in range(len(key) - 2):
+            if key[i] == key[i+1] == key[i+2]:
+                consecutive = True
+                break
+        if consecutive:
+            continue
+            
+        return key
+
 # Randomized Answer Keys
-b1_key = [random.randint(0, 3) for _ in range(6)]
-b2_key = [random.randint(0, 3) for _ in range(8)]
+b1_key = generate_balanced_key(6)
+b2_key = generate_balanced_key(8)
 
 print(f"B1 Answer Key (6 items): {b1_key}")
 print(f"B2 Answer Key (8 items): {b2_key}")

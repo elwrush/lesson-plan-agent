@@ -48,7 +48,7 @@ graph TD
     ApproveSlides -->|Fail| Slideshow
     ApproveSlides -->|Pass| Automate[10. Post-Generation Automations]
     
-    Automate --> Finish([🏁 Final PDF & Live Slideshow])
+    Automate --> Finish([🏁 Final PDF & Live Slideshow in published/])
 ```
 
 ## Workflow
@@ -182,7 +182,8 @@ Generate the lesson plan **in Typst format** for professional PDF output. Use th
 **Canonical Folder:** `inputs/[DD-MM-YYYY-Topic-Level]/`
 
 Store ALL files in this folder using strict sub-directories:
-- **Lesson Plan:** `inputs/[Folder]/[Date-Slug]-LP.typ`
+- **Lesson Plan:** `inputs/[Folder]/published/[Date-Slug]-LP.typ`
+- **Published PDF:** `inputs/[Folder]/published/[Date-Slug]-LP.pdf`
 - **Images:** `inputs/[Folder]/images/`
 - **Audio:** `inputs/[Folder]/audio/`
 - **Quizzes:** `inputs/[Folder]/quizzes/`
@@ -190,7 +191,7 @@ Store ALL files in this folder using strict sub-directories:
 
 > [!CRITICAL]
 > **NO ROOT FILES**: Never save files to the `inputs/` root or the Project root. Always use the named subfolder.
-> **NO SCATTERING**: Do not create generic folders like `temp_quiz_repo`. Use the `quizzes/` subfolder.
+> **NO SCATTERING**: Do not create generic folders like `temp_quiz_repo`. Use the `published/` or `quizzes/` subfolder as appropriate.
 
 #### Typst Structure
 
@@ -256,7 +257,7 @@ Before finalizing the plan, you **MUST** conduct a self-evaluation:
 #### 🧪 Step 9: Validate (MANDATORY)
 Run the validator before finalizing:
 ```powershell
-python skills/writing-lesson-plans/scripts/validate_lesson_plan.py "path/to/lesson-plan.typ" --mode [bell|intensive]
+python skills/writing-lesson-plans/scripts/validate_lesson_plan.py "inputs/[FOLDER]/published/lesson-plan.typ" --mode [bell|intensive]
 ```
 - **Rule**: If the script fails, fix the issues and re-run until it passes.
 
