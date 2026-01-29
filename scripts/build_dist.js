@@ -36,7 +36,15 @@ function robustClean(dir) {
     console.warn(`❌ Could not fully clean ${dir}. Proceeding with overwrite...`);
 }
 
-robustClean(DIST_DIR);
+// Targeted build check
+const targetFolder = process.argv[2];
+
+// Clean and create dist
+if (targetFolder) {
+    console.log(`🎯 Targeted build for: ${targetFolder} (Incremental Mode)`);
+} else {
+    robustClean(DIST_DIR);
+}
 
 if (!fs.existsSync(DIST_DIR)) {
     fs.mkdirSync(DIST_DIR);
@@ -65,11 +73,6 @@ if (fs.existsSync(globalImages)) {
     console.log('📦 Copied global images.');
 }
 
-// Targeted build check
-const targetFolder = process.argv[2];
-if (targetFolder) {
-    console.log(`🎯 Targeted build for: ${targetFolder}`);
-}
 
 // Find presentations
 const folders = fs.readdirSync(INPUTS_DIR).filter(f => {
