@@ -1,7 +1,7 @@
 #import "skills/writing-lesson-plans/templates/lesson-plan-components.typ": *
 
 #set page(paper: "a4", margin: (top: 1.5cm, bottom: 2cm, x: 2cm))
-#set text(font: "Arial", size: 10pt, fill: rgb("#333333"))
+#set text(font: "Arial", size: 14pt, fill: rgb("#333333"))
 #set par(leading: 0.65em, justify: false)
 
 #lesson_header("bell")
