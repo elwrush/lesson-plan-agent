@@ -25,7 +25,8 @@ graph TD
     F --> IV[Image Format Verification]
     IV --> G[Layout: Logical Silos]
     E -->|No| G
-    G --> BI{Booklet Imposition Needed?}
+    G --> SP[Strict Spacing Check: 0.55em Body / 0.9cm Writing]
+    SP --> BI{Booklet Imposition Needed?}
     BI -->|Yes| BO[Apply Page Order: 2,3,1,4 or 2,3,1]
     BI -->|No| H
     BO --> H[Typst: Markup Eval & Margins]
@@ -63,13 +64,13 @@ Before writing any code, you MUST verify the environment:
 Determine if you are **transforming existing materials** or **writing brand new content**.
 - **Linguistic Alignment**: Follow the **[B1 Profile](B1-LINGUISTIC-PROFILE.md)** or **[B2 Profile](B2-LINGUISTIC-PROFILE.md)**.
 - **Natural Flow Layout**: Do NOT force material into a prescribed page count. Allow content to flow naturally across pages.
+    - **Rule**: Do NOT add manual `#pagebreak()` before question blocks if there is sufficient space on the current page. Only break if visually necessary.
 - **Logical Ordering (Main Worksheet)**:
   1. `[Header & Hero Strap]`
   2. `[Story/Reading Text]` (Flows naturally across 1-2 pages)
-  3. `[Page Break]`
-  4. `[Question Block]` (Queries MUST be bold-faced using `#strong[]`)
-  5. `[Page Break]`
-  6. `[Full Answer Key]` (With explanations)
+  3. `[Questions/Tasks]` (Flows naturally; avoid unnecessary page breaks)
+  4. `[Page Break]` (Mandatory before Answer Key)
+  5. `[Full Answer Key]` (With explanations)
 
 - **Modular Output**: Publish writing tasks as separate `.typ` files (e.g., `B1-Writing.typ`) to keep the reading/literacy focus of the main worksheet clean.
 
@@ -91,14 +92,16 @@ Apply the **Creative/Editorial** approach to maximize engagement:
 All worksheets MUST use the global `@local/bell-sheets:0.1.0` package.
 
 #### Layout & Production Rules:
-- **Handwriting Space**: Use **1.1cm** for full lines; **0.9cm** is the absolute minimum for compact tasks.
-- **Handwriting Lines**: Use **Dark Gray (#333333)** to survive low-contrast photocopying.
+- **Body Text Spacing**: Use **0.55em** for text leading (`#set par(leading: 0.55em)`) for a clean, tight professional look. **NEVER** use 0.9cm for body text.
+- **Handwriting Space**: Use **0.9cm** for handwriting lines (using `writing_lines_dynamic(line-spacing: 0.9cm)`).
+- **Long Options Grid**: If multiple-choice options are long sentences, use a **SINGLE COLUMN** grid (`columns: (1fr)`) to prevent text overlap ("grow-D" error).
+- **Task Gutter**: For T/F/NG grids, ALWAYS add `column-gutter: 1cm` to prevent text clashing with option blocks.
 - **External Text Loading**: When loading text with italics/bold from files:
   - **Fix**: Use `#eval(read("file.txt").replace("[", "\[").replace("]", "\]"), mode: "markup")`.
 - **Identity Blocks**: Place on a **separate new page** for major production tasks.
 - **Explicit Margins**: **MANDATORY**. `#set page(margin: (x: 2cm, top: 1.25cm, bottom: 1.25cm))`.
 
-### Step 6: Rendering & Validation
+### Step 7: Rendering & Validation
 1. **Compile**:
    ```powershell
    typst compile "path/to/source.typ" "inputs/[folder]/published/DD-MM-YYYY-[LEVEL]-[TITLE].pdf" --root "."
@@ -107,8 +110,9 @@ All worksheets MUST use the global `@local/bell-sheets:0.1.0` package.
    ```powershell
    python scripts/validate_worksheet.py "path/to/source.typ" --mode [bell|intensive]
    ```
+   **DO NOT** automatically run `build_dist.js` or other deployment scripts unless explicitly requested.
 
-### Step 7: 🏁 THE LINK GATE
+### Step 8: 🏁 THE LINK GATE
 > [!CRITICAL]
 > **YOU MUST PROVIDE A CLICKABLE LINK TO THE PDF.**
 > Post the link using the `file:///` protocol. Do NOT proceed until the user approves the visual output.

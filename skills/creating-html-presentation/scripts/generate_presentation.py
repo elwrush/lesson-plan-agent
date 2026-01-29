@@ -59,6 +59,16 @@ def generate_presentation(json_path):
     # 5. Render Template
     env = Environment(loader=FileSystemLoader(template_dir))
     template = env.get_template('base.html')
+    # Pre-process slides for video URL construction
+    for slide in config.get('slides', []):
+        if slide.get('layout') == 'video' and slide.get('video_id'):
+            start = slide.get('start', '0')
+            end = slide.get('end', '')
+            url = f"https://www.youtube.com/embed/{slide['video_id']}?start={start}"
+            if end:
+                url += f"&end={end}"
+            slide['video_url'] = url
+
     output_html = template.render(
         meta=config.get('meta', {}),
         slides=config.get('slides', [])

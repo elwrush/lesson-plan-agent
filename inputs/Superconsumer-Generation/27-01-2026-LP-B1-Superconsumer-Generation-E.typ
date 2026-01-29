@@ -1,6 +1,7 @@
+
 #import "../../skills/writing-lesson-plans/templates/lesson-plan-components.typ": *
 
-#set page(paper: "a4", margin: (top: 1.5cm, bottom: 2cm, x: 2cm))
+#set page(paper: "a4", margin: (top: 1.5cm, bottom: 2.5cm, x: 2cm))
 #set text(font: "Arial", size: 10pt, fill: rgb("#333333"))
 #set par(leading: 0.65em, justify: false)
 
@@ -14,41 +15,48 @@
   shape: "E (Receptive Skills)",
   assessment: "N/A",
   focus: "Reading",
-  materials: "27-01-2026-B1-Superconsumer-Generation-Reading-Bell.pdf",
+  materials: "B1-Reading.pdf / B1-Writing.pdf / B2-Ext.pdf",
 ))
 
 #v(0.5cm)
 
 #main_aim_box[
-  By the end of the lesson, learners will have practiced and developed the sub-skills of reading for gist (skimming) and detailed information (scanning) in the context of analyzing the "Superconsumer" habits of Generation Y.
+  By the end of the lesson, learners will have developed their reading sub-skills of skimming for gist and scanning for numerical data within the context of analyzing the "Superconsumer" habits of Generation Y.
 ]
 
 #v(0.5cm)
 
 #differentiation_box[
-  This lesson employs a "Tiered Text" strategy, allowing students to access a B2 "Advanced Reading Extension" if they complete the B1 tasks ahead of schedule. This ensures high-ability learners remain challenged (i+1) while supporting the B1 core group.
+  This lesson utilizes a "Tiered Text" strategy. Higher-ability learners (B2 range) are provided with a more linguistically complex version of the text (B2 Extension) should they complete the B1 tasks ahead of schedule.
 ]
+
+#v(0.5cm)
+#slideshow_link("https://elwrush.github.io/lesson-plan-agent/Superconsumer-Generation/")
 
 #v(0.5cm)
 
 #stage_table((
   stage("ONE", "Lead-in & Vocabulary", "14", "To activate schema and clarify key vocabulary.", [
-    - *Part 1: Video Hook* (6 min). Play the YouTube video (https://www.youtube.com/watch?v=_x48tY5sfYM) showing conditions in an Amazon fulfillment center. 
-    - Ss watch and discuss in pairs: "What is the 'cost' of getting our products so fast?" and "How does this make you feel about big companies like Amazon?" 
-    - *Part 2: Skill-Based Warmup* (4 min). Hand out worksheet. Ss discuss Task 1: "Where do you shop most often?" and compare with parents/grandparents.
-    - *Part 3: Vocabulary* (4 min). Elicit/Clarify 5 markers: *Demand*, *Multinational*, *Influence*, *Interact*, *Personalize*. Ss match words to context sentences.
+    - *Part 1: Video Hook* (6 min). Play the YouTube video (https://www.youtube.com/watch?v=_x48tY5sfYM) showing Amazon fulfillment center. 
+    - Elicit curiosity: "What is the 'cost' of getting our products so fast?"
+    - *Part 2: Pre-Teach Vocabulary* (8 min). Clarify/Elicit markers:
+      1. *Demand* /dɪˈmɑːnd/: A strong request for something to be provided.
+      2. *Multinational* /ˌmʌltiˈnæʃnəl/: Involving several different countries.
+      3. *Influence* /ˈɪnfluəns/: The power to have an effect on people or things.
+      4. *Interact* /ˌɪntərˈækt/: To communicate or do things with other people.
+      5. *Personalize* /ˈpɜːrsənəlaɪz/: To design or change something so that it is suitable for a particular person.
   ], "Ss-Ss / T-Ss"),
   
   stage("TWO", "Reading for Gist & Detail", "23", "To practice skimming and scanning sub-skills.", [
-    - *Global Reading* (6 min). Ss skim paragraph 2-6 and complete Task 2: Matching headings. Check in pairs then whole class feedback.
-    - *Scan for Numbers* (8 min). Ss scan the text for specific numbers to complete Task 3. Focus on fast processing of numerical data.
-    - *Close Reading (Detailed)* (9 min). Ss read carefully to decide T/F/NG for Task 4. Feedback focusing on the evidence in the text rather than personal opinion.
-    - *Fast Finishers*: Direct students to the "B2 Reading Extension" on page 6.
-  ], "Ss-Ss / Indiv"),
+    - *Skimming (Task 2)* (6 min). Ss skim paragraphs 2-6 to match headings. Focus on speed.
+    - *Scanning for Numbers (Task 3)* (8 min). Ss scan for specific figures to identify their context.
+    - *Detailed Reading (Task 4)* (9 min). T/F/NG task. Ss must find textual evidence for their answers.
+    - *Fast Finisher*: Direct to "B2 Reading Extension" at the end of the material.
+  ], "Indiv / Ss-Ss"),
   
-  stage("THREE", "Post-reading Reflection", "9", "To personalize the topic and practice evaluation.", [
-    - *Critical Thinking* (Task 5). Ss reflect on the situational prompt about generational shopping habits. 
-    - Ss write a short response (min. 70 words) using the identity block on page 5.
-    - T monitors for content and language, providing 1-to-1 feedback.
-  ], "Indiv / T-Ss"),
+  stage("THREE", "Reflection & Critical Thinking", "9", "To personalize the topic and practice analytical writing.", [
+    - *Personalization (Task 5)*. Ss discuss their shopping habits vs. their parents'.
+    - *Writing Production*. Ss write a reflection (min. 70 words) in the identity block section.
+    - T monitors and provides 1-to-1 language support.
+  ], "Ss-Ss / Indiv"),
 ))

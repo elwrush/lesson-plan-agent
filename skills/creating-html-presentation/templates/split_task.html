@@ -1,5 +1,7 @@
 <!-- SLIDE: SPLIT TASK -->
-<section data-transition="convex" data-auto-animate>
+<section data-transition="convex" data-auto-animate {% if slide.background_video
+    %}data-background-video="{{ slide.background_video }}" data-background-video-muted data-background-opacity="0.3" {%
+    endif %}>
     {% if slide.notes %}<aside class="notes">{{ slide.notes }}</aside>{% endif %}
 
     <div class="slide-canvas">
@@ -18,7 +20,7 @@
             <!-- Right: Task Card -->
             <div class="col-60" style="flex: 1; text-align: left;">
                 <div class="glass-box" data-id="task-card"
-                    style="border: 2px solid #FFD700; background: rgba(0,0,0,0.9); padding: 50px; border-radius: 15px;">
+                    style="border: 2px solid #FFD700; background: rgba(0,0,0,0.9); padding: 25px; border-radius: 15px;">
                     <div data-id="task-badge"
                         style="background: #A72B26; color: white; display: inline-block; padding: 10px 20px; font-weight: 800; margin-bottom: 25px; transform: skew(-5deg); font-size: 0.8em; letter-spacing: 2px;">
                         {{ slide.badge | default('TASK') }}
@@ -38,13 +40,13 @@
         {% else %}
         <!-- Wide Glass Box (No Image) -->
         <div class="glass-box"
-            style="max-width: 900px; margin: 0 auto; border: 2px solid #FFD700; background: rgba(0,0,0,0.95); padding: 60px; border-radius: 20px; text-align: left;">
+            style="max-width: 900px; margin: 0 auto; border: 2px solid #FFD700; background: rgba(0,0,0,0.95); padding: 40px; border-radius: 20px; text-align: left;">
             <div data-id="task-badge"
                 style="background: #A72B26; color: white; display: inline-block; padding: 10px 20px; font-weight: 800; margin-bottom: 25px;">
                 {{ slide.badge | default('TASK') }}
             </div>
             <h2 style="color: #FFD700; font-size: 70px;">{{ slide.title }}</h2>
-            <div style="line-height: 1.4; margin-top: 30px; font-size: 38px;">
+            <div style="line-height: 1.4; margin-top: 20px; font-size: 34px;">
                 {{ slide.content | safe }}
             </div>
             {% if slide.timer %}

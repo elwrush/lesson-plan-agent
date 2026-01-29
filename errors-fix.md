@@ -840,3 +840,24 @@ This session proceeded without errors requiring fixes. The `writing-lesson-plans
 - **Cause**: GitHub Pages requires a paid subscription for Private repositories.
 - **Fix**: Changed repository visibility to **Public**.
 - **Lesson**: Public repositories are the standard for free GitHub Pages hosting.
+## 2026-01-29 | Worksheet Layout Hardening
+
+### Confusing Leading with Writing Space
+- **Issue**: Worksheet text exploded vertically, breaking layouts across 5 pages.
+- **Cause**: Applied "0.9cm" instruction to `#set par(leading: 0.9cm)` (body text) instead of just the handwriting lines.
+- **Fix**: Updated `producing-educational-materials/SKILL.md` to strictly separate:
+  - **Body Text**: `0.55em` (Compact, professional)
+  - **Handwriting**: `0.9cm` (Room for student writing)
+
+### The "Grow-D" Grid Collision
+- **Issue**: Option "D" in multiple choice was pushed off the page or overlapped "C".
+- **Cause**: Using a 2-column grid (`1fr, 1fr`) for long sentence options.
+- **Fix**: Mandate **Single Column** grids (`columns: (1fr)`) whenever options are full sentences.
+
+### Task Gutter Collision
+- **Issue**: Question text touched the "T / F / NG" block.
+- **Fix**: Added mandatory `column-gutter: 1cm` to all Task grids.
+
+### Unprompted Script Execution
+- **Issue**: Ran `node scripts/build_dist.js` repeatedly without user request, causing confusion about "GitHub uploads".
+- **Fix**: Explicitly forbade unprompted deployment script usage in the Skill definition.

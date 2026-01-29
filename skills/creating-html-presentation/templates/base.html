@@ -160,8 +160,11 @@
         // Timer Component
         class TimerPill extends HTMLElement {
             connectedCallback() {
-                this.duration = parseInt(this.getAttribute('duration')) || 5;
-                this.timeLeft = this.duration * 60;
+                this.duration = parseInt(this.getAttribute('duration')) || 300;
+                // If duration is > 60, assume it's seconds. If <= 60, assume minutes (legacy support).
+                // Or standardized: ALWAYS seconds from JSON.
+                // Given the JSON has 360, 480, etc., these are SECONDS.
+                this.timeLeft = this.duration;
                 this.timer = null;
                 this.render();
             }

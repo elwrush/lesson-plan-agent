@@ -5,23 +5,30 @@
         <div class="stage-badge">{{ slide.badge }}</div>
         {% endif %}
         <h2 style="font-size: 55pt !important; margin: 0;">{{ slide.title }}</h2>
-        {% if slide.timer %}
-        <timer-pill duration="{{ slide.timer }}" style="margin-top: 40px;"></timer-pill>
-        {% endif %}
     </div>
 
-    <div class="glass-box" style="display: flex; flex-direction: column; justify-content: center;">
-        <p style="font-size: 20pt; color: var(--primary); margin-bottom: 20px;"><strong>{{ slide.instruction }}</strong>
-        </p>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; font-size: 22pt; text-align: left;">
-            {% for item in slide.items %}
-            <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px;">☐ {{ item }}</div>
+    <div class="glass-box" style="display: flex; flex-direction: column; justify-content: center; position: relative;">
+        <!-- Embedded Timer (Top Right of Box) -->
+        {% if slide.timer %}
+        <div style="position: absolute; top: 20px; right: 20px; z-index: 5;">
+            <timer-pill duration="{{ slide.timer }}"></timer-pill>
+        </div>
+        {% endif %}
+
+        <p style="font-size: 20pt; color: var(--primary); margin-bottom: 20px; width: 80%;"><strong>{{ slide.instruction
+                }}</strong></p>
+
+        <div
+            style="display: grid; grid-template-columns: 1fr; gap: 15px; font-size: 22pt; text-align: left; max-height: 500px; overflow-y: auto;">
+            {% for item in slide.checklist_items %}
+            <div
+                style="background: rgba(255,255,255,0.05); padding: 15px 25px; border-radius: 8px; border-left: 4px solid var(--accent);">
+                ☐ {{ item }}</div>
             {% endfor %}
         </div>
     </div>
 
     <aside class="notes">
-        Advice: Quick skim.
-        Next: Answers.
+        Start Timer. Quick skim. Next: Answers.
     </aside>
 </section>
