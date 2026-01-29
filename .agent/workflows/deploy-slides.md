@@ -1,5 +1,5 @@
 ---
-description: Deploy slideshows to GitHub Pages and sync live URL to lesson plan
+description: Deploy Presentations to GitHub Pages and sync live URL to lesson plan
 ---
 
 # Deploy Slides Workflow

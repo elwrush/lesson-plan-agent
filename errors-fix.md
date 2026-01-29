@@ -801,3 +801,42 @@ This session proceeded without errors requiring fixes. The `writing-lesson-plans
 ### Video Background Loops
 - **Issue**: Short looping videos (e.g., 2-second clip) are distracting behind text.
 - **Fix**: Remove `data-background-video-loop`. Let the video play once and freeze on the final frame (which should be visually compatible with the text).
+
+---
+
+## 2026-01-29 | CI/CD, Private Repos & Asset Propagation
+
+### GitHub Pages "Write Access Denied" (403)
+- **Issue**: GitHub Actions failed with `403 Forbidden` while trying to push to the `gh-pages` branch.
+- **Cause**: Default `GITHUB_TOKEN` permissions in standard workflows are restricted to read-only.
+- **Fix**: Added `permissions: contents: write` to the `deploy` job in `.github/workflows/deploy.yml`.
+- **Lesson**: CI/CD automation that modifies branches requires explicit write consent in the workflow YAML.
+
+### "Unable to resolve action... version master"
+- **Issue**: Deployment failed because the workflow was looking for `@master` in an action repository that only uses `@main`.
+- **Fix**: Updated the `uses` field to point to the correct branch. Transitioned to official `peaceiris/actions-gh-pages@v4` for stability.
+
+### "File not found: lib/index.js" (Action Failure)
+- **Issue**: GitHub Action failed with a missing entry point error.
+- **Cause**: Using source-only forked actions that haven't been compiled into the expected distribution structure.
+- **Fix**: Standardized on official, pre-compiled tagged releases (@v4).
+
+### Sub-Folder 404s (Missing Styles/JS)
+- **Issue**: Presentations loaded text but no CSS/JS (404 errors).
+- **Cause 1**: The `.gitignore` file was recursively masking `dist/` folders inside `inputs/`.
+- **Cause 2**: `generate_presentation.py` was skipping copies if the folder already existed, missing new theme updates (e.g., `noir.css`).
+- **Fix**: 
+  1. Updated `.gitignore` to be root-specific (`/dist/`).
+  2. Updated generation script with `dirs_exist_ok=True`.
+- **Lesson**: Ensure local generation logic is "Merge-Safe" and `.gitignore` doesn't block legitimate production assets.
+
+### Redundant Repository Bloat (40MB Redundancy)
+- **Issue**: Repository size ballooned due to duplicate videos in every presentation folder.
+- **Fix**: Implemented the **Global Asset Pattern**. Move shared media to root `images/` and reference via absolute HTTPS URLs from the CDN.
+- **Lesson**: Use the GitHub Pages host as a centralized asset server for shared media to keep deployment folders lightweight.
+
+### GitHub Pages 404 on Private Repos
+- **Issue**: Even after "Success" in Actions, the URL returned a 404.
+- **Cause**: GitHub Pages requires a paid subscription for Private repositories.
+- **Fix**: Changed repository visibility to **Public**.
+- **Lesson**: Public repositories are the standard for free GitHub Pages hosting.

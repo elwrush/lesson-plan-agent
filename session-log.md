@@ -590,3 +590,33 @@ Development of the **"Pro" Worksheet Template** for the Bondi Beach Attack lesso
 ### Session Status
 - **Next Steps**: Finishing tomorrow.
 - **Context**: We now have the official **Typst repository** as a reference to resolve these layout/grid anomalies.
+
+---
+
+## 2026-01-29 | Presentation Deployment & Skill Formalization
+
+**Objective**: Formalize the deployment of Reveal.js Presentations to GitHub Pages with robust asset management and automatic URL synchronization.
+
+### Terminology Standard
+- **Presentations**: The interactive Reveal.js slideshows hosted on GitHub Pages.
+- **Lesson Plans**: The Typst documents (`.typ`) defining the pedagogy.
+- **Standard**: Strictly distinguished the two in all docs and commit history.
+
+### Architectural: "Skill Formalization"
+- **Skill Promotion**: Created the **`deploying-to-github-pages`** skill (Promoted from a legacy workflow).
+- **Architecture Mapping**: Integrated **`rendering-prompts-into-mermaid`** standards to visualize the Deployment loop.
+- **URL Synchronization**: Developed **`sync_lesson_plan_url.py`** to automatically inject live GitHub Pages links into Typst Lesson Plans.
+
+### Infrastructure Hardening & CI/CD
+- **Persistence**: Fixed overwriting issues by setting `keep_files: true` in the GitHub Actions workflow.
+- **Incremental Builds**: Updated `build_dist.js` to support an "Incremental Mode" that accumulates presentations alongside existing ones.
+- **Permissions**: Resolved 403 errors by granting `contents: write` permissions to the `GITHUB_TOKEN`.
+- **Action Stability**: Switched to the official **`peaceiris/actions-gh-pages@v4`** to resolve entry-point errors found in unbuilt forks.
+
+### Asset Optimization: "Global Asset Pattern"
+- **Centralization**: Moved redundant high-resolution videos (e.g., Mission Background) to a root `images/` folder.
+- **CDN Referencing**: Updated presentations to reference shared assets via absolute GitHub Pages URLs, preventing 5MB+ duplication per presentation.
+
+### Build Logic
+- **Gitignore Tuning**: Patched `.gitignore` to use root-specific paths (`/dist/`) allowing presentation assets in `inputs/` to be committed.
+- **Presentation Sync**: Updated `generate_presentation.py` with `dirs_exist_ok=True` to ensure new themes like `noir.css` are correctly updated in existing presentation folders.

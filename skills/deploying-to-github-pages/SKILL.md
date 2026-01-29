@@ -6,7 +6,7 @@ description: Deploys slideshows to GitHub Pages and synchronizes the live URL ba
 # Skill: Deploying to GitHub Pages (`deploying-to-github-pages`)
 
 ## Description
-This skill automates the deployment of Reveal.js presentations to GitHub Pages. It relies on the official [peaceiris/actions-gh-pages](https://github.com/peaceiris/actions-gh-pages) engine via `.github/workflows/deploy.yml`. It ensures that once a slideshow is pushed, the corresponding Typst lesson plan is updated with the finalized live URL.
+This skill automates the deployment of Reveal.js Presentations to GitHub Pages. It relies on the official [peaceiris/actions-gh-pages](https://github.com/peaceiris/actions-gh-pages) engine via `.github/workflows/deploy.yml`. It ensures that once a Presentation is pushed, the corresponding Typst lesson plan is updated with the finalized live URL.
 
 ## Critical Rules
 
@@ -21,7 +21,7 @@ This skill automates the deployment of Reveal.js presentations to GitHub Pages. 
 
 ```mermaid
 graph TD
-    Start([🚀 Deployment Request]) --> Discovery[1. Discovery: Verify Repo Visibility & Permissions]
+    Start([🚀 Presentation Deployment Request]) --> Discovery[1. Discovery: Verify Repo Visibility & Permissions]
     Discovery --> Build[2. Local Build: node scripts/build_dist.js]
     Build --> Commit[3. Commit & Push via /commit]
     
@@ -51,7 +51,7 @@ node scripts/build_dist.js
 ### 2. Commit and Push
 Use the `/commit` workflow to push the changes.
 ```bash
-/commit "feat: deploy [Lesson Name] slideshow"
+/commit "feat: deploy [Presentation Name] presentation"
 ```
 
 ### 3. Synchronize Lesson Plan URL (CRITICAL)
