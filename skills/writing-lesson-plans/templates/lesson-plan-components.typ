@@ -59,9 +59,9 @@
     stroke: 2pt + maroon,
     inset: 15pt,
     [
-      #text(weight: "bold", fill: maroon, size: 11pt)[Differentiated Input]
+      #text(weight: "bold", fill: maroon, size: 14pt)[Differentiated Input]
       #v(0.3em)
-      #text(size: 9.5pt, style: "italic")[Pedagogical Rationale: Differentiated Input & Learner Autonomy \ #content]
+      #text(size: 12pt, style: "italic")[Pedagogical Rationale: Differentiated Input & Learner Autonomy \ #content]
     ],
   )
 }
@@ -104,7 +104,7 @@
     stroke: (top: 2pt + maroon),
     inset: (top: 10pt),
     [
-      #text(weight: "bold", fill: maroon, size: 11pt)[Answer Key:]
+      #text(weight: "bold", fill: maroon, size: 14pt)[Answer Key:]
       #v(0.3em)
       #content
     ],
@@ -123,11 +123,11 @@
     stroke: (top: 2pt + maroon, bottom: 2pt + maroon),
     inset: (y: 10pt),
     [
-      #text(weight: "bold", fill: maroon, size: 11pt)[Listening Transcript:]
+      #text(weight: "bold", fill: maroon, size: 14pt)[Listening Transcript:]
     ],
   )
   v(0.5cm)
-  text(size: 9.5pt)[#content]
+  text(size: 12pt)[#content]
 }
 
 // ==========================================
@@ -149,7 +149,7 @@
         // Icon (simplified SVG-like shape for presentation)
         text(size: 20pt, fill: rgb("#2563EB"))[📊],
         [
-          #text(weight: "bold", size: 11pt, fill: rgb("#1E40AF"))[CLICK LINK FOR SLIDESHOW] \
+          #text(weight: "bold", size: 14pt, fill: rgb("#1E40AF"))[CLICK LINK FOR SLIDESHOW] \
           #v(0.2em)
           #link(url)[#underline(text(fill: rgb("#2563EB"))[#url])]
         ]

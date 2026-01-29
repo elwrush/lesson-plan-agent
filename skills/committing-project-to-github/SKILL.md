@@ -11,17 +11,19 @@ This skill ensures that all changes follow the project's commit standards, speci
 
 ```mermaid
 graph TD
-    Start([🚀 Commit Request]) --> Discovery[1. Discovery: Check Git Status & Untracked Files]
-    Discovery --> Exclusion[2. Exclusion: Prevent desktop.ini Staging]
-    Exclusion --> Staging[3. Staging: Stage Valid Changes]
-    Staging --> Formatter[4. Formatter: Construct Verbose Commit Message]
-    Formatter --> Commit[5. Commit: Execute git commit]
-    Commit --> Push[6. Push: Sync with GitHub origin/main]
+    Start([🚀 Commit Request]) --> Discovery[1. Discovery: Git Status Audit]
+    Discovery --> Exclusion[2. Exclusion: Filter desktop.ini & Temp Assets]
+    Exclusion --> Staging[3. Staging: Atomic File Addition]
+    Staging --> TypeSelector{4. Semantic Decision: Type & Scope?}
+    TypeSelector -->|feat/fix/refactor| Formatter[5. Formatter: Construct Verbose Message]
+    Formatter --> Commit[6. Commit: Local Record Creation]
+    Commit --> Push[7. Push: Cloud Synchronization]
     Push --> Finish([🏁 Repository Updated])
 
-    %% Rules
-    Exclusion -.->|Rule: desktop.ini| .gitignore
-    Formatter -.->|Standard: Semantic Commits| Body[Verbose Details]
+    %% Standards
+    Discovery -.->|Ref: git status| CLI
+    Formatter -.->|Rule: Detailed Body| Verbose[Instructional Logic]
+    TypeSelector -.->|Ref: Semantic Standard| Commits
 ```
 
 ## Critical Rules

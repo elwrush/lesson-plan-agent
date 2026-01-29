@@ -25,7 +25,10 @@ graph TD
     F --> IV[Image Format Verification]
     IV --> G[Layout: Logical Silos]
     E -->|No| G
-    G --> H[Typst: Markup Eval & Margins]
+    G --> BI{Booklet Imposition Needed?}
+    BI -->|Yes| BO[Apply Page Order: 2,3,1,4 or 2,3,1]
+    BI -->|No| H
+    BO --> H[Typst: Markup Eval & Margins]
     H --> I[Validation & PDF Export]
     I --> J[🏁 Link Gate & Approval]
 ```
@@ -59,13 +62,25 @@ Before writing any code, you MUST verify the environment:
 ### Step 4: Content Strategy
 Determine if you are **transforming existing materials** or **writing brand new content**.
 - **Linguistic Alignment**: Follow the **[B1 Profile](B1-LINGUISTIC-PROFILE.md)** or **[B2 Profile](B2-LINGUISTIC-PROFILE.md)**.
-- **Logical Proximity**: Organize the worksheet into **Level-Siloed Units**:
-  - `[Story Text]` -> `[Questions]` -> `[Writing Task]`.
-  - Avoid separating questions from their source text by more than one page.
+- **Natural Flow Layout**: Do NOT force material into a prescribed page count. Allow content to flow naturally across pages.
+- **Logical Ordering (Main Worksheet)**:
+  1. `[Header & Hero Strap]`
+  2. `[Story/Reading Text]` (Flows naturally across 1-2 pages)
+  3. `[Page Break]`
+  4. `[Question Block]` (Queries MUST be bold-faced using `#strong[]`)
+  5. `[Page Break]`
+  6. `[Full Answer Key]` (With explanations)
+
+- **Modular Output**: Publish writing tasks as separate `.typ` files (e.g., `B1-Writing.typ`) to keep the reading/literacy focus of the main worksheet clean.
+
+- **Booklet Imposition (A5 on A4)**:
+  - For **4-page booklets**, the PDF order MUST be: **2, 3, 1, 4** (Inside Spread, then Front/Back cover).
+  - For **3-page booklets**, the PDF order is: **2, 3, 1** (Inside Spread, then Front cover). Page 4 is assumed blank.
+  - For **2-page documents** (Leaflets), the PDF order is: **1, 2**.
 
 ### Step 5: Design Strategy (Editorial Standard)
 Apply the **Creative/Editorial** approach to maximize engagement:
-1. **Photocopy-Hardened**: Use **10.5pt - 11pt** font and **Bold** headers.
+1. **Photocopy-Hardened**: Use **14pt** (yields ~10pt on A5) for standard text. **12pt** is the absolute minimum for high-density layouts.
 2. **Cinematic Headers**: Use full-width banners with overlay text.
 3. **Narrative Integrity**: Use **Single-Column** for stories; use 2-columns for news/analytical content.
 4. **Answer Key UX**:
