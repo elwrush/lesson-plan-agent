@@ -41,7 +41,7 @@ Identify the download URL for the **1280x720 (720p)** version.
     ```bash
     python skills/searching-pixabay/scripts/process_video.py temp/raw_video.mp4 inputs/[Lesson]/images/final_video.mp4
     ```
-3.  Delete the raw file.
+3.  The script will automatically delete the raw "monster" file upon success.
 
 ### Step 4: Attribution
 Create a `[filename]_attribution.txt` file next to the asset containing the Pixabay user and URL.

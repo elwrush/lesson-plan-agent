@@ -52,6 +52,13 @@ def process_video(input_path, output_path, max_duration=7, target_height=720):
         print("⚠️ WARNING: Video is still > 10MB. Consider lowering resolution.")
         return False
     
+    # Automated Cleanup of Monster File
+    try:
+        os.remove(input_path)
+        print(f"🗑️ Cleaned up raw file: {input_path}")
+    except OSError as e:
+        print(f"⚠️ Failed to delete raw file: {e}")
+
     return True
 
 if __name__ == "__main__":
