@@ -6,13 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <title>{{ meta.title }}</title>
-
     <link rel="stylesheet" href="dist/reset.css">
     <link rel="stylesheet" href="dist/reveal.css">
     <link rel="stylesheet" href="dist/theme/black.css" id="theme">
-
-    <!-- Theme used for syntax highlighted code -->
-    <link rel="stylesheet" href="plugin/highlight/monokai.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
         /* TIMER UI - Native Styling */
@@ -43,9 +40,9 @@
 
         /* Mission Badge Styling - Square, 10% smaller */
         .mission-badge {
-            background-color: rgba(255, 215, 0, 0.2);
+            background-color: rgba(255, 215, 0, 0.15);
             border: 2px solid #FFD700;
-            padding: 12px 20px;
+            padding: 15px;
             border-radius: 4px;
             display: inline-flex;
             flex-direction: column;
@@ -53,25 +50,30 @@
             gap: 10px;
             font-weight: bold;
             font-size: 1.0em;
-            margin: 8px;
-            width: 180px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            margin: 10px;
+            width: 220px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .mission-badge i {
+            font-size: 2em;
+            color: #FFD700;
         }
 
         /* Contrast Shadow for maximum pop on dimmed backgrounds */
         .reveal section {
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8),
-                0px 0px 20px rgba(0, 0, 0, 0.5);
+            /* Text shadows removed to prevent blurring */
         }
 
         /* Native Table Styling - Constrained */
         .reveal table {
             margin-top: 20px;
             border-collapse: collapse;
-            width: 90%;
+            width: 95%;
             margin-left: auto;
             margin-right: auto;
-            font-size: 0.8em;
+            font-size: 0.75em;
+            background: rgba(0, 0, 0, 0.3);
         }
 
         .reveal table th,
@@ -102,7 +104,7 @@
     <script src="plugin/highlight/highlight.js"></script>
     <script>
         const AudioFX = {
-            blip: new Audio('audio/blip.mp3'),
+            blip: new Audio('audio/beep.mp3'),
             bell: new Audio('audio/bell.mp3'),
             warning: new Audio('audio/warning.mp3'),
             init() {

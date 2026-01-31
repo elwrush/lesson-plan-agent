@@ -1,14 +1,14 @@
-<!-- SLIDE: ANSWER KEY (TABLE) -->
-<section data-background="{{ slide.image }}" data-background-opacity="0.3" data-auto-animate>
+<section {% if slide.image %} data-background="{{ slide.image }}" data-background-opacity="0.3" {% endif %} {% if
+    slide.background_gradient %} data-background-gradient="{{ slide.background_gradient }}" {% endif %}
+    data-auto-animate>
 
-    <div class="r-stack">
-        <div style="width: 1000px;">
-            <h3 style="color: #FFD700; margin-bottom: 10px;">{{ slide.badge | default('ANSWERS') }}</h3>
-            <h2 data-id="matching-title">{{ slide.title }}</h2>
+    <div style="width: 1000px; margin: auto; text-align: left;">
+        <h3 style="color: #FFD700; margin-bottom: 10px; text-shadow: 2px 2px 8px rgba(0,0,0,0.9);">{{ slide.badge |
+            default('ANSWERS') }}</h3>
+        <h2 data-id="matching-title" style="text-shadow: 2px 2px 8px rgba(0,0,0,0.9);">{{ slide.title }}</h2>
 
-            <div style="margin-top: 30px;">
-                {{ slide.content | safe }}
-            </div>
+        <div style="margin-top: 30px;">
+            {{ slide.content | safe }}
         </div>
     </div>
 

@@ -1,5 +1,5 @@
 <!-- SLIDE: STRATEGY (BLOCKQUOTE) -->
-<section data-background="{{ slide.image }}" data-background-opacity="0.5" data-auto-animate>
+<section {% if slide.background_color %}data-background-color="{{ slide.background_color }}"{% else %}data-background="{{ slide.image }}" data-background-opacity="0.5"{% endif %} data-auto-animate>
 
     <div class="r-stack">
         <div style="text-align: left; max-width: 1000px;">

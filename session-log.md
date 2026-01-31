@@ -631,3 +631,32 @@ Development of the **"Pro" Worksheet Template** for the Bondi Beach Attack lesso
 - **Encapsulation**: Updated `generate_presentation.py` to output exclusively to a **`published/`** subfolder within each lesson directory.
 - **Asset Portability**: The `published/` folder now contains its own `dist/`, `plugin/`, and `images/` copies, making it a fully portable, deployable unit.
 - **Build Integration**: Enhanced `build_dist.js` to prioritize the `published/` folder when compiling the dashboard, ensuring a clean separation between source materials and production output.
+---
+
+## 2026-01-30 | Student-Centric Presentation Overhaul & ACT Branding
+
+### Institutional Branding: "Assumption College Mathayom"
+- **Logo Integration**: Centered the official institutional logo (`images/ACT.png`) at the top of all title slides.
+- **Institutional Identity**: Removed generic "B2 Intensive" badges in favor of capitalized "ASSUMPTION COLLEGE MATHAYOM" branding.
+- **Header/Footer Cleanup**: Removed redundant institutional text from the footer to maximize slide real estate for pedagogical content.
+
+### UI/UX: The "No-Box" High-Contrast Standard
+- **Design Philosophy**: Abandoned all semi-transparent container boxes (`rgba(0,0,0,0.6)`) to move towards a cleaner, "floating text" cinematic look.
+- **Contrast Strategy**: Achieved 100% legibility through:
+  - Global `text-shadow: 3px 3px 6px rgba(0,0,0,1)` for all slide text.
+  - Deep background dimming (`data-background-opacity="0.4"`) for all media-heavy slides.
+- **Native Tables**: Migrated all vocabulary and phrase lists (Sections A, B, C) to official Reveal.js `<table>` layouts.
+- **Pagination**: Implemented manual splitting of long lists (e.g., 13 hotel phrases) across multiple slides to maintain large, readable font sizes and prevent "spills."
+
+### Pedagogical Animation: "Morphing Logic"
+- **Been vs Gone**: Refined the "The Tips" strategy slide by splitting it into distinct **Meaning** (Concept) and **Form** (Structure) slides.
+- **Task 3 (Verb Forms)**: Optimized `data-auto-animate` to smoothly morph prompt phrases into their correct transformations.
+- **Task 4 (Error Correction)**: 
+  - **Discovery Phase**: The first slide now shows the raw text without underlines, forcing students to identify mistakes independently.
+  - **Morphing reveal**: Transitions smoothly into the correction slide where mistakes (Amber) morph into fixes (Green).
+  - **Linguistic Logic**: Integrated "The Why" notes directly into the answer reveal to help students internalize language patterns.
+
+### Technical Hardening
+- **Template Library**: Created `table.html` and overhauled `checklist.html`, `mission.html`, and `title.html` for reuse across the institution.
+- **Script Improvement**: Updated `generate_presentation.py` to automatically copy the ACT logo from the project root to the published asset folder.
+- **Animation Stability**: Standardized the use of `data-id` on `<span>` elements to ensure jump-free, pixel-perfect morphing between slides.

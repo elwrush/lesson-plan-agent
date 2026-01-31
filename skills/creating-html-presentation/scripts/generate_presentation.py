@@ -14,8 +14,19 @@ def generate_presentation(json_path):
     script_dir = os.path.dirname(os.path.abspath(__file__))
     skill_dir = os.path.dirname(script_dir)
     template_dir = os.path.join(skill_dir, 'templates')
-    core_dir = os.path.join(skill_dir, 'reveal_core')
     
+    # Locate project root (assuming script is in skills/creating-html-presentation/scripts)
+    # skill_dir = .../skills/creating-html-presentation
+    # dirname(skill_dir) = .../skills
+    # dirname(dirname(skill_dir)) = .../LESSONS AND SLIDESHOWS 2
+    project_root = os.path.dirname(os.path.dirname(skill_dir))
+    
+    # Use the local cloned reveal.js repo as requested
+    reveal_source = os.path.join(project_root, 'temp_reveal_repo')
+    if not os.path.exists(reveal_source):
+        print(f"[ERROR] Local reveal.js clone not found at: {reveal_source}")
+        sys.exit(1)
+
     # Target 'published' folder within the lesson directory
     lesson_dir = os.path.dirname(json_path)
     output_dir = os.path.join(lesson_dir, 'published')
@@ -25,22 +36,31 @@ def generate_presentation(json_path):
     
     # 3. Copy Assets (Reveal Core + CSS)
     # Use ignore function to skip GDrive system files and hidden files
-    ignore_func = shutil.ignore_patterns('desktop.ini', '.*')
+    ignore_func = shutil.ignore_patterns('desktop.ini', '.*', '.git', 'node_modules', 'test', 'examples', 'gulpfile.js', 'package.json')
     
     for folder in ['dist', 'plugin', 'css']:
-        src = os.path.join(skill_dir, folder) if folder == 'css' else os.path.join(core_dir, folder)
+        src = os.path.join(reveal_source, folder)
         dst = os.path.join(output_dir, folder)
         
         if os.path.exists(src):
             shutil.copytree(src, dst, ignore=ignore_func, dirs_exist_ok=True)
-            print(f"Synchronized {folder} to: {dst}")
+            print(f"Synchronized {folder} from {reveal_source} to: {dst}")
 
     # 3.5 Copy Lesson Images (MANDATORY for published folder portability)
     images_src = os.path.join(lesson_dir, 'images')
+    images_dst = os.path.join(output_dir, 'images')
+    if not os.path.exists(images_dst):
+        os.makedirs(images_dst)
+
     if os.path.exists(images_src):
-        images_dst = os.path.join(output_dir, 'images')
         shutil.copytree(images_src, images_dst, ignore=ignore_func, dirs_exist_ok=True)
         print(f"Synchronized images to: {images_dst}")
+
+    # Copy ACT logo from project root
+    act_logo_src = os.path.join(os.path.dirname(os.path.dirname(skill_dir)), 'images', 'ACT.png')
+    if os.path.exists(act_logo_src):
+        shutil.copy2(act_logo_src, os.path.join(images_dst, 'ACT.png'))
+        print(f"Copied ACT logo to: {images_dst}")
 
     # 4. Copy Audio Assets
     project_root = os.path.dirname(os.path.dirname(skill_dir))
@@ -49,7 +69,7 @@ def generate_presentation(json_path):
     if not os.path.exists(audio_dst):
         os.makedirs(audio_dst)
     
-    for item in ['blip.mp3', 'bell.mp3', '30-seconds.mp3', 'warning.mp3']:
+    for item in ['blip.mp3', 'beep.mp3', 'bell.mp3', '30-seconds.mp3', 'warning.mp3']:
         src_file = os.path.join(audio_src, item)
         dst_file = os.path.join(audio_dst, item)
         if os.path.exists(src_file) and not os.path.exists(dst_file):

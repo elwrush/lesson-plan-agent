@@ -1,37 +1,51 @@
 ---
 name: producing-educational-materials
-description: >
-  Handles the entire lifecycle of educational material creation: consultation, 
-  pedagogical design, and production of professional Typst worksheets.
-  Use when designing new lessons, transforming source texts, or producing PDF worksheets.
+description: Handles the entire lifecycle of educational material creation: consultation, pedagogical design, and production of professional Typst worksheets.
 ---
 
 # Producing Educational Materials
 
 ## Purpose
-Guide the transition from raw educational requirements to print-ready, professionally branded PDF worksheets. Consolidates pedagogical design with high-density Typst production.
+Guide the transition from raw educational requirements to print-ready, professionally branded PDF worksheets. Consolidates pedagogical design with high-density Typst production. **STRICT RULE: NEVER abbreviate, change, or truncate source text. Professional materials must maintain 100% instructional integrity.**
 
 ## Workflow Visualization
 ```mermaid
 graph TD
-    A[Consultation: CEFR/Skill/Program] --> B{Strategy: Transform or Create?}
-    B -->|Transform| C[Multimodal Content Extraction]
-    B -->|Create| D[Pedagogical Content Design]
-    C & D --> DP[Dependency Discovery: Read lib.typ]
-    DP --> DG[Deterministic Data Gate: Scripted Keys/Anchors]
-    DG --> LP[Linguistic Alignment: CEFR B1/B2 Profile]
-    LP --> E[Image Injunction: Yes/No?]
-    E -->|Yes| F[Serial Image Generation]
-    F --> IV[Image Format Verification]
-    IV --> G[Layout: Logical Silos]
-    E -->|No| G
-    G --> SP[Strict Spacing Check: 0.55em Body / 0.9cm Writing]
-    SP --> BI{Booklet Imposition Needed?}
-    BI -->|Yes| BO[Apply Page Order: 2,3,1,4 or 2,3,1]
-    BI -->|No| H
-    BO --> H[Typst: Markup Eval & Margins]
-    H --> I[Validation & PDF Export]
-    I --> J[🏁 Link Gate & Approval]
+    subgraph "Phase 1: Analysis & Strategy"
+        A[Consultation: CEFR/Skill/Prog/Dur/Images/Quiz/Writing] --> B{Strategy: Transform or Create?}
+        B -->|Transform| C[Multimodal Content Extraction]
+        B -->|Create| D[Pedagogical Content Design]
+        C & D --> LP[Linguistic Alignment: CEFR Profile Sync]
+    end
+
+    subgraph "Phase 2: Dependency & Logic"
+        LP --> DP[Dependency Discovery: Verify lib.typ & Paths]
+        DP --> DG{Quiz/Writing Required?}
+        DG -->|Yes| DK[Deterministic Gate: Scripted Keys/Anchors/Prompts]
+        DG -->|No| IM
+        DK --> IM
+    end
+
+    subgraph "Phase 3: Visuals & Layout"
+        IM[Image Injunction: Search Pixabay?] -->|Yes| SIG[Serial Image Generation & Verification]
+        IM -->|No| LOG
+        SIG --> LOG[Layout: Logical Sequential Silos]
+        LOG --> PH[Page 1 Rules: Logo + v0.1cm + Badges Left + HeroStrap]
+        PH --> SP[Strict Spacing: 0.55em Body / 0.9cm Writing]
+    end
+
+    subgraph "Phase 4: Production & Export"
+        SP --> BI{Booklet Needed?}
+        BI -->|Yes| BO[Apply Imposition: 2,3,1,4 / 2,3,1]
+        BI -->|No| TE[Typst Execution: Markup Eval]
+        BO --> TE
+        TE --> VAL[Validation: Code & Content Audit]
+        VAL --> LG[🏁 Link Gate & Approval]
+    end
+
+    style PH fill:#f9f,stroke:#333,stroke-width:2px
+    style LP fill:#bbf,stroke:#333,stroke-width:2px
+    style DP fill:#bbf,stroke:#333,stroke-width:2px
 ```
 
 ---
@@ -44,9 +58,19 @@ You MUST consult with the user on these core constraints:
 - **Skill/System**: Reading, Listening, Writing, Speaking, Grammar, Vocabulary, or Pronunciation.
 - **Duration**: Target lesson length.
 - **Program Selection**: **CRITICAL**. Prompt user to choose between **Bell** and **Intensive**. 
-  - *Assets Location*: Branded straps are found in `@local/bell-sheets:0.1.0/images/`.
+  - *Assets Location*: Branded straps found in `C:\Users\elwru\AppData\Roaming\typst\packages\local\bell-sheets\0.1.0\images\`.
 - **Image Choice**: Prompt user: *"Would you like to include custom images/illustrations for this worksheet?"*
-- **Quiz Choice**: Prompt user: *"Would you like quiz questions developed for this worksheet? (Yes/No)"*.
+- **Badge Choice**: Never include the lesson duration (e.g., "46 MINS") in a badge. Badges are for CEFR levels or Topic tags only.
+- **Mission Redesign (Relevance Mandate)**:
+    -   **Intro Text**: Must include a hook explaining the relevance to their exam (e.g., "In your PET test you'll probably have to speak about holidays. This lesson will help you do that.").
+    -   **Readability**: ALWAYS apply a dark vignette or gradient overlay to the Mission slide (`data-background-gradient`) to ensure white text remains readable over the background video.
+    -   **Requirement**: You MUST always explain the relevance of the lesson to the student's end-of-year goals (**B1 PET for Schools** or **B2 First for Schools**).
+    -   **Validation**: If the relevance is not clear, ask the user before generating the Mission slide.
+    -   **Structure**: 3 distinct boxes (square badges) for core objectives, each with an icon (plane, book, pen, etc.).
+    -   **System Logic**: Adhere to `knowledge-base/using-skills.md` for role-based specialization and ensure any requirement changes are mapped via `skills/rendering-prompts-into-mermaid`.
+  - *Reference*: See `knowledge-base/using-skills.md` for standard architecture and `skills/rendering-prompts-into-mermaid` for visualizing this requirement in the workflow.
+- **Writing/Critical Thinking Choice**: **MANDATORY**. Prompt user: *"Would you like to include an extension writing or critical thinking task? (Yes/No)"*.
+  - **Action**: If "Yes", you MUST design a task aligned with the CEFR profile. If "No", do NOT invent any personal response or analysis tasks.
   - **Action**: If "Yes", you MUST execute Step 2 (Deterministic Gate).
 
 ### Step 2: Deterministic Data Gate (If Quiz is 'Yes')
@@ -56,63 +80,54 @@ To prevent LLM "probabilistic laziness" in option placement:
 
 ### Step 3: Dependency Discovery (Pre-Production)
 Before writing any code, you MUST verify the environment:
-- **Library Audit**: Use `view_file` on the target library (e.g., `@local/bell-sheets:0.1.0/lib.typ`). 
+- **Library Audit**: Use `view_file` on the target library: `C:\Users\elwru\AppData\Roaming\typst\packages\local\bell-sheets\0.1.0\lib.typ`.
   - **Verify**: Correct function names and argument types.
-  - **Override**: If hardcoded defaults (like image centering) interfere with the mission-critical layout, modify the `@local` library file directly.
+- **Path Verification**: Ensure images are downloaded using Pixabay Skill: `C:\PROJECTS\LESSONS AND SLIDESHOWS 2\skills\searching-pixabay\scripts\download_image.py`.
 
-### Step 4: Content Strategy
-Determine if you are **transforming existing materials** or **writing brand new content**.
+### Step 4: Content & Layout Strategy
+- **Rule: Verbatim Mandate**: **CRITICAL**. You MUST use the source text EXACTLY as provided in the raw files.
+  - NEVER abbreviate long definitions.
+  - NEVER truncate lists of examples.
+  - NEVER change punctuation or tone.
+  - If content is too long for the page, **find a layout solution** (columns, smaller standard font 12pt, or natural overflow). DO NOT edit the text.
 - **Linguistic Alignment**: Follow the **[B1 Profile](B1-LINGUISTIC-PROFILE.md)** or **[B2 Profile](B2-LINGUISTIC-PROFILE.md)**.
-- **Natural Flow Layout**: Do NOT force material into a prescribed page count. Allow content to flow naturally across pages.
-    - **Rule**: Do NOT add manual `#pagebreak()` before question blocks if there is sufficient space on the current page. Only break if visually necessary.
-- **Logical Ordering (Main Worksheet)**:
-  1. `[Header & Hero Strap]`
-  2. `[Story/Reading Text]` (Flows naturally across 1-2 pages)
-  3. `[Questions/Tasks]` (Flows naturally; avoid unnecessary page breaks)
-  4. `[Page Break]` (Mandatory before Answer Key)
-  5. `[Full Answer Key]` (With explanations)
-
-- **Modular Output**: Publish writing tasks as separate `.typ` files (e.g., `B1-Writing.typ`) to keep the reading/literacy focus of the main worksheet clean.
-
-- **Booklet Imposition (A5 on A4)**:
-  - For **4-page booklets**, the PDF order MUST be: **2, 3, 1, 4** (Inside Spread, then Front/Back cover).
-  - For **3-page booklets**, the PDF order is: **2, 3, 1** (Inside Spread, then Front cover). Page 4 is assumed blank.
-  - For **2-page documents** (Leaflets), the PDF order is: **1, 2**.
+- **Rule: Single-Column & Natural Flow (Starting State)**: **MANDATORY**. 
+  - ALWAYS start the first draft with a **single-column layout** for all materials.
+  - ALWAYS allow content to **flow naturally across pages**. 
+  - **STRICTLY NO manual page breaks** between tasks or sections in the initial draft.
+  - *Rationale*: The user will review the content spread first and then request specific booklet impositions or page adjustments in subsequent turns.
+- **Rule: Top Padding**: Always provide minimal space (e.g., `#v(0.1cm)`) between the top logo and the badges/hero strap to maximize vertical utility.
+- **Rule: Badge Positioning**: Badges MUST always be placed on the **top-left**, above the hero strap.
 
 ### Step 5: Design Strategy (Editorial Standard)
 Apply the **Creative/Editorial** approach to maximize engagement:
-1. **Photocopy-Hardened**: Use **14pt** (yields ~10pt on A5) for standard text. **12pt** is the absolute minimum for high-density layouts.
-2. **Cinematic Headers**: Use full-width banners with overlay text.
-3. **Narrative Integrity**: Use **Single-Column** for stories; use 2-columns for news/analytical content.
-4. **Answer Key UX**:
-   - Place B1 and B2 keys on **Separate Pages**.
-   - Include a **Summary Guide** (e.g., *(1) B, (2) A*) at the top of each page.
+1. **Typography Standard**: Use **Arial 13pt** for all body text. This is the absolute global standard for clarity.
+2. **Focus Passages**: Use **Arial 13pt** (Bold for emphasis) for core reading texts. (Note: Avoid 16pt unless a specific visual 'breakaway' is required for readability).
+3. **Cinematic Headers**: Use full-width banners with overlay text.
+4. **Leading & Justification**: Use **0.55em** for body text leading. Text MUST be **left-justified** (ragged right), never full-justified.
+5. **Handwriting Space**: 
+   - ALWAYS provide at least **0.8cm - 1.2cm** of clear vertical space between the prompt and the writing line.
+   - For lists, pair **Left-Aligned** badges directly with lines using `#stack(dir: ltr, spacing: 12pt, badge(...), align(bottom, box(width: 1fr, ...)))`.
+6. **Writing Lines**: Use **0.9cm** line spacing via `#writing_lines_dynamic(line-spacing: 0.9cm)` for long-form responses.
+7. **Numbered Lists**: ALWAYS use native numbering syntax (e.g., `+` in Typst). 
+   - **Style**: Numbers must be **boldfaced**.
+   - **Constraint**: NEVER manually type "1.", "2." etc. in strings or stacks.
+   - **Typst implementation**: Use `#set enum(numbering: n => [*#n.*])` to enforce project-wide bold numbering.
 
-### Step 6: Typst Production (Global Components)
-All worksheets MUST use the global `@local/bell-sheets:0.1.0` package.
-
-#### Layout & Production Rules:
-- **Body Text Spacing**: Use **0.55em** for text leading (`#set par(leading: 0.55em)`) for a clean, tight professional look. **NEVER** use 0.9cm for body text.
-- **Handwriting Space**: Use **0.9cm** for handwriting lines (using `writing_lines_dynamic(line-spacing: 0.9cm)`).
-- **Long Options Grid**: If multiple-choice options are long sentences, use a **SINGLE COLUMN** grid (`columns: (1fr)`) to prevent text overlap ("grow-D" error).
-- **Task Gutter**: For T/F/NG grids, ALWAYS add `column-gutter: 1cm` to prevent text clashing with option blocks.
-- **External Text Loading**: When loading text with italics/bold from files:
-  - **Fix**: Use `#eval(read("file.txt").replace("[", "\[").replace("]", "\]"), mode: "markup")`.
-- **Identity Blocks**: Place on a **separate new page** for major production tasks.
-- **Explicit Margins**: **MANDATORY**. `#set page(margin: (x: 2cm, top: 1.25cm, bottom: 1.25cm))`.
-
-### Step 7: Rendering & Validation
+### Step 6: Rendering & Validation
 1. **Compile**:
    ```powershell
    typst compile "path/to/source.typ" "inputs/[folder]/published/DD-MM-YYYY-[LEVEL]-[TITLE].pdf" --root "."
    ```
+   - **Naming Rule**: **NEVER** add version suffixes (e.g., `-v1`, `-v2`) to the PDF filename. 
+   - **Overwrite Mandate**: ALWAYS overwrite the original target PDF to provide a single, consistent link for user review.
 2. **Validate**:
    ```powershell
-   python scripts/validate_worksheet.py "path/to/source.typ" --mode [bell|intensive]
+   # Note: validate_worksheet.py fallback
+   python scripts/validate_text.py "path/to/source.typ"
    ```
-   **DO NOT** automatically run `build_dist.js` or other deployment scripts unless explicitly requested.
 
-### Step 8: 🏁 THE LINK GATE
+### Step 7: 🏁 THE LINK GATE
 > [!CRITICAL]
 > **YOU MUST PROVIDE A CLICKABLE LINK TO THE PDF.**
 > Post the link using the `file:///` protocol. Do NOT proceed until the user approves the visual output.
@@ -120,7 +135,9 @@ All worksheets MUST use the global `@local/bell-sheets:0.1.0` package.
 ---
 
 ## Reference Material
-- **B1 Standard**: `~/.gemini/antigravity/skills/producing-educational-materials/B1-LINGUISTIC-PROFILE.md`
-- **B2 Standard**: `~/.gemini/antigravity/skills/producing-educational-materials/B2-LINGUISTIC-PROFILE.md`
-- **Global Docs**: `~/.gemini/antigravity/skills/producing-educational-materials/REFERENCE.md` (Coming Soon)
-- **Shared Components**: `@local/bell-sheets:0.1.0/lib.typ`
+- **Skill Architecture Standard**: `C:\PROJECTS\LESSONS AND SLIDESHOWS 2\knowledge_base\using-skills.md` (MUST follow for all skill updates).
+- **Visualization Tool**: `C:\PROJECTS\LESSONS AND SLIDESHOWS 2\skills\rendering-prompts-into-mermaid\SKILL.md` (Use for updating Mermaid diagrams).
+- **B1 Standard**: `C:\PROJECTS\LESSONS AND SLIDESHOWS 2\skills\producing-educational-materials\B1-LINGUISTIC-PROFILE.md`
+- **B2 Standard**: `C:\PROJECTS\LESSONS AND SLIDESHOWS 2\skills\producing-educational-materials\B2-LINGUISTIC-PROFILE.md`
+- **Typst Library**: `C:\Users\elwru\AppData\Roaming\typst\packages\local\bell-sheets\0.1.0\lib.typ`
+- **Pixabay Script**: `C:\PROJECTS\LESSONS AND SLIDESHOWS 2\skills\searching-pixabay\scripts\download_image.py`

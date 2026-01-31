@@ -1,61 +1,47 @@
 ---
 name: searching-pixabay
-description: Searches and downloads high-quality, free images from Pixabay using the API. Use when the user needs visual assets (photos/illustrations) for materials.
+description: Searches Pixabay for high-quality images and videos. Enforces strict resolution and file size limits for web performance.
 ---
 
 # Searching Pixabay
 
-## Description
-This skill downloads images from Pixabay using the official API. It requires a valid `PIXABAY_API_KEY` environment variable.
+This skill helps you find and process visual assets from Pixabay.
 
-## Setup
-1.  **API Key**: Ensure `PIXABAY_API_KEY` is set in the User environment variables.
-2.  **Validation**: The script checks for the key before execution.
+## Core Mandates
 
-## Visual Process
-```mermaid
-graph TD
-    A[Start: Image Request] --> B{API Key Set?}
-    B -->|No| C[Error: Set PIXABAY_API_KEY]
-    B -->|Yes| D[Execute Python Script]
-    
-    D --> E{Results Found?}
-    E -->|No| F[Return: No Matches]
-    E -->|Yes| G[Select Best Match]
-    
-    G --> H[Download High-Res Image]
-    H --> I[Save to Target Path]
-    I --> J[End]
-```
+### 1. Resolution Discipline
+- **Images**: Download `Large` (approx 1920px wide). Avoid original 4K/8K uploads.
+- **Videos**: 
+    - **Target**: `HD (1280x720)` or `FHD (1920x1080)`. 
+    - **FORBIDDEN**: `4K`, `UHD`, `QHD`. These destroy git repo limits.
+
+### 2. Processing Requirement (Videos)
+Raw video files are **NEVER** allowed in the `inputs/` folder. You must process them immediately.
+- **Trim**: Max **7 seconds**.
+- **Audio**: Remove (mute).
+- **Format**: `mp4` (H.264).
+- **Script**: Run `python skills/searching-pixabay/scripts/process_video.py [input] [output]`.
+
+### 3. File Size Limits
+- **Background Video**: < 5 MB (Strict).
+- **Images**: < 500 KB.
 
 ## Workflow
 
-### 1. Usage
-Run the Python script with a query and output path:
+### Step 1: Search
+Use `google_web_search` to find Pixabay assets if API is not available, or browse manually.
+> "site:pixabay.com video beach waves"
 
-```powershell
-python skills/searching-pixabay/scripts/download_image.py --query "cat sitting on wall" --output "inputs/Lesson1/cat.jpg" --type [photo|illustration]
-```
+### Step 2: Selection
+Identify the download URL for the **1280x720 (720p)** version. 
 
-### 2. Arguments
-- `--query`: Search terms (be specific).
-- `--output`: Full path to save the image (must include `.jpg` or `.png` extension).
-- `--type`: (Optional) `photo` (default) or `illustration`.
-- `--orientation`: (Optional) `horizontal` (default) or `vertical`.
+### Step 3: Download & Process
+1.  Download the raw file to a temporary location (e.g., `temp/raw_video.mp4`).
+2.  **IMMEDIATELY** run the processor:
+    ```bash
+    python skills/searching-pixabay/scripts/process_video.py temp/raw_video.mp4 inputs/[Lesson]/images/final_video.mp4
+    ```
+3.  Delete the raw file.
 
-### 3. Verification
-- Check the file size of the downloaded image (should be > 0 bytes).
-- Verify it is a valid visual asset.
-- **For Videos**: Check `inputs/[Lesson]/images/` for the `.mp4` file.
-
-### 4. Video Usage (New)
-To download stock footage (e.g., backgrounds):
-```powershell
-python skills/searching-pixabay/scripts/download_video.py --query "soldiers mission" --output "inputs/Lesson1/images/vid.mp4" --type [film|animation]
-```
-- **Note**: Downloads high-quality (HD/FHD) MP4s.
-
-## Troubleshooting
-- **403 Forbidden**: Check API Key.
-- **503/429**: API limit reached (wait and retry).
-- **No Results**: Try broader search terms.
+### Step 4: Attribution
+Create a `[filename]_attribution.txt` file next to the asset containing the Pixabay user and URL.

@@ -91,14 +91,24 @@ class LessonPlanValidator:
     
     def _check_timing(self):
         """Verify stage times add up to total duration."""
-        # Simple extraction of numbers followed by "Min" in Typst
-        time_vals = re.findall(r'\[(\d+)\s*Min\]', self.content)
+        time_vals = []
+        # 1. Check for standard [XX Min] patterns
+        time_vals.extend([int(t) for t in re.findall(r'\[(\d+)\s*Min\]', self.content)])
+        
+        # 2. Check for stage("X", "Name", "Time", ...) patterns
+        stage_matches = re.findall(r'stage\(\s*".*?"\s*,\s*".*?"\s*,\s*"(\d+)"', self.content)
+        time_vals.extend([int(t) for t in stage_matches])
         
         if time_vals:
-            total = sum(int(t) for t in time_vals)
+            total = sum(time_vals)
             expected = self.metadata.get('duration', 0)
-            if expected and abs(total - expected) > 2:
-                self.warnings.append(f"⚠️ Timing check: Detected stage times sum to {total} mins, expected {expected}.")
+            calc_string = " + ".join(map(str, time_vals))
+            print(f"DEBUG: Timing Calculation: {calc_string} = {total} minutes")
+            
+            if expected and total != expected:
+                self.errors.append(f"[ERROR] Timing Mismatch: Stage times sum to {total} mins ({calc_string}), but metadata duration is {expected} mins.")
+            else:
+                self.warnings.append(f"✅ Timing Verified: {calc_string} = {total} mins.")
 
     def _check_preteach_vocabulary(self):
         """Verify pre-teach vocabulary stage for receptive skills shapes."""

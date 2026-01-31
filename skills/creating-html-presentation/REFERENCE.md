@@ -1,242 +1,97 @@
-# Code Reference (Copy-Paste Snippets)
+# Code Reference & Layout Catalog
 
-> **Purpose**: Raw code for copying into presentations.  
-> **NOT for documentation**: See `COMPONENTS.md` for usage guidelines.  
-> **NOT for decisions**: See `DECISION_TREE.md` for "which to use when" logic.
-
----
-
-/* TYPOGRAPHY: PRESENTATION SCALING */
-.reveal h1 { font-size: 80pt !important; }
-.reveal h2 { font-size: 45pt !important; }
-.reveal h3 { font-size: 35pt !important; }
-.text-body { font-size: 30pt; line-height: 1.2; }
-.text-small { font-size: 24pt; color: #cbd5e1; }
-
-/* INTERACTIVE TIMER PILL */
-.timer-pill {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    background: rgba(0, 0, 0, 0.8);
-    border: 2px solid var(--gold);
-    padding: 10px 25px;
-    border-radius: 50px;
-    margin-top: 30px;
-}
-.timer-display {
-    font-family: 'Courier Prime', monospace;
-    font-size: 40pt;
-    font-weight: 800;
-    color: var(--gold);
-}
-.start-btn {
-    background: var(--gold);
-    color: var(--navy);
-    border: none;
-    padding: 8px 15px;
-    font-weight: 900;
-    cursor: pointer;
-    border-radius: 5px;
-}
-.start-btn.pause { background: var(--maroon); color: white; }
-
-/* TABLES */
-.slide-table {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 5px;
-    font-size: 28px;
-}
-.slide-table th { background: var(--maroon); color: white; padding: 15px; font-weight: 800; }
-.slide-table td { background: var(--glass); border: 1px solid var(--gold); padding: 15px; }
-
-/* MASTER FRAME ARCHITECTURAL BACKER */
-/* Move this to the .reveal container in style block */
-/*
-background: 
-    radial-gradient(circle at center, transparent 30%, rgba(0,0,0,0.5) 100%),
-    linear-gradient(rgba(255, 215, 0, 0.15) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 215, 0, 0.15) 1px, transparent 1px),
-    linear-gradient(45deg, rgba(166, 45, 38, 0.1) 25%, transparent 25%, transparent 50%, rgba(166, 45, 38, 0.1) 50%, rgba(166, 45, 38, 0.1) 75%, transparent 75%, transparent),
-    radial-gradient(circle at 20% 30%, #1a2a45 0%, #0a192f 100%);
-*/
-
-/* NATIVE WEB COMPONENT: <timer-pill> */
-/* Drop this into your script block once */
-/*
-class TimerPill extends HTMLElement {
-    constructor() {
-        super();
-        this.duration = parseInt(this.getAttribute('duration')) || 5;
-        this.timeLeft = this.duration * 60;
-        this.timer = null;
-    }
-    connectedCallback() {
-        this.render();
-        this.updateDisplay();
-        this.querySelector('.start-btn').onclick = () => this.toggle();
-    }
-    render() {
-        this.innerHTML = `
-            <div class="timer-pill">
-                <div class="timer-display">00:00</div>
-                <button class="start-btn">START</button>
-            </div>
-        `;
-    }
-    updateDisplay() {
-        const m = Math.floor(this.timeLeft / 60).toString().padStart(2, '0');
-        const s = (this.timeLeft % 60).toString().padStart(2, '0');
-        this.querySelector('.timer-display').textContent = `${m}:${s}`;
-    }
-    toggle() {
-        const btn = this.querySelector('.start-btn');
-        const pill = this.querySelector('.timer-pill');
-        if (this.timer) {
-            clearInterval(this.timer);
-            this.timer = null;
-            btn.textContent = 'START';
-        } else {
-            btn.textContent = 'PAUSE';
-            this.timer = setInterval(() => {
-                if (this.timeLeft > 0) {
-                    this.timeLeft--;
-                    this.updateDisplay();
-                    if (this.timeLeft === 30) warningSfx.play();
-                    blipSfx.currentTime = 0; blipSfx.play();
-                } else {
-                    clearInterval(this.timer);
-                    this.timer = null;
-                    btn.textContent = 'DONE';
-                    bellSfx.play();
-                }
-            }, 1000);
-        }
-    }
-}
-customElements.define('timer-pill', TimerPill);
-*/
-
-/* USAGE:
-<timer-pill duration="5"></timer-pill>
-*/
+> **Purpose**: Detailed reference for layouts, themes, and code patterns.
+> **Use**: Consult this file during Step 3 (Config Generation).
 
 ---
 
-## Content Checklist Template
+## 🧠 Pedagogical Mapping Matrix (The "Brain")
 
-Use this format for Step 0.6 (Source Content Extraction):
+**CRITICAL**: Use this table to select the correct layout for the content type. Do not guess.
 
-```markdown
-## Source Content Extraction Checklist
+| Worksheet Content Type | **MANDATORY Layout** | **Required Content Structure** |
+| :--- | :--- | :--- |
+| **New Concept / Strategy** | `strategy` | **Bridge Slide**: Background Color + Big Icon + Rationale. |
+| **List of Vocabulary** | `split_table` | Native HTML `<table>` with icons in col 1. |
+| **Matching (Word + Def)** | `match_reorder` | JSON lists (`left_items`, `right_items`). |
+| **Gap Fill / Sentence Completion** | `split_table` | Native HTML `<table>` with centered numbering in col 1. |
+| **Multiple Choice / Cross Out** | `split_table` | Native HTML `<table>` with strikethrough CSS in content. |
+| **Discussion Questions** | `split_table` | Native HTML `<ul>` or `<table>`. **3-Line Rule**. |
+| **Instructions + Timer** | `split_table` | Native HTML `<table>`. **Embed Timer Row manually**. |
+| **Listening/Reading Text** | `split_task` | Text in `<p>`, Image on left. |
+| **Lead-in / Warmer** | `video` or `title` | Video/Image background. |
 
-### From Lesson Plan:
-- [ ] Stage 1: [name] - [key activity]
-- [ ] Stage 2: [name] - [key activity]
-...
-
-### From Worksheet:
-#### Task 1: [exact title]
-- [ ] Question 1: "[exact wording]"
-  - Answer: "[exact answer from key]"
-- [ ] Question 2: "[exact wording]"
-  - Answer: "[exact answer from key]"
-...
-
-### Total Counts:
-- Tasks: X
-- Questions: Y
-- Answers to create: Y (1 slide per answer)
-```
+> **⚠️ Layout Gap Analysis**: If the content does NOT fit these patterns (e.g., complex game, timeline), you **MUST** ask the user: *"This content requires a new layout. Shall I design a new template for it?"*
 
 ---
 
-## Auto-Animate Patterns
+## 🏗️ Layout Catalog (The "Menu")
 
-### Before/After Sentence Transformation
-```html
-<!-- Before -->
-<section data-auto-animate 
-         data-auto-animate-duration="1.5" 
-         data-auto-animate-easing="ease-in-out"
-         data-background-color="var(--bg-dark)">
-    <h2>Sentence Reduction</h2>
-    <p data-id="sentence" style="font-size: 36px;">
-        Michelangelo, <span data-id="remove" style="color: #ef4444; text-decoration: underline;">who was</span> a brilliant sculptor, carved...
-    </p>
-    <p style="font-size: 24px; color: #ef4444;">⬇ Watch the underlined words disappear ⬇</p>
-</section>
-
-<!-- After -->
-<section data-auto-animate 
-         data-auto-animate-duration="1.5" 
-         data-auto-animate-easing="ease-in-out"
-         data-background-color="var(--bg-dark)">
-    <h2>Sentence Reduction</h2>
-    <p data-id="sentence" style="font-size: 36px; color: var(--text-accent);">
-        Michelangelo, a brilliant sculptor, carved...
-    </p>
-    <p style="font-size: 32px; color: var(--text-accent);">✓ We removed: <strong>who was</strong></p>
-</section>
-```
-
-### Reusable Grammar Transform Component
-```html
-<grammar-transform 
-    title="From Relative Clause to Appositive"
-    before="Michelangelo, who was a brilliant sculptor, carved the statue of David."
-    after="Michelangelo, a brilliant sculptor, carved the statue of David."
-    highlight="who was">
-</grammar-transform>
-```
+| Layout ID | Description | Best For |
+| :--- | :--- | :--- |
+| **`title`** | Gold Standard Split: Deck 1 (ALL CAPS) & Deck 2 (Title Case). | Opening slide. |
+| **`segue`** | Heavy Radial Gradient with Skewed Phase markers. | Transition between phases. |
+| **`strategy`** | Solid Color Background + Title + Text. | **Bridge Slides**, Context, Rules. |
+| **`split_table`** | Split layout with embedded HTML table. | List-based tasks (Vocab/Matching). |
+| **`match_reorder`** | Interactive Vocabulary Match. Right column morphs. | Matching tasks. |
+| **`video`** | Embeds YouTube/Shorts + Floating Task Box. | Lead-ins, Warmers. |
+| **`checklist`** | Grid of items for "Skim" tasks. | Simple checking tasks. |
+| **`answer`** | Validation slide with "Why?" explanation box. | Answer keys. |
 
 ---
 
-## Horizontal Layout Patterns
+## 🎨 CSS Themes
 
-### ❌ BANNED: Narrow Centered Stacking
-```html
-<section>
-    <h2>Title</h2>
-    <div class="glass-box" style="width: 500px; margin: 0 auto;">
-        <p>Content 1</p>
-        <p>Content 2</p>
-        <p>Content 3</p>
-        <p>Content 4</p>  <!-- HIDDEN! -->
-        <timer-pill></timer-pill>  <!-- HIDDEN! -->
-    </div>
-</section>
+Themes are located in `css/themes/`.
+
+| Theme | Vibe | Usage |
+| :--- | :--- | :--- |
+| **`thai-heritage.css`** | **Gold Standard**. Deep Royal Blue + Gold. | Default for all academic lessons. |
+| **`indonesia.css`** | Batik patterns, warm earth tones. | Cultural topics. |
+| **`noir.css`** | High contrast, monochrome + red accent. | Serious/Crime topics. |
+| **`cyber.css`** | Neon, dark mode, futuristic. | Tech/Sci-Fi topics. |
+
+---
+
+## ⚠️ Technical Pitfalls (Learned Lessons)
+
+1.  **Pedagogical Scaffolding**:
+    -   ❌ **NEVER** dump a task without context.
+    -   ✅ **ALWAYS** insert a **Bridge Slide** (`strategy` layout) before every major task block (Vocab, Grammar, Speaking) to explain the *Why* and *How*.
+
+2.  **Table Alignment**:
+    -   ❌ **NEVER** rely on default left-alignment for numbers.
+    -   ✅ **ALWAYS** explicitly set `text-align: center` for "Number" or "ID" columns.
+
+3.  **Generative Hallucinations**:
+    -   ❌ **NEVER** summarize or truncate source sentences in grammar/vocab tasks.
+    -   ✅ **ALWAYS** verify strict verbatim alignment with the `.typ` source.
+
+---
+
+## 🧩 Copy-Paste Snippets
+
+### Bridge Slide (Pedagogical Scaffolding)
+```json
+{
+    "layout": "strategy",
+    "title": "BUILDING BLOCKS",
+    "background_color": "#C2B280",
+    "icon": "fas fa-map-marked-alt",
+    "content": "<p>Contextual explanation...</p>",
+    "notes": "Explain why we are learning this."
+}
 ```
 
-### ✅ CORRECT: Horizontal Split (Task Slide)
+### Native Table Pattern (Task/Numbered)
 ```html
-<section>
-    <div class="row-container">
-        <div class="col-50">
-            <img src="images/task.jpg" class="inset-media">
-        </div>
-        <div class="col-50">
-            <div class="glass-box">
-                <h3>Task Title</h3>
-                <p>Instructions...</p>
-                <timer-pill duration="5"></timer-pill>
-            </div>
-        </div>
-    </div>
-</section>
-```
-
-### ✅ CORRECT: Wide Glass Box (Multi-Content)
-```html
-<section>
-    <h2>B2 Mission</h2>
-    <div class="glass-box" style="width: 800px; margin: 0 auto;">
-        <div style="display: flex; gap: 20px;">
-            <div style="flex: 1;">Content A</div>
-            <div style="flex: 1;">Content B</div>
-        </div>
-        <timer-pill duration="2"></timer-pill>
-    </div>
-</section>
+<!-- Explicitly center the Number column to prevent visual crowding -->
+<table style='width: 100%; border-collapse: separate; border-spacing: 0 20px; font-size: 0.9em;'>
+    <tbody>
+        <tr>
+            <td style='width: 60px; text-align: center; vertical-align: middle; font-weight: bold; color: #FFD700;'>1</td>
+            <td style='vertical-align: middle;'>Question text here...</td>
+        </tr>
+    </tbody>
+</table>
 ```
