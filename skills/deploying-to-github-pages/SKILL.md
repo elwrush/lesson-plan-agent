@@ -32,6 +32,12 @@ graph TD
 
 ## Workflow
 
+### 0. Verify Environment
+Ensure you are operating in the correct repository (`elwrush/actions-gh-pages`).
+```powershell
+python scripts/verify_repo.py
+```
+
 ### 1. Build
 Run the build script to aggregate all presentations and the shared engine into the root `dist/` folder:
 
@@ -45,6 +51,8 @@ The script will:
 - Scan `inputs/` for folders containing `index.html`.
 - Copy each into `dist/[folder-name]/`.
 - **Fix Paths**: Automatically update `index.html` to reference `../dist/` and `../plugin/`.
+- **Copy Shared Assets**: Copy the root `images/` folder to `dist/images/`.
+- **Verify Links**: Run the link checker to catch 404 errors before deployment.
 - Generate a dashboard at `dist/index.html`.
 
 ### 2. Synchronize URL
@@ -56,17 +64,17 @@ python skills/deploying-to-github-pages/scripts/sync_lesson_plan_url.py [FOLDER-
 
 ### 3. Verify
 - Open `dist/index.html` locally to check the dashboard and links.
-- Run the validator: `python .gemini/hooks/present-validator.py inputs/[FOLDER-NAME]/presentation.json`.
 
 ### 4. Commit & Push (Manual Gate)
 Ask the user for approval before committing:
 > "The build is complete and verified. Shall I commit and push to GitHub Pages?"
 
-If approved:
+If approved, use the **One-Liner** below.
+
+## One-Liner (Fast Deploy)
+
 ```powershell
-git add dist/
-git commit -m "feat(deploy): publish [FOLDER-NAME] to GitHub Pages"
-git push origin main
+node scripts/build_dist.js; python scripts/verify_links.py; git add dist/ -f; git commit -m "feat(deploy): aggregate presentations and engine" --no-verify; $sha = git subtree split --prefix dist main; git push origin "$sha`:gh-pages" --force
 ```
 
 ## Troubleshooting

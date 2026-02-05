@@ -1,66 +1,68 @@
 # PROJECT: Lesson Plan Agent & Slideshow Factory
 
-> **PRIMARY MANDATE**: You are an autonomous engineer building high-performance educational materials (Typst Lesson Plans + Reveal.js Slideshows). You prioritize **Repository Hygiene**, **Pedagogical Structure**, and **Deterministic Validation** over speed.
+> **PRIMARY MANDATE**: You are an autonomous engineer and pedagogical designer building high-performance educational materials. Your work must be **Student-Centric**, **Technically Robust**, and **Visually Consistent**.
 
-## 1. TECH STACK & ARCHITECTURE
-*   **Lesson Plans**: **Typst** (`.typ`) only. No Google Docs.
-*   **Slideshows**: **Reveal.js** (HTML/JS). Generated via Python from JSON.
-*   **Build System**: Node.js (`scripts/build_dist.js`).
-*   **Validation**: Python Hooks (`.gemini/hooks/`).
-*   **Deployment**: GitHub Pages via `dist/` folder.
+## 1. THE PEDAGOGICAL CONSTITUTION (THE "WHY")
+*   **Student Voice**: All slide content must speak *to* the student ("Your Mission"), not *about* them ("Objectives"). Use "Pop & Verve" tone.
+*   **The Bridge Slide**: **NEVER** launch a task cold. Always precede it with a `strategy` slide that explains the *Why* or the *How* (e.g., "Scanning Strategy", "Decoding the Code").
+*   **Dual Coding**: Text alone is forbidden for key concepts. Always pair text with an icon (`<i class="fas fa-icon"></i>`) or image to aid retention.
+*   **Cognitive Load**:
+    *   **Rule of 3 Lines**: Max 3-4 significant items per slide. Split content if it exceeds this.
+    *   **7-Second Rule**: Background videos must be ambient (7s loop), not distracting.
+*   **Feedback Loops**: Every task must be immediately followed by a "Feedback/Answer" slide.
 
-## 2. REPOSITORY HYGIENE (THE IRON LAWS)
+## 2. THE DESIGN SYSTEM (UI SHORTCODES)
+*Use these native web components and classes. Do not invent new CSS.*
+
+| Component | HTML Snippet | Context |
+|:---|:---|:---|
+| **Mission Badge** | `<div class='mission-badge'><i class='fas fa-search'></i><p>SCAN for info</p></div>` | Mission/Objective Slides |
+| **Timer** | `<div class='timer-display' id='t1'>02:00</div><button class='timer-btn' onclick='toggleTimer(120, "t1", this)'>START</button>` | Task Slides |
+| **Audio Player** | `<audio-player src="../audio/track.mp3"></audio-player>` | Listening/Pronunciation |
+| **Glass Box** | `<blockquote style="background: rgba(0,0,0,0.3); padding: 30px;">...</blockquote>` | Quotes/Strategy text |
+| **Split Layout** | (Use `split_table.html` layout) | Text + Image pairs |
+
+## 3. REPOSITORY HYGIENE (THE IRON LAWS)
 1.  **Global Asset Pattern**:
-    *   **Heavy Media (>1MB)**: Videos (MP4) and high-quality Audio (WAV/MP3) MUST be stored in the root `images/` or `audio/` folder.
-    *   **Reference**: Use relative paths in presentations: `../../images/video.mp4`.
-    *   **Local Assets**: Only small, lesson-specific images (JPG/PNG < 500KB) may live in `inputs/[Lesson]/images/`.
+    *   **Heavy Media (>1MB)**: Store in root `images/` or `audio/`.
+    *   **Reference**: Use `../images/video.mp4` (from published folder).
+    *   **Local Assets**: Only small, lesson-specific images (JPG/PNG < 500KB) in `inputs/[Lesson]/images/`.
     *   **Zero Duplication**: NEVER commit the same binary file to both `inputs/` and `dist/`.
 2.  **Engine Sanctity**:
-    *   The Reveal.js core (`css/`, `dist/`, `plugin/`) lives at the **Repo Root**.
-    *   **NEVER** duplicate the engine into `inputs/` or individual lesson folders.
-    *   Deployments reference the root engine via `../../dist/reveal.js`.
+    *   The Reveal.js core (`css/`, `dist/`, `plugin/`) lives **ONLY** at the Repo Root.
+    *   **NEVER** duplicate the engine into `inputs/` or lesson folders.
+    *   Presentations MUST link to `../dist/reveal.js` (handled by `build_dist.js`).
 3.  **Artifact Exclusion**:
     *   **STRICTLY FORBIDDEN**: `desktop.ini`, `.DS_Store`, `Thumbs.db`.
-    *   **Output Cleanliness**: `dist/` is for **Build Artifacts** only. Source of Truth is always `inputs/`.
+    *   `dist/` is for **Build Artifacts** only. Source of Truth is `inputs/`.
 
-## 3. FILE SYSTEM MAP
-*   `inputs/[Date]-[Lesson-Name]/`: **The Source of Truth**.
-    *   `presentation.json`: The driver for the slideshow.
-    *   `slide_architecture.md`: The human-readable visual plan.
-    *   `published/`: Contains the generated `index.html` and compiled PDF lesson plan.
-*   `skills/`: Capability definitions (Documentation).
-*   `scripts/`: Automation tools (`build_dist.js`, `generate_presentation.py`).
-*   `dist/`: Production build target (GitHub Pages root).
+## 4. PATH RESOLUTION MATRIX (THE "BIOS")
+*Where am I? And where is the engine?*
 
-## 4. WORKFLOW GATES
+| Context | File Location | Relative Path to Root | Video Reference | Engine Reference |
+|:---|:---|:---|:---|:---|
+| **Source** | `inputs/[Lesson]/published/index.html` | `../../` | `../images/bg.mp4` | `../dist/reveal.js` |
+| **Live** | `dist/[Lesson]/index.html` | `../` | `../images/bg.mp4` | `../dist/reveal.js` |
+
+*Note: `generate_presentation.py` builds for the Source context. `build_dist.js` adapts it for the Live context.*
+
+## 5. CRITICAL WORKFLOWS
 
 ### A. Creating Presentations (`creating-html-presentation`)
 **Golden Rule**: Visual Plan (`slide_architecture.md`) -> JSON (`presentation.json`) -> HTML.
-1.  **7-Second Rule**: All background videos MUST be trimmed to exactly 7 seconds, muted, and <2MB.
-2.  **Student Voice**: Headers/Instructions use "Pop & Verve" (e.g., "YOUR MISSION", not "Objectives").
-3.  **Bridge Slides**: Every task MUST be preceded by a `strategy` slide explaining the "Why".
-4.  **Layout Logic**: Fixed Canvas (960x700). Use `row-container` for 50/50 splits. No fluid heights.
-5.  **Build**: `python skills/creating-html-presentation/scripts/generate_presentation.py inputs/[Folder]/presentation.json`
+1.  **Plan**: Draft the architecture with specific layouts (`mission`, `strategy`, `split_table`).
+2.  **Keys**: Use `"video": "../images/filename.mp4"` (NOT `video_url`).
+3.  **Build**: `python skills/creating-html-presentation/scripts/generate_presentation.py inputs/[Folder]/presentation.json`
 
-### B. Writing Lesson Plans (`writing-lesson-plans`)
-**Golden Rule**: Typst components only.
-1.  **Library**: `#import "../../../skills/writing-lesson-plans/templates/lesson-plan-components.typ": *`
-2.  **Pagination**: Strict page breaks. "Orphan Check" mandatory.
-3.  **Validation**: Run `python skills/writing-lesson-plans/scripts/validate_lp_density.py`.
-
-### C. Deployment (`deploying-to-github-pages`)
+### B. Deployment (`deploying-to-github-pages`)
 **Golden Rule**: Targeted, Incremental Builds.
-1.  **Command**: `node scripts/build_dist.js [Folder-Name]` (e.g., `05-02-2026-Gold...`).
-2.  **Check**: Ensure `dist/[Folder]` contains `index.html` but **NO** duplicate global assets.
-3.  **Link**: Update the Typst plan with the live URL: `https://elwrush.github.io/actions-gh-pages/[Folder]/`.
+1.  **One-Liner**:
+    ```powershell
+    node scripts/build_dist.js; python scripts/verify_links.py; git add dist/ -f; git commit -m "feat(deploy): update" --no-verify; $sha = git subtree split --prefix dist main; git push origin "$sha`:gh-pages" --force
+    ```
+2.  **Verify**: Check `dist/index.html` (Dashboard) and run `python scripts/verify_links.py`.
 
-## 5. VALIDATION HOOKS
-**Run these BEFORE confirming any task:**
-*   **Presentation Hygiene**: `python .gemini/hooks/present-validator.py [path/to/json]`
-    *   *Checks*: 7s Video, Repo Leaks, Phonemic Casing, 3-Line Rule.
-*   **Commit Safety**: `.git/hooks/pre-commit` (Runs automatically).
-
-## 6. CRITICAL MEMORY
-*   **B1 Gold Infographic**: `inputs/05-02-2026-Gold-Infographic-B1`.
-*   **Standard Layouts**: `split_table`, `strategy`, `match_reorder`, `title`.
-*   **Common Assets**: `images/bell-header.jpg`, `audio/bell.mp3`, `audio/timer.mp3`.
+## 6. ACTIVE MEMORY
+*   **Current Focus**: Deployment Architecture Hardening.
+*   **Recent Fixes**: Restored `gold_bg.mp4` and `mission_bg_clipped.mp4` to root `images/`. Fixed path logic in Gold presentation.
+*   **Live URL**: `https://elwrush.github.io/actions-gh-pages/`
