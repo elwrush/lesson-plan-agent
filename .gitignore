@@ -43,6 +43,7 @@ tmp/
 
 # Gemini artifacts
 .gemini/
+!.gemini/hooks/
 
 # Node
 node_modules/

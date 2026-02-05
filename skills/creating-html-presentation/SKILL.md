@@ -18,6 +18,7 @@ This skill generates high-energy Reveal.js presentations. It mandates a **Pedago
 5.  **Pedagogical UI**: Use **Dual Coding** (Icons + Text) and **Negative Feedback** animations (Red Strikethrough).
 6.  **Phonemic Casing**: Phonemic script (text within slashes, e.g., /tɒm/) MUST NEVER use upper-case Latin letters (A-Z). Phonemes are always lower-case or specific IPA symbols.
 7.  **Student-Centric Voice**: All visible slide content (titles, instructions, rationales) **MUST** be addressed directly to the student using an engaging, high-energy "Pop & Verve" tone (e.g., "YOUR MISSION", "THE CHALLENGE", "FINAL CHALLENGE"). **NEVER** use teacher-facing procedural language (e.g., "Objective", "Rationale", "Monitor") in student-visible areas. These belong exclusively in `<aside class="notes">`.
+8.  **Repo Hygiene (Global Asset Pattern)**: To prevent repository bloat, **Heavy Media** (Videos > 1MB, Audio) **MUST** be stored in the project root `images/` folder and referenced via relative paths (e.g., `../../images/video.mp4`). **NEVER** duplicate heavy assets into the lesson's `dist/` folder. Small images (JPG/PNG) may remain local.
 
 ## Workflow
 
@@ -30,6 +31,20 @@ This skill generates high-energy Reveal.js presentations. It mandates a **Pedago
     *   *Action*: If NO, ask user: *"Task X requires a new layout. Shall I design one?"*
 4.  **Draft Architecture**: Create `slide_architecture.md`. Define the layout for *every* slide, including mandatory **Bridge Slides**.
 
+## Workflow
+
+### Phase 0: 🧠 Visual & Pedagogical Architecture (MANDATORY)
+**Goal**: Create a detailed blueprint and secure user approval.
+1.  **Skeleton Mapping**: Map worksheet/book materials as the core skeleton.
+2.  **Pedagogical Augmentation**: Overlay the Lesson Plan stages.
+3.  **Human-Readable Detailing**: Create a Markdown file (`slide_architecture.md`) thatspecifies for every slide:
+    - **Visual Vibe**: A clear, non-technical description of the image/video and layout.
+    - **The Voice**: The exact student-centric headline and instructions.
+    - **The Logic**: specify `auto-animate` transitions and `fragment` triggers.
+    - **The Bridge**: specify how this slide links to the next pedagogical step.
+4.  **Formatting**: Use bold headers, tables for lists, and clear bullet points. **NO BLOCK CODE** for the plan itself—it must be rendered Markdown.
+5.  **STOP AND WAIT**: Present this Markdown plan to the user. **DO NOT** take any further action until it is explicitly approved.
+
 ### Phase 1: 📊 Pedagogical Mapping (Visualization)
 **Goal**: Verify the Learning Journey.
 1.  **Execute**: `skills/rendering-prompts-into-mermaid`.
@@ -37,22 +52,25 @@ This skill generates high-energy Reveal.js presentations. It mandates a **Pedago
 3.  **Verify Flow**: Check for **Bridge Node** -> **Task Node** -> **Feedback Node** pattern. If Bridge is missing, add it.
 
 ### Phase 2: 📦 Asset Strategy
-**Goal**: Secure high-quality visuals.
-1.  **User-Led Generation**: Provide prompts. Wait for user to provide images.
-2.  **Organization**: Store in `inputs/[Folder]/images/`.
+**Goal**: Source and process high-quality visual assets.
+1.  **Search & Selection**: Use the **[searching-pixabay](cci:7://file:///c:/PROJECTS/LESSONS%20AND%20SLIDESHOWS%202/skills/searching-pixabay/SKILL.md:0:0-0:0)** skill to find high-resolution images and videos.
+2.  **Video Processing**: **MANDATORY**. All Pixabay videos MUST be processed using `python skills/searching-pixabay/scripts/process_video.py` to ensure they are trimmed (max 7s), muted, and scaled (720p).
+3.  **Looping Mandate**: Ensure opening/background videos are set to `video_loop: true` in the slide configuration.
+4.  **Local Storage**: Store all processed assets in the lesson's `images/` folder.
 
 ### Phase 3: 🎨 Config Generation (The Plan)
 **Goal**: Create the JSON driver.
-1.  **Generate**: Create `presentation.json`.
-2.  **Constraint**: Use layouts from `REFERENCE.md`. Prefer `split_table` for tasks.
-3.  **Gatekeeper Validation**:
-    *   **CRITICAL STEP**: Run `scripts/validate_content_alignment.py [json_path]`.
+1.  **Constraint**: Use the **Approved Markdown Architecture** as the ONLY source for the JSON.
+2.  **Gatekeeper Validation**:
+    *   **CRITICAL STEP**: Run `scripts/validate_architecture_sync.py [json_path]`.
     *   **Action**: If fails, **STOP** and fix JSON.
 
 ### Phase 4: 🛠️ Build & Render
 **Goal**: Generate the HTML using the Local Repo.
 1.  **Execute**: `python skills/creating-html-presentation/scripts/generate_presentation.py [json_path]`.
-2.  **Output**: `index.html` in the project folder.
+2.  **Architecture**: The script generates a "clean" `index.html` and copies lesson-specific images/audio ONLY. 
+3.  **Engine**: The Reveal.js engine is shared at the root of the library. Subfolder `index.html` files must use `../dist/` etc. (Handled automatically by `build_dist.js`).
+4.  **Output**: `index.html` in the lesson's `published/` folder.
 
 ### Phase 5: 🧪 Final Validation
 **Goal**: Ensure technical stability.
