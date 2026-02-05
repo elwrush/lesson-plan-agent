@@ -95,11 +95,11 @@ def check_path_hygiene(output_dir):
         content = f.read()
         
     # Check for the presence of the global engine path
-    if 'src="../../dist/reveal.js"' not in content and 'src="../../dist/reveal.js"' not in content.replace('"', "'"):
-        errors.append("Path Violation: index.html must reference the root engine via '../../dist/reveal.js'.")
+    if 'src="../dist/reveal.js"' not in content and 'src="../dist/reveal.js"' not in content.replace('"', "'"):
+        errors.append("Path Violation: index.html must reference the root engine via '../dist/reveal.js'.")
         
-    if 'href="../../dist/reveal.css"' not in content and 'href="../../dist/reveal.css"' not in content.replace('"', "'"):
-        errors.append("Path Violation: index.html must reference the root CSS via '../../dist/reveal.css'.")
+    if 'href="../dist/reveal.css"' not in content and 'href="../dist/reveal.css"' not in content.replace('"', "'"):
+        errors.append("Path Violation: index.html must reference the root CSS via '../dist/reveal.css'.")
         
     return errors
 
