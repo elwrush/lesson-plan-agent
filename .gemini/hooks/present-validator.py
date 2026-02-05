@@ -84,7 +84,7 @@ def check_repo_hygiene(json_path):
 
 def check_path_hygiene(output_dir):
     """
-    Verifies that index.html correctly references the shared engine at ../../
+    Verifies that index.html correctly references the shared engine at ../
     """
     index_path = os.path.join(output_dir, 'index.html')
     if not os.path.exists(index_path):
