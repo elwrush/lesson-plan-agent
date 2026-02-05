@@ -87,9 +87,15 @@ if (targetFolder) {
     }
 
     // Global Reveal.js Engine (for shared hosting)
-    const revealRepo = path.join(PROJECT_ROOT, 'temp_reveal_repo');
+    // PREFER: node_modules (CI/CD safe) -> FALLBACK: temp_reveal_repo (Local dev)
+    const nodeModulesReveal = path.join(PROJECT_ROOT, 'node_modules', 'reveal.js');
+    const tempReveal = path.join(PROJECT_ROOT, 'temp_reveal_repo');
+    const revealSource = fs.existsSync(nodeModulesReveal) ? nodeModulesReveal : tempReveal;
+
+    console.log(`🔍 Resolving Reveal.js engine from: ${revealSource}`);
+
     ['dist', 'plugin', 'css'].forEach(folder => {
-        const src = path.join(revealRepo, folder);
+        const src = path.join(revealSource, folder);
         const dest = path.join(DIST_DIR, folder);
         if (fs.existsSync(src)) {
             fs.cpSync(src, dest, {
@@ -97,10 +103,12 @@ if (targetFolder) {
                 filter: (src) => {
                     const name = path.basename(src);
                     if (fs.statSync(src).isDirectory()) return true;
-                    return !name.startsWith('.') && name.toLowerCase() !== 'desktop.ini' && !name.endsWith('.md');
+                    return !name.startsWith('.') && name.toLowerCase() !== 'desktop.ini' && !name.endsWith('.md') && !name.endsWith('.json');
                 }
             });
             console.log(`📦 Copied global Reveal engine: ${folder}`);
+        } else {
+            console.warn(`⚠️ Warning: Could not find engine folder: ${src}`);
         }
     });
 }
