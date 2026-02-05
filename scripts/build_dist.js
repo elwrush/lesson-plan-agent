@@ -67,6 +67,15 @@ async function build() {
         }
     }
 
+    // 2.5 Copy Shared Assets (Root images/)
+    console.log('🖼️  Copying shared global assets (root images/)...');
+    const rootImages = path.join(projectRoot, 'images');
+    const distImages = path.join(distRoot, 'images');
+    if (fs.existsSync(rootImages)) {
+        await copyDir(rootImages, distImages, (srcPath) => !srcPath.includes('desktop.ini'));
+        console.log('   ✅ Copied root images/');
+    }
+
     // 3. Aggregate Presentations
     console.log('📂 Aggregating presentations from inputs/...');
     const lessons = [];
