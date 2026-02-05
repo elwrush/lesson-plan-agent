@@ -89,8 +89,8 @@ def generate_presentation(json_path):
             slide['video_autoplay'] = True
             slide['video_loop'] = True
 
-    # Standardize on 1 level up for the library root (../dist/ etc)
-    # Since 'dist/' is the web root, presentations live at /[LESSON-NAME]/index.html
+    # Standardize on 1 level up for the library root (dist/ etc)
+    # Presentations live at /[LESSON-NAME]/index.html
     root_path = "../"
 
     output_html = template.render(

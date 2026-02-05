@@ -12,7 +12,7 @@ const fs = require('fs');
 const path = require('path');
 
 const PROJECT_ROOT = path.join(__dirname, '..');
-const DIST_DIR = path.join(PROJECT_ROOT, 'dist');
+const DIST_DIR = PROJECT_ROOT; // Build directly into root for GitHub Pages
 const INPUTS_DIR = path.join(PROJECT_ROOT, 'inputs');
 
 // Clean and create dist
