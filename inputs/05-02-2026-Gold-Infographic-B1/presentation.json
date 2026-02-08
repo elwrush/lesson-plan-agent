@@ -64,18 +64,6 @@
             "notes": "Define infographics as a bridge between data and visual stories."
         },
         {
-            "layout": "split_table",
-            "title": "LET'S INVESTIGATE: THAILAND",
-            "image": "images/thailand_birth_rate_infographic.png",
-            "content": "<h3>THAILAND'S FERTILITY CRISIS</h3>\n<table style='width: 100%; border-collapse: separate; border-spacing: 0 10px; font-size: 0.9em;'>\n    <tbody>\n        <tr><td style='width: 30px; color: #FFD700;'><i class='fas fa-chart-line'></i></td><td>What is the trend in birth rates?</td></tr>\n        <tr><td style='width: 30px; color: #FFD700;'><i class='fas fa-users'></i></td><td>How does this affect society?</td></tr>\n        <tr><td style='width: 30px; color: #FFD700;'><i class='fas fa-icons'></i></td><td>What 'icons' do you see representing the data?</td></tr>\n    </tbody>\n</table>",
-            "notes": "Analyze the Thailand infographic. Highlighting how icons and graphs tell a story without using many words."
-        },
-        {
-            "layout": "image",
-            "image": "images/thailand_birth_rate_infographic.png",
-            "notes": "Observe the full infographic together. Point out specific data trends."
-        },
-        {
             "layout": "segue",
             "phase": "PHASE 1.5",
             "title": "THE GOLD QUIZ",
@@ -85,14 +73,14 @@
             "layout": "split_table",
             "title": "GOLD: FACT OR FICTION?",
             "image": "images/gold_bar.jpg",
-            "content": "<table style='width: 100%; border-collapse: separate; border-spacing: 0 10px;'>\n    <tbody>\n        <tr>\n            <td style='width: 40px; color: #FFD700;'><i class='fas fa-utensils'></i></td>\n            <td style='text-align: left;'>Gold is edible.</td>\n        </tr>\n        <tr>\n            <td style='width: 40px; color: #FFD700;'><i class='fas fa-swimming-pool'></i></td>\n            <td style='text-align: left;'>All gold ever mined fits in 2 Olympic pools.</td>\n        </tr>\n        <tr>\n            <td style='width: 40px; color: #FFD700;'><i class='fas fa-user-circle'></i></td>\n            <td style='text-align: left;'>There is gold in your body.</td>\n        </tr>\n    </tbody>\n</table>",
+            "content": "<table style='width: 100%; border-collapse: separate; border-spacing: 0 10px; font-size: 1em;'>\n    <tbody>\n        <tr>\n            <td style='width: 40px; color: #FFD700;'><i class='fas fa-utensils'></i></td>\n            <td style='text-align: left;'>Gold is edible.</td>\n        </tr>\n        <tr>\n            <td style='width: 40px; color: #FFD700;'><i class='fas fa-swimming-pool'></i></td>\n            <td style='text-align: left;'>All gold ever mined fits in 2 Olympic pools.</td>\n        </tr>\n        <tr>\n            <td style='width: 40px; color: #FFD700;'><i class='fas fa-user-circle'></i></td>\n            <td style='text-align: left;'>There is gold in your body.</td>\n        </tr>\n    </tbody>\n</table>",
             "notes": "Quick warmer. Students guess. Reveal the answers to spark interest."
         },
         {
             "layout": "answer_detail",
             "badge": "QUIZ: ANSWER 1/3",
             "title": "Gold is edible.",
-            "answer": "✓ FACT - TRUE!",
+            "answer": "TRUE - FACT",
             "evidence": "Gold leaf is used in luxury desserts and drinks. It's safe to eat but has no taste.",
             "explanation": "Edible gold (gold leaf or gold flakes) is classified as food-safe. It's often used to decorate chocolates, cakes, and fancy drinks. Remember: just because it's edible doesn't mean it's tasty!",
             "background_gradient": "radial-gradient(circle, #D4AF37 0%, #1a1a1a 100%)",
@@ -102,7 +90,7 @@
             "layout": "answer_detail",
             "badge": "QUIZ: ANSWER 2/3",
             "title": "All gold ever mined fits in 2 Olympic pools.",
-            "answer": "✗ FICTION - FALSE!",
+            "answer": "FALSE - FICTION",
             "evidence": "If you gathered all the gold ever mined, it would fill about 3-4 Olympic swimming pools.",
             "explanation": "This common myth is close but not quite right! While gold is very dense (heavy), the total amount mined throughout human history is larger than most people expect.",
             "background_gradient": "radial-gradient(circle, #D4AF37 0%, #1a1a1a 100%)",
@@ -112,7 +100,7 @@
             "layout": "answer_detail",
             "badge": "QUIZ: ANSWER 3/3",
             "title": "There is gold in your body.",
-            "answer": "✓ FACT - TRUE!",
+            "answer": "TRUE - FACT",
             "evidence": "The human body contains approximately 0.2 milligrams of gold, mostly in the blood.",
             "explanation": "Amazingly, trace amounts of gold exist naturally in our bodies! This tiny amount comes from the foods we eat and the environment. It's not enough to extract, but it's there!",
             "background_gradient": "radial-gradient(circle, #D4AF37 0%, #1a1a1a 100%)",
@@ -123,7 +111,7 @@
             "title": "DECODING THE METAL",
             "background_color": "#1E3A8A",
             "icon": "fas fa-book-open",
-            "content": "<p style='font-size: 1.2em;'>Before we excavate the facts, let's unlock the language.</p>",
+            "content": "<p style='font-size: 1.2em;'>Before we excavate the facts, we need to unlock the vocabulary.</p><p style='font-size: 1em; margin-top: 20px;'>These key words will help us understand the gold infographic.</p>",
             "notes": "Bridge slide to vocabulary."
         },
         {
@@ -192,19 +180,19 @@
             "title": "THE SPEED SCAN",
             "background_color": "#1E3A8A",
             "icon": "fas fa-bolt",
-            "content": "<p style='font-size: 1.2em;'>Don't read every word! Look for headings and numbers.</p>",
+            "content": "<p style='font-size: 1.2em;'>Now we're going to read for gist. This means we read for general understanding, not detail.</p><p style='font-size: 1em; margin-top: 20px;'><strong style='color: #FFD700;'>TIP:</strong> Don't read every word! Look for headings and numbers.</p>",
             "notes": "Bridge to scanning strategy."
         },
         {
             "layout": "split_table",
-            "title": "SCANNING FOR ANSWERS",
             "image": "images/infographic_preview.jpg",
-            "content": "<h3>TASK: EXERCISE 1</h3>\n<table style='width: 100%; border-collapse: separate; border-spacing: 0 10px; font-size: 0.8em;'>\n    <tbody>\n        <tr><td style='width: 30px; color: #FFD700;'><i class='fas fa-meteor'></i></td><td>Where did the gold on the surface of Earth come from?</td></tr>\n        <tr><td style='width: 30px; color: #FFD700;'><i class='fas fa-burst'></i></td><td>How was gold formed in the universe?</td></tr>\n        <tr><td style='width: 30px; color: #FFD700;'><i class='fas fa-earth-asia'></i></td><td>Where is most of the gold on the Earth?</td></tr>\n        <tr><td style='width: 30px; color: #FFD700;'><i class='fas fa-faucet-drip'></i></td><td>How are gold deposits formed underground?</td></tr>\n        <tr><td style='width: 30px; color: #FFD700;'><i class='fas fa-list-check'></i></td><td>What are the five main uses of gold?</td></tr>\n        <tr><td colspan='2' style='text-align: center; padding-top: 20px;'>\n            <div class='timer-container'>\n                <div class='timer-display' id='timer-scan'>02:00</div>\n                <button class='timer-btn' onclick='toggleTimer(120, \"timer-scan\", this)'>START</button>\n            </div>\n        </td></tr>\n    </tbody>\n</table>",
-            "notes": "Scanning task. Students have 2 minutes to find the answers using headings and images."
+            "content": "<h3>TASK: EXERCISE 1 (PART 1)</h3>\n<table style='width: 100%; border-collapse: separate; border-spacing: 0 10px; font-size: 0.9em;'>\n    <tbody>\n        <tr><td style='width: 30px; color: #FFD700;'><i class='fas fa-meteor'></i></td><td>Where did the gold on the surface of Earth come from?</td></tr>\n        <tr><td style='width: 30px; color: #FFD700;'><i class='fas fa-burst'></i></td><td>How was gold formed in the universe?</td></tr>\n        <tr><td style='width: 30px; color: #FFD700;'><i class='fas fa-earth-asia'></i></td><td>Where is most of the gold on the Earth?</td></tr>\n        <tr><td colspan='2' style='text-align: center; padding-top: 20px;'>\n            <div class='timer-container'>\n                <div class='timer-display' id='timer-scan-1'>01:00</div>\n                <button class='timer-btn' onclick='toggleTimer(60, \"timer-scan-1\", this)'>START</button>\n            </div>\n        </td></tr>\n    </tbody>\n</table>",
+            "notes": "Scanning task Part 1. Focus on origin and location."
         },
         {
             "layout": "answer_detail",
             "badge": "SCAN: ANSWER 1/5",
+            "para": "1",
             "title": "Where did the gold on Earth's surface come from?",
             "answer": "Asteroids and Meteorites",
             "evidence": "\"Gold was delivered to Earth by asteroids and meteorites in a period called the Late Heavy Bombardment, about 4 billion years ago.\"",
@@ -215,6 +203,7 @@
         {
             "layout": "answer_detail",
             "badge": "SCAN: ANSWER 2/5",
+            "para": "2",
             "title": "How was gold formed in the universe?",
             "answer": "Supernova Explosions",
             "evidence": "\"Gold is created in the most powerful explosions in the universe: supernovae and neutron star collisions.\"",
@@ -225,6 +214,7 @@
         {
             "layout": "answer_detail",
             "badge": "SCAN: ANSWER 3/5",
+            "para": "3",
             "title": "Where is most of the gold on Earth?",
             "answer": "At Earth's Core (99%)",
             "evidence": "\"Approximately 99% of all the gold on Earth is located in its core, thousands of kilometers below the surface.\"",
@@ -233,8 +223,15 @@
             "notes": "This is why gold mining is so difficult and expensive."
         },
         {
+            "layout": "split_table",
+            "image": "images/infographic_preview.jpg",
+            "content": "<h3>TASK: EXERCISE 1 (PART 2)</h3>\n<table style='width: 100%; border-collapse: separate; border-spacing: 0 10px; font-size: 0.9em;'>\n    <tbody>\n        <tr><td style='width: 30px; color: #FFD700;'><i class='fas fa-faucet-drip'></i></td><td>How are gold deposits formed underground?</td></tr>\n        <tr><td style='width: 30px; color: #FFD700;'><i class='fas fa-list-check'></i></td><td>What are the five main uses of gold?</td></tr>\n        <tr><td colspan='2' style='text-align: center; padding-top: 20px;'>\n            <div class='timer-container'>\n                <div class='timer-display' id='timer-scan-2'>01:00</div>\n                <button class='timer-btn' onclick='toggleTimer(60, \"timer-scan-2\", this)'>START</button>\n            </div>\n        </td></tr>\n    </tbody>\n</table>",
+            "notes": "Scanning task Part 2. Focus on formation and uses."
+        },
+        {
             "layout": "answer_detail",
             "badge": "SCAN: ANSWER 4/5",
+            "para": "4",
             "title": "How are gold deposits formed underground?",
             "answer": "Hot Water Through Rock",
             "evidence": "\"Gold deposits are formed when hot water circulates through rock, depositing gold in cracks and veins.\"",
@@ -245,6 +242,7 @@
         {
             "layout": "answer_detail",
             "badge": "SCAN: ANSWER 5/5",
+            "para": "5",
             "title": "What are the five main uses of gold?",
             "answer": "Jewelry, Technology, Investment, Medicine, Dentistry",
             "evidence": "\"Gold is used in: Jewelry, Technology (electronics), Investment (bars/coins), Medicine, and Dentistry.\"",
@@ -257,29 +255,29 @@
             "title": "DATA DETECTIVES",
             "background_color": "#8B1538",
             "icon": "fas fa-microscope",
-            "content": "<p style='font-size: 1.2em;'>Now look deeper. What do these specific numbers tell us?</p>",
+            "content": "<p style='font-size: 1.2em;'>Now we're going to read for detail. Let's see what these specific numbers tell us!</p>",
             "notes": "Bridge to detail reading."
         },
         {
             "layout": "split_table",
             "title": "THE NUMBERS GAME",
-            "content": "<h3>WHAT DO THESE FIGURES REFER TO?</h3>\n<table style='width: 100%; font-size: 0.7em;'>\n    <tbody>\n        <tr class='fragment'>\n            <td style='color: #FFD700;'>130 million years</td>\n            <td>Age of the explosion that created gold.</td>\n        </tr>\n        <tr class='fragment'>\n            <td style='color: #FFD700;'>99%</td>\n            <td>Gold in liquid form at Earth's center.</td>\n        </tr>\n        <tr class='fragment'>\n            <td style='color: #FFD700;'>45 cm</td>\n            <td>Depth of gold if it covered the Earth.</td>\n        </tr>\n        <tr class='fragment'>\n            <td style='color: #FFD700;'>1,000,000,000</td>\n            <td>Cell phones produced each year.</td>\n        </tr>\n    </tbody>\n</table>",
+            "content": "<h3>OXFORD DISCOVER: EXERCISE 3 (P. 131)</h3>\n<table style='width: 100%; font-size: 0.7em;'>\n    <tbody>\n        <tr>\n            <td style='color: #FFD700;'>130 million years</td>\n            <td class='fragment'>Age of the explosion that created gold.</td>\n        </tr>\n        <tr>\n            <td style='color: #FFD700;'>99%</td>\n            <td class='fragment'>Gold in liquid form at Earth's center.</td>\n        </tr>\n        <tr>\n            <td style='color: #FFD700;'>45 cm</td>\n            <td class='fragment'>Depth of gold if it covered the Earth.</td>\n        </tr>\n        <tr>\n            <td style='color: #FFD700;'>1,000,000,000</td>\n            <td class='fragment'>Cell phones produced each year.</td>\n        </tr>\n    </tbody>\n</table>",
             "notes": "Exercise 3. Students match the figures to their meanings."
+        },
+        {
+            "layout": "strategy",
+            "title": "DIGGING DEEPER",
+            "background_color": "#1E3A8A",
+            "icon": "fas fa-search-plus",
+            "content": "<p style='font-size: 1.2em;'>We know the <strong>statistics</strong>. Now we need the <strong>stories</strong>.</p><div style='margin-top: 30px; text-align: left; display: inline-block; background: rgba(0,0,0,0.3); padding: 20px; border-radius: 8px;'><p style='margin-bottom: 15px;'><i class='fas fa-history' style='color: #FFD700; margin-right: 15px;'></i><strong>HISTORICAL USES:</strong> What did people <em>do</em> with it?</p><p><i class='fas fa-thumbs-up' style='color: #FFD700; margin-right: 15px;'></i><strong>BENEFITS:</strong> <em>Why</em> was it good?</p></div>",
+            "notes": "Bridge to deep detail reading. Focus on specific scanning questions."
         },
         {
             "layout": "split_table",
             "title": "THE HISTORICAL RECORD",
             "image": "images/cleopatra.jpg",
-            "content": "<h3>THE CHALLENGE: EXERCISE 4</h3>\n<table style='width: 100%; border-collapse: separate; border-spacing: 0 15px;'>\n    <tbody>\n        <tr class='fragment'>\n            <td>What were the historical uses?</td>\n            <td class='fragment' style='color: #FFD700;'>Jewelry, currency, dentistry.</td>\n        </tr>\n        <tr class='fragment'>\n            <td>What are the benefits?</td>\n            <td class='fragment' style='color: #FFD700;'>Doesn't darken, easy to manipulate.</td>\n        </tr>\n    </tbody>\n</table>",
-            "notes": "Exercise 4. Deep detail reading."
-        },
-        {
-            "layout": "strategy",
-            "title": "WORD TRANSFORMATIONS",
-            "background_color": "#1E3A8A",
-            "icon": "fas fa-magic",
-            "content": "<p style='font-size: 1.2em;'>How do we turn 'Beauty' into 'Beautify'? Suffix power!</p>",
-            "notes": "Bridge to grammar focus."
+            "content": "<h3>OXFORD DISCOVER: EXERCISE 4 (P. 131)</h3>\n<table style='width: 100%; border-collapse: separate; border-spacing: 0 15px; font-size: 0.9em;'>\n    <tbody>\n        <tr>\n            <td>What were the historical uses?</td>\n            <td class='fragment' style='color: #FFD700;'>Jewelry, currency, dentistry.</td>\n        </tr>\n        <tr>\n            <td>What are the benefits?</td>\n            <td class='fragment' style='color: #FFD700;'>Doesn't darken, easy to manipulate.</td>\n        </tr>\n        <tr><td colspan='2' style='text-align: center; padding-top: 20px;'>\n            <div class='timer-container'>\n                <div class='timer-display' id='timer-history'>01:00</div>\n                <button class='timer-btn' onclick='toggleTimer(60, \"timer-history\", this)'>START</button>\n            </div>\n        </td></tr>\n    </tbody>\n</table>",
+            "notes": "Exercise 4. Deep detail reading. Questions are visible; answers reveal on click."
         },
         {
             "layout": "segue",
@@ -288,9 +286,17 @@
             "background_gradient": "radial-gradient(circle, #1E3A8A 0%, #000000 100%)"
         },
         {
+            "layout": "strategy",
+            "title": "WORD TRANSFORMATIONS",
+            "background_color": "#1E3A8A",
+            "icon": "fas fa-magic",
+            "content": "<p style='font-size: 1.2em; margin-bottom: 30px;'>We can change a <strong>Noun</strong> (thing) into a <strong>Verb</strong> (action).</p><div style='display: flex; justify-content: center; align-items: center; gap: 20px; font-size: 1.3em;'><div style='background: rgba(0,0,0,0.3); padding: 20px; border-radius: 8px;'>Beauty<br><span style='font-size: 0.6em; opacity: 0.7;'>(Noun)</span></div><i class='fas fa-arrow-right' style='color: #FFD700;'></i><div style='background: rgba(0,0,0,0.3); padding: 20px; border-radius: 8px; border: 2px solid #FFD700;'>Beaut<span style='color: #FFD700; font-weight: bold;'>ify</span><br><span style='font-size: 0.6em; opacity: 0.7;'>(Verb)</span></div></div><p style='font-size: 1em; margin-top: 30px;'><strong style='color: #FFD700;'>SUFFIX POWER:</strong> -ify, -ize, -en, -ate</p>",
+            "notes": "Bridge to grammar focus. Explain how suffixes change the part of speech."
+        },
+        {
             "layout": "split_table",
             "title": "THE VERB FACTORY",
-            "content": "<h3>VERB SUFFIXES (-ify, -ize, -en, -ate)</h3>\n<table style='width: 100%; font-size: 0.8em;'>\n    <thead><tr><th>Suffix</th><th>Example from Text</th></tr></thead>\n    <tbody>\n        <tr class='fragment'>\n            <td style='color: #FFD700;'>-ify</td>\n            <td>beautify, solidify</td>\n        </tr>\n        <tr class='fragment'>\n            <td style='color: #FFD700;'>-ize</td>\n            <td>moisturize, specialize</td>\n        </tr>\n        <tr class='fragment'>\n            <td style='color: #FFD700;'>-en</td>\n            <td>brighten, harden</td>\n        </tr>\n        <tr class='fragment'>\n            <td style='color: #FFD700;'>-ate</td>\n            <td>excavate, manipulate</td>\n        </tr>\n    </tbody>\n</table>",
+            "content": "<h3>OXFORD DISCOVER: EXERCISE 5 (P. 131)</h3>\n<table style='width: 100%; font-size: 0.8em;'>\n    <thead><tr><th>Suffix</th><th>Example from Text</th></tr></thead>\n    <tbody>\n        <tr>\n            <td style='color: #FFD700;'>-ify</td>\n            <td class='fragment'>beautify, solidify</td>\n        </tr>\n        <tr>\n            <td style='color: #FFD700;'>-ize</td>\n            <td class='fragment'>moisturize, specialize</td>\n        </tr>\n        <tr>\n            <td style='color: #FFD700;'>-en</td>\n            <td class='fragment'>brighten, harden</td>\n        </tr>\n        <tr>\n            <td style='color: #FFD700;'>-ate</td>\n            <td class='fragment'>excavate, manipulate</td>\n        </tr>\n        <tr><td colspan='2' style='text-align: center; padding-top: 20px;'>\n            <div class='timer-container'>\n                <div class='timer-display' id='timer-verb'>01:00</div>\n                <button class='timer-btn' onclick='toggleTimer(60, \"timer-verb\", this)'>START</button>\n            </div>\n        </td></tr>\n    </tbody>\n</table>",
             "notes": "Vocabulary focus on verb suffixes. Students categorize words from the text."
         },
         {
@@ -300,10 +306,18 @@
             "background_gradient": "radial-gradient(circle, #8B1538 0%, #000000 100%)"
         },
         {
+            "layout": "strategy",
+            "title": "SPEAKING STRATEGY",
+            "background_color": "#1E3A8A",
+            "icon": "fas fa-comments",
+            "content": "<p style='font-size: 1.2em; margin-bottom: 30px;'>Don't just say 'Yes' or 'No'. <strong>Build</strong> your answer!</p><div style='display: flex; flex-direction: column; gap: 15px; width: 80%; margin: 0 auto; font-size: 1em;'><div style='background: rgba(0,0,0,0.3); padding: 20px; border-radius: 8px; text-align: left; border-left: 5px solid #FFD700;'><i class='fas fa-comment-dots' style='color: #FFD700; width: 40px;'></i> <strong>1. OPINION:</strong> &quot;I think...&quot;</div><div style='background: rgba(0,0,0,0.3); padding: 20px; border-radius: 8px; text-align: left; border-left: 5px solid #FFD700;'><i class='fas fa-lightbulb' style='color: #FFD700; width: 40px;'></i> <strong>2. REASON:</strong> &quot;...because...&quot;</div><div style='background: rgba(0,0,0,0.3); padding: 20px; border-radius: 8px; text-align: left; border-left: 5px solid #FFD700;'><i class='fas fa-star' style='color: #FFD700; width: 40px;'></i> <strong>3. EXAMPLE:</strong> &quot;For example...&quot;</div></div>",
+            "notes": "Teach the O-R-E structure (Opinion, Reason, Example) to help students expand their answers."
+        },
+        {
             "layout": "split_table",
             "title": "VALUE & VIRTUE",
             "image": "images/resources.jpg",
-            "content": "<h3>TALKING POINTS:</h3>\n<table style='width: 100%; border-collapse: separate; border-spacing: 0 15px; font-size: 0.9em;'>\n    <tbody>\n        <tr class='fragment'><td style='width: 30px; color: #FFD700;'><i class='fas fa-question-circle'></i></td><td>Is gold necessary for our lives? Why?</td></tr>\n        <tr class='fragment'><td style='width: 30px; color: #FFD700;'><i class='fas fa-gears'></i></td><td>What factors make resources valuable?</td></tr>\n        <tr class='fragment'><td style='width: 30px; color: #FFD700;'><i class='fas fa-scale-balanced'></i></td><td>Do we value any resources too much or too little?</td></tr>\n    </tbody>\n</table>",
+            "content": "<h3>TALKING POINTS:</h3>\n<table style='width: 100%; border-collapse: separate; border-spacing: 0 15px; font-size: 0.9em;'>\n    <tbody>\n        <tr><td style='width: 30px; color: #FFD700;'><i class='fas fa-question-circle'></i></td><td>Is gold necessary for our lives? Why?</td></tr>\n        <tr><td style='width: 30px; color: #FFD700;'><i class='fas fa-gears'></i></td><td>What factors make resources valuable?</td></tr>\n        <tr><td style='width: 30px; color: #FFD700;'><i class='fas fa-scale-balanced'></i></td><td>Do we value any resources too much or too little?</td></tr>\n    </tbody>\n</table>",
             "notes": "Personalization. Final discussion."
         }
     ]
