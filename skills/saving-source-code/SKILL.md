@@ -31,13 +31,14 @@ git remote add source https://github.com/elwrush/lesson-plan-agent.git
 Stage changes while aggressively filtering junk.
 
 ```powershell
-# 1. Unstage everything to start clean (optional but safer)
-# git reset
+# 0. Pre-Flight Sanitize (CRITICAL for GDrive)
+# Removes system files that may have been created by cloud sync, even in .git/
+Get-ChildItem -Path . -Recurse -Include desktop.ini,Thumbs.db,.DS_Store -Force -ErrorAction SilentlyContinue | Remove-Item -Force -ErrorAction SilentlyContinue
 
-# 2. Add everything
+# 1. Add everything
 git add .
 
-# 3. Explicitly unstage Forbidden Artifacts
+# 2. Explicitly unstage Forbidden Artifacts (Double Check)
 git reset dist/
 git reset **/desktop.ini
 ```
@@ -59,5 +60,5 @@ git push source main
 ## One-Liner (Fast Save)
 
 ```powershell
-git remote add source https://github.com/elwrush/lesson-plan-agent.git; git add .; git reset dist/ **/desktop.ini; git commit -m "chore: save work"; git push source main
+Get-ChildItem -Path . -Recurse -Include desktop.ini,Thumbs.db,.DS_Store -Force -ErrorAction SilentlyContinue | Remove-Item -Force -ErrorAction SilentlyContinue; git remote add source https://github.com/elwrush/lesson-plan-agent.git; git add .; git reset dist/ **/desktop.ini; git commit -m "chore: save work"; git push source main
 ```
