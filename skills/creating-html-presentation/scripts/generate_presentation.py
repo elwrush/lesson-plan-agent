@@ -14,17 +14,15 @@ def generate_presentation(json_path):
     skill_dir = os.path.dirname(script_dir)
     template_dir = os.path.join(skill_dir, 'templates')
     
-    # Locate project root (assuming script is in skills/creating-html-presentation/scripts)
-    # skill_dir = .../skills/creating-html-presentation
-    # dirname(skill_dir) = .../skills
-    # dirname(dirname(skill_dir)) = .../LESSONS AND SLIDESHOWS 2
+    # Locate project root
     project_root = os.path.dirname(os.path.dirname(skill_dir))
     
-    # Use the local cloned reveal.js repo as requested
-    reveal_source = os.path.join(project_root, 'temp_reveal_repo')
+    # Use the internal reveal.js library
+    reveal_source = os.path.join(project_root, 'lib', 'reveal')
     if not os.path.exists(reveal_source):
-        print(f"[ERROR] Local reveal.js clone not found at: {reveal_source}")
-        sys.exit(1)
+        # We don't necessarily NEED the source here for generation as it's a template builder,
+        # but we should log if the library we depend on for PREVIEW is missing.
+        print(f"[WARN] Internal reveal.js engine not found in {reveal_source}")
 
     # Target 'published' folder within the lesson directory
     lesson_dir = os.path.dirname(json_path)
@@ -83,7 +81,11 @@ def generate_presentation(json_path):
                 url += f"&end={end}"
             slide['video_url'] = url
         
-        # Ensure autoplay and looping for background videos as per request
+        # Ensure autoplay and looping for background videos
+        # MANDATE: Title slides always loop background videos automatically
+        if slide.get('layout') == 'title' and slide.get('video'):
+            slide['video_loop'] = True
+
         if 'video_url' in slide and slide['video_url'].endswith('.mp4'):
             # These will be used in data-background-video-* attributes
             slide['video_autoplay'] = True

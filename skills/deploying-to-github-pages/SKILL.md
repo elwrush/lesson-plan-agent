@@ -73,8 +73,14 @@ If approved, use the **One-Liner** below.
 
 ## One-Liner (Fast Deploy)
 
+**Windows cmd.exe compatible:**
 ```powershell
-node scripts/build_dist.js; python scripts/verify_links.py; git add dist/ -f; git commit -m "feat(deploy): aggregate presentations and engine" --no-verify; $sha = git subtree split --prefix dist main; git push origin "$sha`:gh-pages" --force
+node scripts/build_dist.js && python scripts/verify_links.py && git add dist/ -f && git commit -m "feat(deploy): update presentations" --no-verify && for /f %s in ('git subtree split --prefix dist main') do set sha=%s && git push origin "%s:gh-pages" --force
+```
+
+**PowerShell:**
+```powershell
+node scripts/build_dist.js; python scripts/verify_links.py; git add dist/ -f; git commit -m "feat(deploy): update presentations" --no-verify; $sha = git subtree split --prefix dist main; git push origin "$sha`:gh-pages" --force
 ```
 
 ## Troubleshooting

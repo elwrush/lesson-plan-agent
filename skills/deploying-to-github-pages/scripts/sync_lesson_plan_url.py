@@ -7,7 +7,7 @@ def sync_url(folder_name):
     inputs_dir = os.path.join(project_root, 'inputs', folder_name)
     
     if not os.path.exists(inputs_dir):
-        print(f"❌ Error: Folder '{folder_name}' not found in inputs/")
+        print(f"[ERROR] Folder '{folder_name}' not found in inputs/")
         return
 
     # Base URL for GitHub Pages
@@ -22,12 +22,13 @@ def sync_url(folder_name):
             typ_files.extend([os.path.join(path, f) for f in os.listdir(path) if f.endswith('.typ')])
     
     if not typ_files:
-        print(f"⚠️  No .typ files found for {folder_name}.")
+        print(f"[WARNING] No .typ files found for {folder_name}.")
         return
 
     pattern = re.compile(r'#slideshow_link\(".*?"\)')
     replacement = f'#slideshow_link("{base_url}")'
     
+    updated_count = 0
     for typ_file in typ_files:
         with open(typ_file, 'r', encoding='utf-8') as f:
             content = f.read()
@@ -37,13 +38,17 @@ def sync_url(folder_name):
             if new_content != content:
                 with open(typ_file, 'w', encoding='utf-8') as f:
                     f.write(new_content)
-                print(f"✅ Updated URL in: {os.path.relpath(typ_file, project_root)}")
+                print(f"[OK] Updated URL in: {os.path.relpath(typ_file, project_root)}")
+                updated_count += 1
             else:
-                print(f"ℹ️  URL already up to date in: {os.path.relpath(typ_file, project_root)}")
+                print(f"[SKIP] URL already up to date in: {os.path.relpath(typ_file, project_root)}")
         else:
             # If no link exists, we might want to add it, but for now we follow the mandate 
             # to only update existing ones to avoid breaking formatting.
-            print(f"ℹ️  No #slideshow_link found in: {os.path.relpath(typ_file, project_root)}")
+            print(f"[INFO] No #slideshow_link found in: {os.path.relpath(typ_file, project_root)}")
+    
+    if updated_count > 0:
+        print(f"[SUCCESS] Updated {updated_count} lesson plan(s)")
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:

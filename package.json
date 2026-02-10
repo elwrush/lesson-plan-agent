@@ -4,10 +4,21 @@
   "description": "AI-powered lesson planning assistant for English language teachers, built with Google Gemini and the Skills-based architecture.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js",
+    "dev": "node server.js",
+    "server": "node server.js",
+    "server:watch": "nodemon server.js",
+    "server:bg": "start node server.js",
+    "dev:external": "set HOST=0.0.0.0&& node server.js",
+    "build": "node scripts/build_dist.js",
+    "preview": "npm run build && npm start"
   },
   "keywords": [],
   "dependencies": {
-    "reveal.js": "^5.2.1"
+    "reveal.js": "^5.2.1",
+    "serve-handler": "^6.1.6"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.0"
   }
 }

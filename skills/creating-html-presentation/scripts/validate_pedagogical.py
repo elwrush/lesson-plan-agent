@@ -14,8 +14,12 @@ Usage:
 import argparse
 import os
 import sys
+import io
 from bs4 import BeautifulSoup
 import re
+
+# Fix Windows console encoding
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
 
 def load_visual_plan(plan_path):
     """Parse visual-plan.md and extract expected slide structure."""

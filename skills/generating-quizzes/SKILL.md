@@ -11,50 +11,44 @@ This skill automates the creation of high-quality, pedagogically sound assessmen
 
 ```mermaid
 graph TD
-    A[Discovery: Ingest Text/Transcript] --> B[Stage 1: Identify Assessment Anchors]
-    B --> C[Linguistic Alignment: CEFR Profiling]
-    C --> D[Stage 2: Balanced Randomized Answer Key]
-    D --> E[Generate Pre-determined Options Order]
-    E --> F[Stage 3: Bloom's Alignment & Generation]
-    F --> G[Map Concepts to Keyed Options]
-    G --> H[Stage 4: Validation Script]
-    H --> I{Valid JSON?}
-    I -- No --> F
-    I -- Yes --> J[Stage 5: Agent Self-Critique]
-    J --> K{Metrics Pass?}
-    K -- No: Easy/Obvious --> F
-    K -- Yes --> L[Human Subjective Validation]
-    L --> M[Final Quiz JSON in published/]
+    A[Discovery: Ingest Text/Transcript] --> B[Phase 1: Cognitive Planning]
+    B --> C{User Confirmation?}
+    C -- No --> B
+    C -- Yes --> D[Phase 2: Answer Key & Generation]
+    D --> E[Phase 3: Validation & Variety Check]
+    E --> F{Passes Validator?}
+    F -- No --> D
+    F -- Yes --> G[Final Quiz JSON]
 ```
 
-1.  **Define Parameters**:
-    -   **Source Content**: Reading text or Listening transcript.
-    -   **CEFR Level**: Target difficulty (A1-C2).
-    -   **Question Types**: Choose from the 12 types in [REFERENCE.md](file:///c:/PROJECTS/LESSONS%20AND%20SLIDESHOWS%202/skills/generating-quizzes/REFERENCE.md).
-    -   **Bloom's Levels**: Specify target cognitive levels (e.g., "Understanding", "Analyzing").
-    -   **CRITICAL INTERACTION**: The agent MUST present these options as an **enumerated menu** to the user to confirm the "Assessment Blueprint" before proceeding.
+### Phase 1: Cognitive Planning (MANDATORY)
+Before generating any questions, you must:
+1.  **Ask the User**: "What is the target Cognitive Level for this assessment? (e.g., Lower Order: Remembering/Understanding, or Higher Order: Analyzing/Evaluating)"
+2.  **Propose a Plan**: Based on the user's input, select 3-4 distinct question types from the `REFERENCE.md` list.
+    *   *Lower Order Focus*: multiple-choice, matching, gapfill, true/false.
+    *   *Higher Order Focus*: inference, reordering, error-correction, antecedent.
+3.  **Present the Plan**:
+    ```text
+    Proposed Assessment Plan:
+    1. Task 1: [Type] (Targeting: [Bloom's Level])
+    2. Task 2: [Type] (Targeting: [Bloom's Level])
+    3. Task 3: [Type] (Targeting: [Bloom's Level])
+    
+    Do you approve this structure? (Y/N)
+    ```
+4.  **Wait for Confirmation**: Do not proceed to generation until the user approves.
 
-2.  **Generate Answer Key**:
-    -   **CRITICAL**: Generate a randomized sequence of correct answer positions (e.g., [1, 0, 3, 2...]) *before* generating the questions. 
-    -   **Randomization Rule**: You MUST ensure a balanced distribution of answers (A, B, C, D) across the quiz. For a 6-item quiz, each option (0-3) should ideally appear at least once. Do NOT allow more than 2 consecutive identical answers.
+### Phase 2: Generation
+1.  **Generate Answer Key**: Run `python skills/generating-quizzes/scripts/generate_answer_key.py [num_mcq_questions]` to create a balanced key for any multiple-choice sections.
+2.  **Draft Questions**: Generate the content following the approved plan. Ensure every question is grounded in an "Assessment Anchor" from the text.
+3.  **Variety Constraint**: The quiz MUST contain at least one task type *other than* `mcq` or `boolean`.
 
-3.  **Generate Content**:
-    -   Apply the multi-stage prompt series in [REFERENCE.md](file:///c:/PROJECTS/LESSONS%20AND%20SLIDESHOWS%202/skills/generating-quizzes/REFERENCE.md).
-    -   Match the correct answer for each question to the pre-generated Answer Key position.
-    -   **Constraint**: Every question must be grounded in an "Assessment Anchor" from the text.
+### Phase 3: Validation
+1.  **Run Validator**: `python skills/generating-quizzes/scripts/validate_quiz.py [path_to_json]`
+    *   *Note*: The validator will fail if the quiz is purely MCQ/True-False.
+2.  **Check Distribution**: `python skills/generating-quizzes/scripts/verify_distribution.py [path_to_json]` (for MCQ sections).
 
-4.  **Validate Structure**:
-    -   Run `python skills/generating-quizzes/scripts/validate_quiz.py [path_to_json]`.
-    -   **Published Storage**: The final, validated quiz JSON MUST be saved to the `inputs/[folder]/published/` subfolder.
-    -   **Requirements**: Exactly 4 choices for MCQs, 0-indexed answers, and pedagogical explanations.
-
-5.  **Human Subjective Validation & Agent Self-Critique**:
-    -   Perform a final quality check as a "human validator." 
-    -   **MANDATORY Agent Critique**: You MUST specifically answer the following three questions for the generated quiz:
-        1.  **Is the quiz too easy or difficult?** (Does it match the CEFR level?)
-        2.  **Are the answers obvious?** (Can they be guessed without reading the text?)
-        3.  **Do the distractors need to be improved?** (Are they plausible but clearly wrong?)
-    -   **Rewrite Rule**: If the answer to any of the above is "Yes" (meaning the quiz fails the metric), you MUST rewrite the affected questions and repeat the validation until it passes.
+## Design Standards
 
 ## Design Standards
 

@@ -36,18 +36,29 @@ async function emptyDir(dir) {
 async function build() {
     const projectRoot = process.cwd();
     const distRoot = path.join(projectRoot, 'dist');
-    const tempRepo = path.join(projectRoot, 'temp_reveal_repo');
+    const engineRoot = path.join(projectRoot, 'node_modules', 'reveal.js');
     const inputsDir = path.join(projectRoot, 'inputs');
 
-    console.log('🚀 Starting build process...');
+    const targetFolder = process.argv[2]; // Target a specific folder if provided
+
+    console.log(`🚀 Starting ${targetFolder ? 'targeted' : 'full'} build process...`);
 
     // 1. Clean dist directory
     try {
-        if (fs.existsSync(distRoot)) {
-            await emptyDir(distRoot);
-            console.log('🧹 Cleaned dist directory.');
+        if (!targetFolder) {
+            if (fs.existsSync(distRoot)) {
+                await emptyDir(distRoot);
+                console.log('🧹 Cleaned dist directory (Full Build).');
+            } else {
+                await fsPromises.mkdir(distRoot, { recursive: true });
+            }
         } else {
-            await fsPromises.mkdir(distRoot, { recursive: true });
+            const targetDist = path.join(distRoot, targetFolder);
+            if (fs.existsSync(targetDist)) {
+                await fsPromises.rm(targetDist, { recursive: true, force: true });
+                console.log(`🧹 Cleaned target dist: ${targetFolder}`);
+            }
+            await fsPromises.mkdir(targetDist, { recursive: true });
         }
     } catch (err) {
         console.error('❌ Error cleaning dist:', err);
@@ -57,13 +68,13 @@ async function build() {
     console.log('📦 Copying shared Reveal.js engine...');
     const engineFolders = ['dist', 'plugin', 'css'];
     for (const folder of engineFolders) {
-        const src = path.join(tempRepo, folder);
+        const src = path.join(engineRoot, folder);
         const dest = path.join(distRoot, folder);
         if (fs.existsSync(src)) {
             await copyDir(src, dest, (srcPath) => !srcPath.includes('desktop.ini') && !srcPath.includes('.git'));
             console.log(`   ✅ Copied ${folder}/`);
         } else {
-            console.warn(`   ⚠️  Warning: ${folder} not found in ${tempRepo}`);
+            console.warn(`   ⚠️  Warning: ${folder} not found in ${engineRoot}`);
         }
     }
 
@@ -79,10 +90,17 @@ async function build() {
     // 3. Aggregate Presentations
     console.log('📂 Aggregating presentations from inputs/...');
     const lessons = [];
-    const folders = await fsPromises.readdir(inputsDir);
+    
+    // If targeted, only look at that folder. Otherwise, look at all.
+    const folders = targetFolder ? [targetFolder] : await fsPromises.readdir(inputsDir);
 
     for (const folder of folders) {
         const lessonPath = path.join(inputsDir, folder);
+        if (!fs.existsSync(lessonPath)) {
+            console.warn(`   ⚠️  Warning: Lesson folder not found: ${folder}`);
+            continue;
+        }
+        
         const stat = await fsPromises.stat(lessonPath);
         if (!stat.isDirectory()) continue;
 
@@ -101,12 +119,8 @@ async function build() {
 
             // --- PATH FIXING LOGIC ---
             // Ensure assets reference the shared root engine at ../dist/ and ../plugin/
-            // Match href="dist/ or src="dist/ or href='dist/ or src='dist/
             content = content.replace(/(href|src)=["']dist\//g, '$1="../dist/');
             content = content.replace(/(href|src)=["']plugin\//g, '$1="../plugin/');
-            
-            // Also handle any absolute-style paths that might have been accidentally used
-            // e.g. /dist/ or /plugin/ should also point to ../
             content = content.replace(/(href|src)=["']\/dist\//g, '$1="../dist/');
             content = content.replace(/(href|src)=["']\/plugin\//g, '$1="../plugin/');
 
@@ -116,22 +130,43 @@ async function build() {
                 const srcAsset = path.join(presentationSrc, assetFolder);
                 const destAsset = path.join(destLessonDir, assetFolder);
                 if (fs.existsSync(srcAsset)) {
-                    await copyDir(srcAsset, destAsset, (srcPath) => !srcPath.includes('desktop.ini'));
+                    await copyDir(srcAsset, destAsset, (srcPath) => {
+                        if (srcPath.includes('desktop.ini') || srcPath.includes('.git')) return false;
+                        const ext = path.extname(srcPath).toLowerCase();
+                        if (['.mp4', '.webm', '.mov', '.avi'].includes(ext)) return false;
+                        try {
+                            const stats = fs.statSync(srcPath);
+                            if (stats.isFile() && stats.size > 1024 * 1024) return false;
+                        } catch (e) { return false; }
+                        return true;
+                    });
                 }
             }
 
             const titleMatch = content.match(/<title>(.*?)<\/title>/);
             const title = titleMatch ? titleMatch[1] : folder;
+            lessons.push({ folder: folder, title: title });
+        }
+    }
 
-            lessons.push({
+    // 4. Generate/Update Dashboard
+    // In a targeted build, we should ideally read the existing dist folders to keep the dashboard full
+    console.log('📊 Updating dashboard...');
+    const allDistFolders = await fsPromises.readdir(distRoot);
+    const dashboardLessons = [];
+    
+    for (const folder of allDistFolders) {
+        const lessonIndex = path.join(distRoot, folder, 'index.html');
+        if (fs.existsSync(lessonIndex) && folder !== 'dist' && folder !== 'plugin' && folder !== 'css' && folder !== 'images') {
+            const content = await fsPromises.readFile(lessonIndex, 'utf-8');
+            const titleMatch = content.match(/<title>(.*?)<\/title>/);
+            dashboardLessons.push({
                 folder: folder,
-                title: title
+                title: titleMatch ? titleMatch[1] : folder
             });
         }
     }
 
-    // 4. Generate Dashboard
-    console.log('📊 Generating dashboard...');
     const dashboardHtml = `
 <!DOCTYPE html>
 <html lang="en">
@@ -152,7 +187,7 @@ async function build() {
 <body>
     <h1>📚 Presentations Library</h1>
     <div class="grid">
-        ${lessons.map(l => `
+        ${dashboardLessons.map(l => `
             <a href="${l.folder}/" class="card">
                 <h3>${l.title}</h3>
                 <p>${l.folder}</p>
@@ -164,7 +199,7 @@ async function build() {
     `;
     await fsPromises.writeFile(path.join(distRoot, 'index.html'), dashboardHtml);
 
-    console.log('🏁 Build complete! Ready for deployment.');
+    console.log(`🏁 ${targetFolder ? 'Targeted' : 'Full'} build complete!`);
 }
 
 build().catch(err => {

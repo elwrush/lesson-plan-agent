@@ -91,6 +91,14 @@ Before writing any code, you MUST verify the environment:
   - NEVER change punctuation or tone.
   - If content is too long for the page, **find a layout solution** (columns, smaller standard font 12pt, or natural overflow). DO NOT edit the text.
 - **Linguistic Alignment**: Follow the **[B1 Profile](B1-LINGUISTIC-PROFILE.md)** or **[B2 Profile](B2-LINGUISTIC-PROFILE.md)**.
+- **Rule: Paragraph Numbering**: **MANDATORY**. 
+  - All reading texts MUST have numbered paragraphs to facilitate classroom reference.
+  - Prefix every paragraph with a bold, maroon number: `#text(fill: maroon, weight: "bold")[[1]]`.
+  - Do NOT use automatic CSS counters; hardcode the numbers in the Typst file for stability.
+- **Rule: Multiple Choice Formatting**: **MANDATORY**. 
+  - NEVER use run-on lines for choices (e.g., `A. One B. Two`).
+  - Use a nested `#enum(numbering: "A.", ..)` for vertical choices (one per line).
+  - Use a 2-column `#grid(columns: (1fr, 1fr), ...)` if choices are very short (e.g., single words, dates) and space is a concern.
 - **Rule: Single-Column & Natural Flow (Starting State)**: **MANDATORY**. 
   - ALWAYS start the first draft with a **single-column layout** for all materials.
   - ALWAYS allow content to **flow naturally across pages**. 
@@ -103,7 +111,7 @@ For detailed typography, spacing, and branding standards, refer to **[styling.md
 ### Step 6: Rendering & Validation
 1. **Compile**:
    ```powershell
-   typst compile "path/to/source.typ" "inputs/[folder]/published/DD-MM-YYYY-[LEVEL]-[TITLE].pdf" --root "."
+   typst compile "inputs/[folder]/[filename].typ" "inputs/[folder]/published/DD-MM-YYYY-[LEVEL]-[TITLE].pdf" --root "."
    ```
    - **Naming Rule**: **NEVER** add version suffixes (e.g., `-v1`, `-v2`) to the PDF filename. 
    - **Overwrite Mandate**: ALWAYS overwrite the original target PDF to provide a single, consistent link for user review.
@@ -113,12 +121,24 @@ For detailed typography, spacing, and branding standards, refer to **[styling.md
    python scripts/validate_text.py "path/to/source.typ"
    ```
 
-### Step 7: 🏁 THE LINK GATE
+### Step 7: Typst Debugging & Resilience
+If compilation fails:
+1.  **Extract Error**: Identify the specific delimiter or syntax error from the Typst output.
+2.  **Codebase Search**: Search `C:\PROJECTS\WRITING-ASSESSMENT\temp_typst_repo\` for the error message or related syntax tests.
+3.  **Pattern Match**: Find how the Typst compiler expects that specific structure to be formatted.
+4.  **Resolve**: Apply the verified syntax to the `.typ` file.
+    *   *Common Fix*: For parentheses in lists causing "unclosed delimiter" errors (e.g., `#gap ( ___ )`), use the text function: `#gap #text("(___)")`. This isolates the delimiters from the parser.
+5.  **Documentation**: Add the fix pattern to `references/styling.md` or this skill.
+
+### Step 8: 🏁 THE LINK GATE
 > [!CRITICAL]
 > **YOU MUST PROVIDE A CLICKABLE LINK TO THE PDF.**
 > Post the link using the `file:///` protocol. Do NOT proceed until the user approves the visual output.
 
 ---
+
+## Programmatic Hooks
+- `scripts/resolve_typst_error.py`: (Development Pending) A script to automate searching the Typst codebase for error patterns.
 
 ## Reference Material
 - **Skill Architecture Standard**: `C:\PROJECTS\LESSONS AND SLIDESHOWS 2\knowledge_base\using-skills.md` (MUST follow for all skill updates).

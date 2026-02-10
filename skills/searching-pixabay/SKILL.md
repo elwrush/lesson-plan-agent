@@ -28,20 +28,19 @@ Raw video files are **NEVER** allowed in the `inputs/` folder. You must process 
 
 ## Workflow
 
-### Step 1: Search
-Use `google_web_search` to find Pixabay assets if API is not available, or browse manually.
-> "site:pixabay.com video beach waves"
+### Step 1: Automated Download (Video)
+Use the python script to search and download videos by query or ID.
+```bash
+python skills/searching-pixabay/scripts/download_video.py --query "search terms" --output "images/raw_video.mp4"
+```
 
-### Step 2: Selection
-Identify the download URL for the **1280x720 (720p)** version. 
+### Step 2: Mandatory Processing
+**IMMEDIATELY** process the raw video to enforce size/duration limits (7s, Mute, 720p).
+```bash
+python skills/searching-pixabay/scripts/process_video.py "images/raw_video.mp4" "images/final_video_7s.mp4"
+```
+*Note: The script automatically deletes the raw file upon success.*
 
-### Step 3: Download & Process
-1.  Download the raw file to a temporary location (e.g., `temp/raw_video.mp4`).
-2.  **IMMEDIATELY** run the processor:
-    ```bash
-    python skills/searching-pixabay/scripts/process_video.py temp/raw_video.mp4 inputs/[Lesson]/images/final_video.mp4
-    ```
-3.  The script will automatically delete the raw "monster" file upon success.
-
-### Step 4: Attribution
-Create a `[filename]_attribution.txt` file next to the asset containing the Pixabay user and URL.
+### Step 3: Deployment
+- Move the final processed video to `inputs/[Lesson]/images/` (if < 1MB) or root `images/` (if > 1MB).
+- Update `presentation.json` with the correct path.

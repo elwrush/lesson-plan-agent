@@ -2,6 +2,7 @@ import json
 import argparse
 import sys
 import os
+from difflib import SequenceMatcher
 
 VALID_TYPES = [
     "antecedent", "mcq", "boolean", "vocab", "inference", 
@@ -10,6 +11,11 @@ VALID_TYPES = [
 ]
 
 BLOOM_LEVELS = ["Remembering", "Understanding", "Applying", "Analyzing", "Evaluating", "Creating"]
+
+def check_echoing(text1, text2):
+    if not text1 or not text2:
+        return 0.0
+    return SequenceMatcher(None, text1, text2).ratio()
 
 def validate_quiz(file_path):
     if not os.path.exists(file_path):
@@ -36,6 +42,8 @@ def validate_quiz(file_path):
             print(f"{t_prefix}Invalid or missing 'task_type'. Must be one of {VALID_TYPES}")
             success = False
             continue
+        
+        t_type = task["task_type"]
 
         if "instructions" not in task:
             print(f"{t_prefix}Missing 'instructions'.")
@@ -67,8 +75,24 @@ def validate_quiz(file_path):
                 print(f"{q_prefix}Missing 'anchor_text'.")
                 success = False
 
+            # Echoing Check
+            if "anchor_text" in q:
+                anchor = q["anchor_text"]
+                query_sim = check_echoing(anchor, q["query"])
+                if query_sim > 0.85:
+                    print(f"{q_prefix}Warning: High similarity ({query_sim:.2f}) between Query and Anchor Text. Potential direct echo.")
+                
+                # Check correct answer similarity (for MCQs)
+                if t_type in ["mcq", "vocab", "inference"] and isinstance(q.get("answer"), int):
+                    try:
+                        correct_text = q["choices"][q["answer"]]
+                        ans_sim = check_echoing(anchor, correct_text)
+                        if ans_sim > 0.85:
+                            print(f"{q_prefix}Warning: High similarity ({ans_sim:.2f}) between Correct Answer and Anchor Text. Potential direct echo.")
+                    except IndexError:
+                        pass # Validated elsewhere
+
             # Type-specific validation
-            t_type = task["task_type"]
             
             if t_type in ["mcq", "vocab", "inference"]:
                 if "choices" not in q or not isinstance(q["choices"], list) or len(q["choices"]) != 4:
@@ -105,6 +129,26 @@ def validate_quiz(file_path):
                 if not isinstance(q.get("answer"), list):
                     print(f"{q_prefix}'answer' must be a list of indices.")
                     success = False
+        
+        # Validate Answer Distribution (MCQ-like tasks only)
+        if t_type in ["mcq", "vocab", "inference"] and len(task["questions"]) >= 4:
+            answers = [q.get("answer") for q in task["questions"] if isinstance(q.get("answer"), int)]
+            unique_answers = set(answers)
+            required_set = {0, 1, 2, 3}
+            if not required_set.issubset(unique_answers):
+                missing = required_set - unique_answers
+                print(f"{t_prefix}Warning: Unbalanced Answer Key. Missing answer choices: {missing}")
+                # Ideally this should fail validation if strictly enforced, but let's warn for now
+                # Or make it strict based on user request:
+                success = False
+
+    # Validate Task Variety
+    task_types = {t["task_type"] for t in data["tasks"]}
+    basic_types = {"mcq", "boolean"}
+    
+    if task_types.issubset(basic_types):
+        print("Error: Quiz lacks variety. It must contain at least one task type other than MCQ or Boolean (e.g., matching, reordering, gapfill, inference).")
+        success = False
 
     if success:
         print(f"Success: {file_path} passed universal validation.")

@@ -1,6 +1,6 @@
 ---
-description: Extracts text from images and PDFs using Gemini's multimodal vision.
+description: Phase 1 of the Robust Pipeline - Extracting verbatim content.
 ---
-# Read Content Workflow
 
-1. Activate [reading-visual-content/SKILL.md](file:///c:/PROJECTS/LESSONS%20AND%20SLIDESHOWS%202/skills/reading-visual-content/SKILL.md)
+1. **EXECUTE**: Follow Phase 1 of `.agent/workflows/agentic-flow.md`.
+2. **GOAL**: Create a `content_checklist.md` that captures 100% of the source material.

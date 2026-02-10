@@ -1,6 +1,6 @@
 ---
-description: Consolidating pedagogical design and professional worksheet production.
+description: The complete end-to-end production of educational materials.
 ---
-# Produce Educational Materials Workflow
 
-1. Activate [producing-educational-materials/SKILL.md](file:///c:/PROJECTS/LESSONS%20AND%20SLIDESHOWS%202/skills/producing-educational-materials/SKILL.md)
+1. **EXECUTE**: Follow the complete 5-Phase Pipeline in `.agent/workflows/agentic-flow.md`.
+2. **MANDATE**: Secure every gate (Source, LP, Visual, Asset) sequentially.

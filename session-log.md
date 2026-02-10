@@ -1,3 +1,35 @@
+---
+
+## 2026-02-09 | Architectural Migration & Standalone Portability
+
+### Pending Task: GitHub Repository Architecture Overhaul
+- **Issue**: Current structure conflates the "Live Site" (GitHub Pages) with the "Source Code" (Skills, Scripts, Templates).
+- **Problem**: Skills and internal engineering assets are currently repoed alongside or within the deployment pipeline, creating a "Mixed Repo" conflict.
+- **Goal**: Decouple the **Source Engine** (Internal) from the **Hosted Presentations** (Public).
+
+### Key Achievement: "Zero-Dependency" Standalone Factory
+- **Problem**: Persistent `npm` corruption and "Permission Denied" errors on synced (G:) cloud drives, combined with a fragile Node.js-based build/serve process.
+- **Solution**: Completely decoupled the project from the Node.js ecosystem.
+  1. **Internalized Engine**: Moved the Reveal.js core (`dist/`, `plugin/`, `css/`) from `node_modules` to a permanent `lib/reveal` folder.
+  2. **Python Build System**: Replaced `build_dist.js` with `build.py`, a robust Python script that handles directory cleaning, asset copying, and path patching with high reliability on cloud drives.
+  3. **Caddy Integration**: Adopted **Caddy** as the production-grade static file server.
+- **Result**: The project is now 100% portable and "cold-start" ready without ever needing `npm install`.
+
+### Technical Refinements
+- **Automation (Fast Edit)**: Enhanced `scripts/fast_edit.py` to:
+  - Use `build.py` for targeted builds.
+  - Automatically open the browser via the `--open` flag.
+  - Call a new `.gemini/hooks/ensure-server.py` hook to verify the server is active before building.
+- **Visibility**: Created `run_server.bat` to launch Caddy in a visible terminal window, providing an immediate "heartbeat" and error log for the teacher.
+- **Resilience**: Switched to port **8000** and bound to `127.0.0.1` explicitly to bypass Windows firewall/proxy issues.
+
+### Decommissioning
+- **Deleted**: `node_modules/`, `server.js`, `server_output.txt`, and `serve.py` (legacy).
+- **Housekeeping**: Sanitized `generate_presentation.py` to remove legacy `node_modules` checks.
+
+### Workflow Upgrade: "The Robust Gate"
+- **Mandate**: Established the **5-Phase Pipeline** (Ingestion -> Plan -> Visuals -> Assets -> Code) to eliminate hallucinations.
+- **Standard**: Updated `AGENTS.md` and `SKILL.md` to mandate the new Python/Caddy workflow.
 
 ---
 
@@ -322,7 +354,7 @@
 - **Strict Verification**: Mandated a manual check of `images/brain_alarm.png` existence within the build script before allowing the push.
 
 ### Status:
--   **RESOLVED**: See 2026-01-18 (Morning) below.
+-   **RESOLVED**: See 2026-02-09 (Morning) below.
 
 ---
 
@@ -778,3 +810,11 @@ Development of the **"Pro" Worksheet Template** for the Bondi Beach Attack lesso
 - **Presentation Live**: `https://elwrush.github.io/actions-gh-pages/05-02-2026-Gold-Infographic-B1/`
 - **Dashboard Live**: `https://elwrush.github.io/actions-gh-pages/`
 - **Codebase**: Audited, cleaned of duplicates, and enforcing strict hygiene via pre-commit hooks.
+
+## 2026-02-09 | Workflow Optimization Strategy
+
+### Key Decision: Transition to Gated 'Robust' Workflow
+- **Problem**: Persistent hallucinations and dropped content during the 'Code-First' or 'Roadmap-First' processes.
+- **Solution**: Formulated an **Ideal Workflow** that separates Ingestion, Pedagogical Planning, Visual Mapping, and Code Assembly into distinct phases separated by **Human-in-the-Loop (HITL) Gates**.
+- **Status**: Details saved to update.md. Future lessons should be built using this multi-stage validation pipeline to ensure 100% verbatim accuracy and pedagogical 'intelligence'.
+- **Next Step**: Create or update skills to enforce these Gates (Source Gate, Pedagogical Gate, Structural Gate).

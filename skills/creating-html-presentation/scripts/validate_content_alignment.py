@@ -116,13 +116,30 @@ def validate_alignment(json_path):
     base_dir = os.path.dirname(json_path)
     
     # Find .typ file
-    typ_files = [f for f in os.listdir(base_dir) if f.endswith('.typ') and ('bell' in f or 'intensive' in f)]
-    if not typ_files:
+    typ_files = [f for f in os.listdir(base_dir) if f.endswith('.typ')]
+    
+    # Prioritize based on naming convention
+    target_typ = None
+    for f in typ_files:
+        if f.startswith('202') and 'Reading' in f: # New convention heuristic
+            target_typ = f
+            break
+    
+    if not target_typ and typ_files:
+        # Fallback to legacy
+        for f in typ_files:
+            if 'bell' in f or 'intensive' in f:
+                target_typ = f
+                break
+        if not target_typ:
+            target_typ = typ_files[0] # Fallback to first found
+
+    if not target_typ:
         print("⚠️ No .typ file found to validate against.")
         return True # Soft pass
         
-    typ_path = os.path.join(base_dir, typ_files[0]) # Use the first one found
-    print(f"   Using source: {typ_files[0]}")
+    typ_path = os.path.join(base_dir, target_typ)
+    print(f"   Using source: {target_typ}")
     
     typ_tasks = extract_typ_tasks(typ_path)
     json_text_blob = normalize_text(extract_json_content(json_path))

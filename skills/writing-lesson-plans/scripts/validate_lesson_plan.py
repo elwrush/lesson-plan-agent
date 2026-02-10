@@ -113,8 +113,18 @@ class LessonPlanValidator:
     def _check_preteach_vocabulary(self):
         """Verify pre-teach vocabulary stage for receptive skills shapes."""
         shape = self.metadata.get('shape', '')
-        if shape in ['E', 'G', 'H']:
-            # Expanded keywords to include 'language' and 'preparation' which are common in Productive skills
+        if shape == 'E':
+            # Strict check for Shape E: Exactly 5 items
+            vocab_stage = next((s for s in self.stages if any(kw in s['name'].lower() for kw in ["pre-teach", "vocabulary", "language"])), None)
+            if not vocab_stage:
+                self.errors.append("[ERROR] Shape E requires a Pre-teach Vocabulary stage.")
+            else:
+                # Count items like 1. word, 2. word or *word*
+                # Looking for numbered lists or bulleted lists in the procedure
+                items = re.findall(r'(\d+\.\s+\*.*?\*|[-*]\s+\*.*?\*)', vocab_stage['procedure'])
+                if len(items) != 5:
+                    self.errors.append(f"[ERROR] Shape E requires EXACTLY 5 vocabulary items. Found {len(items)}.")
+        elif shape in ['G', 'H']:
             has_vocab = any(kw in s['name'].lower() for s in self.stages for kw in ["pre-teach", "vocabulary", "language", "preparation"])
             if not has_vocab:
                 self.errors.append(f"[ERROR] Shape {shape} requires a Pre-teach Vocabulary or Language Preparation stage.")
