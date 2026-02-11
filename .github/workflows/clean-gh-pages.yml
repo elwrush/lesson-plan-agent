@@ -1,0 +1,42 @@
+name: Clean gh-pages
+
+on:
+  push:
+    branches:
+      - gh-pages
+
+jobs:
+  remove-desktop-ini:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout gh-pages
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+
+      - name: Remove desktop.ini and Thumbs.db files
+        run: |
+          FOUND=$(find . -name "desktop.ini" -o -name "Thumbs.db" | head -50)
+          if [ -n "$FOUND" ]; then
+            echo "Found Windows artifacts to remove:"
+            echo "$FOUND"
+            find . -name "desktop.ini" -delete
+            find . -name "Thumbs.db" -delete
+          else
+            echo "No Windows artifacts found. Clean!"
+            exit 0
+          fi
+
+      - name: Commit cleanup
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "Nothing to commit"
+          else
+            git commit -m "chore: auto-remove desktop.ini/Thumbs.db"
+            git push
+          fi
