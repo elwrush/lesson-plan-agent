@@ -34,7 +34,7 @@
   - Explicit pixel heights for rows (`500px`).
   - Strict `max-height: 400px` for all media.
   - Floating "Cyber Pill" header (`absolute`, `z-index: 10`) to remove layout impact.
-  - **Result**: Perfect deployment on Cloudflare (Desktop & Mobile).
+  - **Result**: Perfect deployment (Desktop & Mobile).
 
 ### Workflow Pivot: The "Visual First" Standard
 - **Change**: Moved from "Code-First" (writing HTML directly) to a **5-Step Gated Workflow**.
@@ -240,7 +240,7 @@
 
 
 ### 2026-01-18: Presentation Deployment Troubleshooting
-- **Issue**: "Global Logistics" presentation deployment failed to load external `slide-components.js` due to path resolution errors and Cloudflare MIME type mismatches (returning 404 HTML for JS files).
+- **Issue**: "Global Logistics" presentation deployment failed to load external `slide-components.js` due to path resolution errors and MIME type mismatches (returning 404 HTML for JS files).
 - **Attempted Fixes**:
     - Corrected relative paths (`../skills/...`).
     - Moved script to root (`/js/slide-components.js`) and used absolute paths.
@@ -270,7 +270,7 @@
 - **Issue**: Deploying the "Fight or Flight" presentation consistently served a legacy "Sprinter" theme (Maroon/Yellow) instead of the approved "Red Alert" (Cyber/Red) version.
 - **Root Cause**: A perfect storm of **Path Collision** and **Cache Persistence**.
   -   The deployment pipeline was building from `presentations/18-01-26_Fight-or-Flight/`, which contained an older project version.
-  -   Even after local `dist/` updates, Cloudflare Pages continued to serve the cached athlete visual.
+  -   Even after local `dist/` updates, The hosting service continued to serve the cached athlete visual.
   -   Agent confusion: Multiple copies of `index.html` existed in `inputs/`, `presentations/`, and the root, leading to "Whack-a-Mole" updates where the wrong source was repeatedly promoted.
 
 ### Failed Interventions:
@@ -307,25 +307,11 @@
   - Lists available folders if no argument provided
   - Checks for required files before completing
 
-### Cloudflare API Token Setup
-- **Issue**: Wrangler OAuth failed in headless environment; existing token lacked Pages permissions.
-- **Solution**: Created new token with correct permissions:
-  - Permission: **Account > Cloudflare Pages > Edit**
-  - Account Resources: **Specific account** (not "All accounts")
-  - Stored in `CLOUDFLARE_SLIDESHOW_API` User environment variable
-
-### Deployment Projects
-| Project | URL | Method |
-|:---|:---|:---|
-| `lesson-slideshows` | lesson-slideshows.pages.dev | Direct Wrangler deploy |
-| `lesson-plan-agent` | lesson-plan-agent.pages.dev | Git-connected CI deploy |
-
 ### Skill Updates
 - **`hosting-presentations`**: Completely rewritten for direct Wrangler deployment with API token.
 - **`creating-html-presentation`**: Added mandatory co-location rule at top of SKILL.md.
 
 ### Live URLs
-- **Fight or Flight Slideshow**: https://lesson-slideshows.pages.dev
 - **Presentations Dashboard**: https://elwrush.github.io/actions-gh-pages/presentations/
 
 ---
