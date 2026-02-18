@@ -250,8 +250,8 @@
 - **Resolution**:
     - **Architecture**: Implemented a **"Whitelist Build Strategy"**.
     - **Script**: `scripts/build_dist.js` now builds a clean `dist/` folder containing *only* the specific presentation content and shared assets.
-    - **CI**: Configured `package.json` (`postinstall`) and `wrangler.jsonc` to deploy this clean `dist/` folder.
-- **Status**: **SUCCESS**. Presentation is live and fully functional at the worker URL.
+    - **CI**: Configured `package.json` (`postinstall`) to deploy this clean `dist/` folder.
+- **Status**: **SUCCESS**. Presentation is live and fully functional.
 
 ### 2026-01-18 (Continued): Worksheet Fixes
 - **Issue 1**: Intensive worksheets displayed legacy text strap instead of the mandatory `intensive-header.jpg`.
