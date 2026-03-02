@@ -1,0 +1,51 @@
+<section {% if slide.image %} data-background="{{ slide.image }}" data-background-opacity="0.4" {% endif %}
+    data-background-gradient="{{ slide.background_gradient | default('radial-gradient(circle, #004d00 0%, #000000 100%)' if not slide.image else '') }}"
+    data-auto-animate>
+
+    <div class="slide-canvas">
+        <div
+            style="display: flex; flex-direction: column; align-items: center; justify-content: flex-start; height: 100%; width: 100%; padding-top: 15px;">
+
+            <h1 data-id="task-title"
+                style="font-size: 1.8em; margin-bottom: 10px; line-height: 1.1; text-shadow: 2px 2px 4px black; color: #FFD700; width: 90%; text-align: left;">
+                {{ slide.title }}
+            </h1>
+
+            <div class="ranking-container" style="width: 92%; display: flex; flex-direction: column; gap: 8px;">
+                {% set pastels = ['rgba(100, 149, 237, 0.2)', 'rgba(144, 238, 144, 0.2)', 'rgba(255, 182, 193, 0.2)',
+                'rgba(255, 255, 186, 0.2)', 'rgba(221, 160, 221, 0.2)', 'rgba(175, 238, 238, 0.2)'] %}
+                {% for i in range(slide.right_items|length) %}
+                <div style="display: flex; gap: 10px; align-items: stretch; width: 100%;">
+
+                    <!-- Left: Number Badge -->
+                    <div data-id="indicator-{{ i }}"
+                        style="flex: 0 0 60px; background: rgba(0,0,0,0.6); border: 1px solid rgba(255,215,0,0.3); border-left: 4px solid var(--accent); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.3em; color: var(--accent); text-shadow: 1px 1px 2px black;">
+                        {{ slide.left_items[i] }}
+                    </div>
+
+                    <!-- Right: Text Item -->
+                    {% set text = slide.right_items[i].text if slide.right_items[i].text is defined else
+                    slide.right_items[i] %}
+                    {% set bg_color = pastels[loop.index0 % pastels|length] if not slide.background_gradient else
+                    'rgba(45, 65, 45, 0.8)' %}
+                    <div data-id="right-{{ text }}"
+                        style="flex: 1; padding: 10px 20px; background: {{ bg_color }}; border-left: 4px solid #888; color: white; border-radius: 6px; text-align: left; font-size: 1.0em; box-shadow: 4px 4px 10px rgba(0,0,0,0.5); display: flex; align-items: center; line-height: 1.2; backdrop-filter: blur(5px);">
+                        {{ text }}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            {% if slide.content %}
+            <div style="margin-top: 10px; width: 90%;">
+                {{ slide.content | safe }}
+            </div>
+            {% endif %}
+
+        </div>
+    </div>
+
+    <aside class="notes">
+        {{ slide.notes | default('Monitor student progress.') }}
+    </aside>
+</section>

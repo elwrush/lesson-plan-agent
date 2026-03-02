@@ -21,7 +21,7 @@ This document maps enforceable requirements from each skill to validator checks.
 
 ## 2. generating-worksheets
 
-**Validator**: `skills/generating-worksheets/scripts/validate_worksheet.py` ⚠️ NOT YET CREATED
+**Validator**: `skills/03-producing-educational-materials/scripts/validate_worksheet.py` ⚠️ NOT YET CREATED
 
 **Required Checks**:
 1. **Single-column text** (ERROR if 2-column CSS detected)
@@ -41,9 +41,9 @@ This document maps enforceable requirements from each skill to validator checks.
 
 ---
 
-## 3. writing-lesson-plans
+## 3. 02-writing-lesson-plans
 
-**Validator**: `skills/writing-lesson-plans/scripts/validate_lesson_plan.py` ⚠️ NOT YET CREATED
+**Validator**: `skills/02-writing-lesson-plans/scripts/validate_lesson_plan.py` ⚠️ NOT YET CREATED
 
 **Required Checks**:
 1. **Shape compliance** (CRITICAL)
@@ -98,7 +98,7 @@ This document maps enforceable requirements from each skill to validator checks.
   - Check for duplicate headers
 
 ### Phase 3: Medium Priority  
-- [ ] writing-lesson-plans validator
+- [ ] 02-writing-lesson-plans validator
   - Shape compliance check
   - Timing validation
   - Pre-teach vocabulary verification

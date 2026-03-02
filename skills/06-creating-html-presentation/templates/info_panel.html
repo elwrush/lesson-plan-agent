@@ -1,0 +1,26 @@
+<section {% if slide.background_image %} data-background-image="{{ slide.background_image }}"
+    data-background-opacity="{{ slide.background_opacity | default(0.5) }}" {% endif %}>
+    <div class="slide-canvas"
+        style="display: flex; flex-direction: column; justify-content: center; height: 100%; text-align: left; padding: 40px;">
+
+        {% if slide.badge %}
+        <div style="margin-bottom: 20px;">
+            <span
+                style="background: #FFD700; color: black; padding: 5px 15px; font-weight: bold; border-radius: 4px; font-size: 0.8em; letter-spacing: 2px;">{{
+                slide.badge }}</span>
+        </div>
+        {% endif %}
+
+        <h1 style="font-size: 2.5em; color: white; margin-bottom: 40px; text-shadow: 2px 2px 8px black; width: 80%;">
+            {{ slide.title }}</h1>
+
+        <div style="max-width: 800px;">
+            {{ slide.content }}
+        </div>
+
+    </div>
+
+    <aside class="notes">
+        {{ slide.notes }}
+    </aside>
+</section>

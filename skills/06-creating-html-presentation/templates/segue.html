@@ -1,0 +1,14 @@
+<!-- SLIDE: SEGUE -->
+<section data-transition="zoom" {% if slide.background_gradient %}
+    data-background-gradient="{{ slide.background_gradient }}" {% endif %}>
+    <div class="slide-canvas">
+        <div style="opacity: 0.6; letter-spacing: 5px; font-weight: 800;">{{ slide.phase }}</div>
+        <h1 style="color: #FFD700; font-size: 3em;">{{ slide.title }}</h1>
+        {% if slide.subtitle %}
+        <h2 style="font-size: 1.5em; color: white;">{{ slide.subtitle }}</h2>
+        {% endif %}
+    </div>
+    <aside class="notes">
+        Moving to next section.
+    </aside>
+</section>
