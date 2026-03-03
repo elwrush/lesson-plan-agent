@@ -2,7 +2,6 @@
   "name": "lessons-and-slideshows-2",
   "version": "1.1.0",
   "description": "AI-powered lesson planning assistant for English language teachers, built with Google Gemini and the Skills-based architecture.",
-  "main": "index.js",
   "scripts": {
     "start": "node server.js",
     "dev": "node server.js",
@@ -10,7 +9,7 @@
     "server:watch": "nodemon server.js",
     "server:bg": "start node server.js",
     "dev:external": "set HOST=0.0.0.0&& node server.js",
-    "build": "mkdir -p dist && echo '...' > dist/index.html && exit 0",
+    "build": "mkdir -p dist && echo '...' > dist/index.html",
     "build:local": "node scripts/build_dist.js",
     "preview": "npm run build:local && npm start"
   },
