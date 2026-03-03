@@ -9,7 +9,8 @@ description: Handles the entire lifecycle of educational material creation: cons
 Guide the transition from raw educational requirements to print-ready, professionally branded PDF worksheets. Consolidates pedagogical design with high-density Typst production. 
 
 ### 🛑 MANDATORY: ZERO HALLUCINATION POLICY
-**You MUST NOT guess Typst syntax.** Before you write or edit any `.typ` file (Phase 4), if you are unsure of a layout, table, or list implementation, you **MUST** use the `consult_repo` tool (from skill 16) to check the official Typst repository (`typst:crates/typst-library/src/`).
+**You MUST NOT guess Typst syntax.** Before you write or edit any `.typ` file (Phase 4), if you are unsure of a layout, table, or list implementation, you **MUST** consult the official Typst repository using the global repo skill (Skill 16) by running:
+`python skills/16-consulting-global-repos/scripts/gh_fetch.py typst:crates/typst-library/src/...`
 
 ## STRICT RULE: NEVER abbreviate, change, or truncate source text. Professional materials must maintain 100% instructional integrity.**
 
@@ -66,7 +67,7 @@ You MUST consult with the user on these core constraints:
 - **Skill/System**: Reading, Listening, Writing, Speaking, Grammar, Vocabulary, or Pronunciation.
 - **Duration**: Target lesson length.
 - **Program Selection**: **CRITICAL**. Prompt user to choose between **Bell** and **Intensive**. 
-  - *Assets Location*: Branded straps found in `C:\Users\elwru\AppData\Roaming\typst\packages\local\bell-sheets\0.1.0\images\`.
+  - *Assets Location*: Branded straps found in `lib/typst/images/`.
 - **Hero Image Requirement**: **MANDATORY**. Every worksheet MUST have a hero image.
   - Ask the user for keywords to search Pixabay.
   - If Pixabay search fails or is unsuitable, prompt the user to provide a manual image path.
@@ -89,8 +90,8 @@ To prevent LLM "probabilistic laziness" in option placement:
 
 ### Step 3: Dependency Discovery (Pre-Production)
 Before writing any code, you MUST verify the environment:
-- **Library Audit**: You MUST use the **GitHub API (Skill 16)** to consult the official Typst repository (`typst/typst`) for syntax verification. For the local project library, use `read_file` on `lib/typst/lib.typ`.
-- **Path Verification**: Ensure images are downloaded using Pixabay Skill: `C:\PROJECTS\LESSONS AND SLIDESHOWS 2\skills\04-searching-pixabay\scripts\download_image.py`.
+- **Library Audit**: You MUST use the **GitHub API (Skill 16)** via `python skills/16-consulting-global-repos/scripts/gh_fetch.py` to consult the official Typst repository (`typst/typst`) for syntax verification. For the local project library, use `read_file` on `lib/typst/lib.typ`.
+- **Path Verification**: Ensure images are downloaded using Pixabay Skill: `skills/04-searching-pixabay/scripts/download_image.py`.
 
 ### Step 4: Content & Layout Strategy
 - **Rule: Verbatim Mandate**: **CRITICAL**. You MUST use the source text EXACTLY as provided in the raw files.
@@ -111,10 +112,10 @@ Before writing any code, you MUST verify the environment:
   - Questions and their corresponding ruled lines MUST be wrapped in a non-breakable block (e.g., `#block(breakable: false, [...])`) to prevent them from being separated by page breaks.
 - **Rule: Handwriting Space**: **MANDATORY**.
   - All ruled lines for handwriting MUST have a minimum vertical clearance of 0.8cm (`#v(0.8cm)`).
-- **Rule: Dynamic Writing Lines**: **MANDATORY**.
-  - Writing tasks MUST use the library function `#writing_lines_dynamic()` which utilizes the `layout(size => ...)` engine.
-  - NEVER attempt to calculate remaining space manually using `page.margin` math. The `size.height` provided by the `layout` block is the only source of truth for available vertical space.
-  - The line count formula is strictly $n = \text{int}(H/S) + 1$ to ensure the last line reaches the bottom margin.
+- **Rule: Writing Lines**: **MANDATORY**.
+  - For writing tasks spanning the rest of the page, use `#writing_lines_dynamic()`.
+  - For short, fixed-length tasks (e.g. 5 lines), use `#writing_lines_fixed(5)`.
+  - NEVER attempt to calculate remaining space manually or inject arbitrary empty lines via `#v()`. Use the local library functions.
 - **Rule: Single-Column & Natural Flow (Starting State)**: **MANDATORY**. 
   - ALWAYS start the first draft with a **single-column layout**.
 
@@ -139,7 +140,6 @@ For detailed typography, spacing, and branding standards, refer to **[styling.md
 ---
 
 ## Reference Material
-- **Skill Architecture Standard**: `C:\PROJECTS\LESSONS AND SLIDESHOWS 2\knowledge_base\using-skills.md`
-- **Visualization Tool**: `C:\PROJECTS\LESSONS AND SLIDESHOWS 2\skills\rendering-prompts-into-mermaid\SKILL.md`
-- **Styling Guide**: `C:\PROJECTS\LESSONS AND SLIDESHOWS 2\skills\producing-educational-materials\references\styling.md`
-- **Typst Library**: `C:\Users\elwru\AppData\Roaming\typst\packages\local\bell-sheets\0.1.0\lib.typ`
+- **Skill Architecture Standard**: `knowledge_base/using-skills.md`
+- **Styling Guide**: `skills/03-producing-educational-materials/references/styling.md`
+- **Typst Library**: `lib/typst/lib.typ`

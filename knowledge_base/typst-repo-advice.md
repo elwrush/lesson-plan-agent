@@ -11,7 +11,7 @@ This document explains the "Public Reference + Local Branding" hybrid model used
 2.  **Context Efficiency**: Loading a full local repository into the context window is wasteful. Fetching specific raw source files or browsing via the GitHub API allows for "surgical" consultation, preserving tokens.
 3.  **Separation of Concerns**: 
     *   **Syntax/Functionality**: Handled by the official Typst repository.
-    *   **Branding/Identity**: Handled by the local `lib/act-lib.typ` library.
+    *   **Branding/Identity**: Handled by the local `lib/typst/lib.typ` library.
 4.  **Enforcement via Guard Hooks**: Agents are prone to "guessing" layouts or using deprecated patterns (like `#h(1fr)`). A mandatory pre-tool hook forces consultation of both syntax and branding before any `.typ` file can be modified.
 
 ---
@@ -20,10 +20,10 @@ This document explains the "Public Reference + Local Branding" hybrid model used
 
 ### 1. The Guard Hook (`scripts/hooks/typst_guard.py`)
 Implement a hook that triggers on `BeforeTool` for `write_file` and `replace` on `.typ` files. The hook must validate:
-*   **Branding Consultation**: Was `lib/act-lib.typ` read in the last 30 minutes?
+*   **Branding Consultation**: Was `lib/typst/lib.typ` read in the last 30 minutes?
 *   **Syntax Consultation**: Was a GitHub reference fetched in the last 30 minutes?
 *   **Pattern Blocking**: Check for forbidden legacy strings (e.g., `bell_header`, `#h(1fr)`).
-*   **Mandatory Imports**: Ensure `#import "/lib/act-lib.typ": *` is present.
+*   **Mandatory Imports**: Ensure `#import "/lib/typst/lib.typ": *` is present.
 
 ### 2. State Tracking (`.gemini/tmp/`)
 Use lightweight JSON files to track consultation timestamps:
@@ -38,8 +38,8 @@ Do not clone the repo. Use `curl` or `run_shell_command` to:
 *   **Read Source**: `https://raw.githubusercontent.com/typst/typst/main/crates/typst-library/src/layout/mod.rs`
 
 ### 4. Local Branding Integration
-All project-specific components (headers, footers, frames) reside in `lib/act-lib.typ`. 
-*   **Rule**: Never redefine a header in a `.typ` file. Use the `act_header()` function from the library.
+All project-specific components (headers, footers, frames) reside in `lib/typst/lib.typ`.
+*   **Rule**: Never redefine a header in a `.typ` file. Use the local library's header functions.
 *   **Rule**: Always use the standard library for page setups to avoid layout spills.
 
 ---
@@ -48,7 +48,7 @@ All project-specific components (headers, footers, frames) reside in `lib/act-li
 
 When tasked with modifying a `.typ` file:
 
-1.  **Consult Branding**: Call `read_file` on `lib/act-lib.typ`.
+1.  **Consult Branding**: Call `read_file` on `lib/typst/lib.typ`.
 2.  **Consult Syntax**: Use `curl` to fetch the relevant source from the [Typst GitHub Repo](https://github.com/typst/typst).
 3.  **Update State**: Write the current timestamp to the `.gemini/tmp/` tracker files.
 4.  **Implement**: Apply changes, ensuring the mandatory import is included.
