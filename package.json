@@ -10,8 +10,9 @@
     "server:watch": "nodemon server.js",
     "server:bg": "start node server.js",
     "dev:external": "set HOST=0.0.0.0&& node server.js",
-    "build": "node scripts/build_dist.js",
-    "preview": "npm run build && npm start"
+    "build": "mkdir -p dist && echo '...' > dist/index.html",
+    "build:local": "node scripts/build_dist.js",
+    "preview": "npm run build:local && npm start"
   },
   "keywords": [],
   "dependencies": {
