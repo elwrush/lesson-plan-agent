@@ -10,7 +10,7 @@
     "server:watch": "nodemon server.js",
     "server:bg": "start node server.js",
     "dev:external": "set HOST=0.0.0.0&& node server.js",
-    "build": "mkdir -p dist && echo '...' > dist/index.html",
+    "build": "mkdir -p dist && echo '...' > dist/index.html && exit 0",
     "build:local": "node scripts/build_dist.js",
     "preview": "npm run build:local && npm start"
   },
