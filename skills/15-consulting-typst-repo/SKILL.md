@@ -29,10 +29,10 @@ After doing this, update `.gemini/tmp/typst_last_consulted.json` with the curren
 ```
 
 ### Step 2: Consult Public Typst Syntax
-Never use Google search for Typst documentation. Use the `web_fetch` tool to fetch the relevant source from the official repo.
+Never use Google search for Typst documentation. Use the `gh_fetch.py` script from Skill 16 to fetch the relevant source from the official repo.
 
-*   **Browse Structure**: `https://api.github.com/repos/typst/typst/contents/crates/typst-library/src`
-*   **Read Source (e.g. lists/enums)**: `https://raw.githubusercontent.com/typst/typst/main/crates/typst-library/src/layout/list.rs` or `enum.rs`.
+*   **Browse Structure**: `python skills/16-consulting-global-repos/scripts/gh_fetch.py typst:crates/typst-library/src`
+*   **Read Source (e.g. lists/enums)**: `python skills/16-consulting-global-repos/scripts/gh_fetch.py typst:crates/typst-library/src/layout/list.rs` or `enum.rs`.
 
 After doing this, update `.gemini/tmp/typst_github_last_consulted.json` with the current Unix timestamp.
 

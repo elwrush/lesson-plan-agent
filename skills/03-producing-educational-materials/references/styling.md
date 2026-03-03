@@ -18,7 +18,9 @@ This document defines the high-density Typst production standards for profession
 
 ## 3. Interaction & Writing Space
 - **Handwriting Space**: ALWAYS provide at least **0.8cm - 1.2cm** of clear vertical space between a prompt and the writing line.
-- **Writing Lines**: Use **0.9cm** line spacing via `#writing_lines_dynamic(line-spacing: 0.9cm)`.
+- **Writing Lines**:
+    - For dynamic length: Use **0.9cm** line spacing via `#writing_lines_dynamic(line-spacing: 0.9cm)`.
+    - For fixed length tasks (e.g. 5 lines): Use `#writing_lines_fixed(5, line-spacing: 0.9cm)`.
 - **Numbered Lists**: 
     - Use native Typst numbering (`+`).
     - Numbers must be **boldfaced**.
