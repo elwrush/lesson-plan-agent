@@ -20,7 +20,9 @@
             <p style="color: #ddd; font-size: 1.2em; margin-bottom: 20px;">{{ slide.instruction }}</p>
 
             {% if slide.audio %}
-            <audio-player src="{{ slide.audio }}"></audio-player>
+            <div class="audio-player-wrapper">
+                <audio-player src="{{ slide.audio }}"></audio-player>
+            </div>
             {% endif %}
         </div>
 

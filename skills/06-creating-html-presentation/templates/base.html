@@ -15,16 +15,23 @@
         :root {
             /* FIXED FONT MATRIX */
             --r-main-font-size: 40px;
-            --r-heading1-size: 2.4em;   /* Main Titles */
-            --r-heading2-size: 1.6em;   /* Section Headers */
-            --r-heading3-size: 1.1em;   /* Badges / Small Headers */
+            --r-heading1-size: 2.4em;
+            /* Main Titles */
+            --r-heading2-size: 1.6em;
+            /* Section Headers */
+            --r-heading3-size: 1.1em;
+            /* Badges / Small Headers */
             --r-heading4-size: 1.0em;
-            
-            --ped-lead-in-size: 1.5em;  /* Impact / Prompt Text */
-            --ped-body-size: 1.1em;     /* Dialogue / Exercise Text */
-            --ped-table-size: 0.85em;    /* Table Content */
-            --ped-note-size: 0.8em;     /* Rationales / Footnotes */
-            
+
+            --ped-lead-in-size: 1.5em;
+            /* Impact / Prompt Text */
+            --ped-body-size: 1.1em;
+            /* Dialogue / Exercise Text */
+            --ped-table-size: 0.88em;
+            /* Table Content - balanced limit */
+            --ped-note-size: 0.8em;
+            /* Rationales / Footnotes */
+
             --r-block-margin: 20px;
         }
 
@@ -99,47 +106,82 @@
 
         /* Contrast Shadow for maximum pop on dimmed backgrounds */
 
+
+
+        /* LAYOUT TABLES - No borders, no backgrounds */
+        table.layout-table {
+            border: none !important;
+            background: transparent !important;
+            width: 100% !important;
+            height: auto !important;
+            border-collapse: collapse !important;
+            border-spacing: 0 !important;
+            margin: 0 !important;
+        }
+
+        table.layout-table>tbody>tr>td,
+        table.layout-table>tr>td {
+            border: none !important;
+            background: transparent !important;
+            padding: 0 !important;
+            vertical-align: middle !important;
+            text-align: left;
+        }
+
         /* Native Table Styling - Constrained */
-        .reveal table {
+        .reveal table:not(.layout-table) {
             margin-top: 10px;
-            border-collapse: collapse;
-            width: 95%;
+            border-collapse: separate !important;
+            border-spacing: 0 4px !important;
+            width: 100% !important;
             margin-left: auto;
             margin-right: auto;
-            background: rgba(0, 0, 0, 0.3);
-            text-align: left;
+            text-align: left !important;
+            background: transparent !important;
         }
 
-        .reveal table th,
-        .reveal table td {
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 15px;
-            text-align: left;
+        .reveal table:not(.layout-table) th,
+        .reveal table:not(.layout-table) td {
+            background: rgba(0, 0, 0, 0.3) !important;
+            border: 1px solid rgba(255, 255, 255, 0.2) !important;
+            padding: 8px 12px !important;
+            text-align: left !important;
+            vertical-align: middle;
         }
 
-        .reveal table th {
-            background: rgba(255, 215, 0, 0.1);
-            color: #FFD700;
+        .reveal table:not(.layout-table) th {
+            background: rgba(255, 215, 0, 0.1) !important;
+            color: #FFD700 !important;
+        }
+
+        /* UTILITIES */
+        .text-gold {
+            color: #FFD700 !important;
         }
 
         /* AUDIO PLAYER - Gold Standard Scrubber */
+        .audio-player-wrapper {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            z-index: 1000;
+        }
+
         .audio-player {
-            background: rgba(0, 0, 0, 0.5);
-            border: 2px solid #FFD700;
-            padding: 10px 15px;
-            /* Slightly tighter padding */
-            display: flex;
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid #FFD700;
+            padding: 5px 12px;
+            display: inline-flex;
             align-items: center;
-            gap: 15px;
-            width: 95%;
-            /* Responsive width */
-            max-width: 600px;
-            margin: 10px auto;
-            border-radius: 50px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            gap: 10px;
+            width: auto;
+            min-width: 250px;
+            max-width: 400px;
+            margin: 5px;
+            border-radius: 4px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
             box-sizing: border-box;
-            /* Prevent padding from expanding width */
-            overflow: hidden;
+            font-size: 0.8em;
         }
 
         .audio-play-btn {
@@ -205,11 +247,12 @@
             opacity: 1;
             visibility: inherit;
         }
+
         .reveal .slides section .fragment.highlight-gold.visible {
             color: #FFD700;
             font-weight: bold;
         }
-        
+
         .reveal u {
             text-decoration: underline;
             text-underline-offset: 4px;
@@ -222,20 +265,20 @@
         <div class="slides">
             {% set last_bg = namespace(src=None, type=None) %}
             {% for slide in slides %}
-                {# Handle both slide.video (root level) and slide.background (nested object) #}
-                {% if slide.video and not slide.background %}
-                    {% set current_bg = {'type': 'video', 'src': slide.video} %}
-                {% elif slide.background and slide.background.retain_from_previous and last_bg.src %}
-                    {% set current_bg = {'type': last_bg.type, 'src': last_bg.src} %}
-                {% else %}
-                    {% set current_bg = slide.background %}
-                    {% if slide.background %}
-                        {% set last_bg.src = slide.background.src %}
-                        {% set last_bg.type = slide.background.type %}
-                    {% endif %}
-                {% endif %}
-                
-                {% include 'slide.html' %}
+            {# Handle both slide.video (root level) and slide.background (nested object) #}
+            {% if slide.video and not slide.background %}
+            {% set current_bg = {'type': 'video', 'src': slide.video} %}
+            {% elif slide.background and slide.background.retain_from_previous and last_bg.src %}
+            {% set current_bg = {'type': last_bg.type, 'src': last_bg.src} %}
+            {% else %}
+            {% set current_bg = slide.background %}
+            {% if slide.background %}
+            {% set last_bg.src = slide.background.src %}
+            {% set last_bg.type = slide.background.type %}
+            {% endif %}
+            {% endif %}
+
+            {% include 'slide.html' %}
             {% endfor %}
         </div>
     </div>
@@ -404,32 +447,6 @@
             autoAnimateEasing: 'ease-in-out',
             plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
         });
-
-        // VERTICAL SCALE GUARD (LAW 21)
-        function applyScaleGuard() {
-            const currentSlide = Reveal.getCurrentSlide();
-            if (!currentSlide) return;
-
-            const containers = currentSlide.querySelectorAll('.slide-canvas, .table-container');
-            const MAX_HEIGHT = 680; // 720 minus margin
-
-            containers.forEach(container => {
-                let fontSize = parseFloat(window.getComputedStyle(container).fontSize);
-                let attempts = 0;
-                
-                // Reset to default before measuring
-                // container.style.fontSize = ''; 
-
-                while (container.scrollHeight > MAX_HEIGHT && attempts < 10) {
-                    fontSize *= 0.95;
-                    container.style.fontSize = fontSize + 'px';
-                    attempts++;
-                }
-            });
-        }
-
-        Reveal.on('ready', applyScaleGuard);
-        Reveal.on('slidetransitionend', applyScaleGuard);
     </script>
 </body>
 

@@ -7,13 +7,16 @@
         <div
             style="padding: 20px; min-height: 60vh; display: flex; flex-direction: column; justify-content: flex-start;">
             {% if slide.badge %}
-            <div class="mission-badge" style="display: inline-block; margin-bottom: 15px; min-width: auto; padding: 8px 25px;">
+            <div class="mission-badge"
+                style="display: inline-block; margin-bottom: 15px; min-width: auto; padding: 8px 25px;">
                 <span style="font-weight: 800; letter-spacing: 2px; font-size: 0.8em;">{{ slide.badge }}</span>
             </div>
             {% endif %}
 
             {% if slide.title %}
-            <h1 style="font-size: 1.1em; margin-bottom: 15px; line-height: 1.1; text-shadow: 2px 2px 4px black; color: #FFD700 !important;">{{
+            <h1
+                style="font-size: 1.1em; margin-bottom: 15px; line-height: 1.1; text-shadow: 2px 2px 4px black; color: #FFD700 !important;">
+                {{
                 slide.title }}</h1>
             {% endif %}
 
@@ -28,13 +31,14 @@
             </div>
 
             {% if slide.audio %}
-            <div style="margin-top: 20px; display: flex; justify-content: center; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px;">
+            <div class="audio-player-wrapper">
                 <audio-player src="{{ slide.audio }}"></audio-player>
             </div>
             {% endif %}
 
             {% if slide.timer %}
-            <div class="timer-container" style="margin-top: 20px; justify-content: center; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px; gap: 30px;">
+            <div class="timer-container"
+                style="margin-top: 20px; justify-content: center; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px; gap: 30px;">
                 <div class="timer-display" id="timer-{{ slide.timer }}-display"
                     style="font-size: 2.2em; font-family: monospace; color: #FFD700; text-shadow: 0 0 10px rgba(0,0,0,0.8);">
                     {% set mins = (slide.timer / 60) | int %}{% set secs = (slide.timer % 60) | int %}
@@ -61,10 +65,12 @@
         width: 100% !important;
         font-size: 0.9em !important;
     }
+
     .table-container th {
         font-size: 0.8em !important;
         padding: 10px !important;
     }
+
     .table-container td {
         padding: 10px !important;
     }

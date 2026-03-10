@@ -42,12 +42,12 @@ def validate_media_paths(json_path):
     errors = []
     warnings = []
 
-    with open(json_path, 'r', encoding='utf-8') as f:
-        try:
-            data = json.load(f)
-        except Exception as e:
-            print(f"[ERROR] JSON Parse Error: {e}")
-            return False
+    from manifest_parser import parse_markdown_manifest
+    try:
+        data = parse_markdown_manifest(sys.argv[1] if len(sys.argv) > 1 else json_path)
+    except Exception as e:
+        print(f"[ERROR] Manifest Parse Error: {e}")
+        return False
 
     # Check config-level media
     config = data.get('config', {})
@@ -76,6 +76,16 @@ def validate_media_paths(json_path):
         # Check audio
         audio = slide.get('audio')
         if audio:
+            # Path Format Check: bare filenames will NOT resolve in the rendered HTML.
+            # Audio MUST be prefixed with '/audio/' or 'audio/' so the generator
+            # bundles the file and the browser resolves the path correctly.
+            if not audio.startswith('/audio/') and not audio.startswith('audio/'):
+                errors.append(
+                    f"Slide {i} ({slide_title}): audio '{audio}' MUST use a path prefix. "
+                    f"Use '/audio/filename.mp3' not a bare filename. "
+                    f"A bare filename passes the existence check but breaks in the browser."
+                )
+
             # Handle both /audio/ and audio/
             filename = audio.replace('/audio/', '').replace('audio/', '')
             
@@ -88,10 +98,10 @@ def validate_media_paths(json_path):
                 errors.append(f"Slide {i} ({slide_title}): audio '{audio}' does not exist (checked {local_audio_path} and {root_audio_path})")
 
     if errors:
-        print("\n[X] MEDIA PATH VALIDATION FAILED:")
+        print("\n[MEDIA PATH VALIDATION FAILED]")
         for error in errors:
             print(f"  - {error}")
-        print("\n[!] Fix: Either add the missing files or update the JSON to reference existing assets.")
+        print("\n[FAIL] Fix: Either add the missing files or update the manifest to reference existing assets.")
         return False
     
     if warnings:

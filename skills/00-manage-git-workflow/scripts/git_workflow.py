@@ -32,7 +32,13 @@ def commit(message):
     
     print(f"[COMMIT] Staging and committing: {message}...")
     run_command("git add .")
-    run_command("git reset dist/")
+    
+    # 🛑 MATERIAL GUARD: Unstage forbidden directories
+    forbidden = ["inputs/", "images/", "audio/", "videos/", "published/", "dist/"]
+    print("[GUARD] Ensuring no materials are staged...")
+    for folder in forbidden:
+        run_command(f"git reset {folder}")
+    
     run_command('git commit -m "' + message + '"')
     print("[PUSH] Pushing to source...")
     run_command("git push source main")

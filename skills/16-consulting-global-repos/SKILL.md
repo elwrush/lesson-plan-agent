@@ -29,8 +29,11 @@ python skills/16-consulting-global-repos/scripts/gh_fetch.py <alias>:<path>
 ## 🛑 THE INTERACTIVE WORKFLOW
 
 1. **Identify the Gap**: Determine what syntax, schema, or pattern is missing or ambiguous.
-2. **Consult Reference**: Check `REFERENCE.md` for known repository aliases (e.g., `typst`, `revealjs`).
-3. **Execute Fetch**: Use the `gh_fetch.py` script to pull the directory listing or specific file content.
+2. **Consult Reference**: Check `REFERENCE.md` for known repository aliases (e.g., `typst`, `revealjs`, `meander`).
+   - If writing Reveal.js, you MUST consult `revealjs` or `revealjs-com` before writing code.
+   - If generating `.pptx`, you MUST consult `pandoc`.
+   - If wrapping text around images in Typst, you MUST consult `meander`.
+3. **Execute Fetch**: Use the `gh_fetch.py` script to pull the directory listing or specific file content (this acts as an API-driven RAG knowledge base).
 4. **Analyze & Extract**: Read the returned code to identify the exact implementation pattern.
 5. **Apply Surgically**: Integrate the pattern into the workspace following local conventions.
 
@@ -38,7 +41,7 @@ python skills/16-consulting-global-repos/scripts/gh_fetch.py <alias>:<path>
 | Alias | Repository | Purpose |
 |-------|------------|---------|
 | `typst` | `typst/typst` | Official Typst source & library components. |
-| `revealjs` | `hakimel/reveal.js` | Presentation framework core. |
+| `revealjs` | `reveal/revealjs.com` | Presentation framework documentation and patterns. |
 | `fontawesome` | `FortAwesome/Font-Awesome` | Icon metadata and SVG paths. |
 | `reference` | `elwrush/lesson-plan-references` | Project-specific pedagogical templates. |
 | `meander` | `Vanille-N/meander.typ` | Meander package for text wrapping. |

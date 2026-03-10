@@ -9,12 +9,12 @@ def validate_answer_separation(json_path):
         print(f"Error: {json_path} not found")
         return False
 
-    with open(json_path, "r", encoding="utf-8") as f:
-        try:
-            data = json.load(f)
-        except Exception as e:
-            print(f"Error parsing JSON: {e}")
-            return False
+    from manifest_parser import parse_markdown_manifest
+    try:
+        data = parse_markdown_manifest(sys.argv[1] if len(sys.argv) > 1 else json_path)
+    except Exception as e:
+        print(f"Error parsing manifest: {e}")
+        return False
 
     slides = data.get("slides", [])
     errors = []
@@ -53,7 +53,9 @@ def validate_answer_separation(json_path):
                     )
 
             # 2. Location Marker Check
-            if evidence and not re.search(r"\[(Para|Line|Page)\s+[\d\w]+\]", evidence):
+            # Accepts: [Para N], [Line N], [Page N] for reading tasks
+            # Also accepts: [Audio X], [Track X] for listening tasks (no paragraph numbers)
+            if evidence and not re.search(r"\[(Para|Line|Page|Audio|Track)\s+[\d\w\.]+\]", evidence):
                 errors.append(
                     f"Slide {i} ({slide.get('title')}): Evidence snippet missing location marker (e.g. [Para 5] or [Line 12])."
                 )

@@ -6,6 +6,23 @@ from pathlib import Path
 # Add project root for pathing
 PROJECT_ROOT = Path(__file__).parent.parent.parent.parent
 
+def load_approved_stages():
+    """Dynamically loads APPROVED_STAGES from REFERENCE.py."""
+    try:
+        # Assuming script is in skills/02-writing-lesson-plans/scripts/
+        reference_path = Path(__file__).parent.parent / "REFERENCE.py"
+        if not reference_path.exists():
+            return set()
+            
+        namespace = {}
+        with open(reference_path, 'r', encoding='utf-8') as f:
+            exec(f.read(), namespace)
+        return namespace.get('APPROVED_STAGES', set())
+    except Exception:
+        return set()
+
+APPROVED_STAGES = load_approved_stages()
+
 class LessonPlanValidator:
     def __init__(self, content, filename=""):
         self.filename = filename
@@ -16,43 +33,45 @@ class LessonPlanValidator:
         self.stages = self._extract_stages()
     
     def _extract_metadata(self):
-        """Extract lesson metadata from Typst file."""
+        """Extract lesson metadata from Typst file using modern_template keys."""
         metadata = {}
-        duration_match = re.search(r'duration:\s*"(\d+)\s*Minutes"', self.content, re.IGNORECASE)
-        if duration_match:
-            metadata['duration'] = int(duration_match.group(1))
+        # Keys to match: topic, date, week, classes, level, shape, sb, wb, resources, slides_url
+        keys = ['topic', 'date', 'week', 'classes', 'level', 'shape', 'sb', 'wb', 'resources', 'slides_url']
+        for key in keys:
+            match = re.search(fr'{key}:\s*"(.*?)"', self.content, re.IGNORECASE)
+            if match:
+                metadata[key] = match.group(1).strip()
         
-        shape_match = re.search(r'shape:\s*"([A-J])', self.content, re.IGNORECASE)
-        if shape_match:
-            metadata['shape'] = shape_match.group(1).upper()
-        
-        cefr_match = re.search(r'cefr:\s*"([A-C][0-2])', self.content, re.IGNORECASE)
-        if cefr_match:
-            metadata['cefr'] = cefr_match.group(1).upper()
-
+        # Special check for lesson_aim (often doesn't use quotes for multi-line but we try to find it)
+        aim_match = re.search(r'lesson_aim:\s*"(.*?)"', self.content, re.DOTALL | re.IGNORECASE)
+        if aim_match:
+            metadata['lesson_aim'] = aim_match.group(1).strip()
+            
         return metadata
 
     def _extract_stages(self):
-        """Extract stage procedures from Typst blocks."""
+        """Extract stage data from modern_template stage(aim, proc, interaction) calls."""
         stages = []
-        # Modern format: stage("NUM", "Name", "Time", "Aim", [Procedure], "Pattern")
-        stage_pattern = re.compile(r'stage\(\s*"(.*?)"\s*,\s*"(.*?)"\s*,\s*"(.*?)"\s*,\s*"(.*?)"\s*,\s*\[(.*?)\]\s*,\s*"(.*?)"\)', re.DOTALL | re.IGNORECASE)
+        # Pattern: stage([aim], [proc], [interaction])
+        # Simple non-greedy pattern that captures content between square brackets
+        stage_pattern = re.compile(
+            r'stage\s*\(\s*\[(.*?)\],\s*\[(.*?)\],\s*\[(.*?)\]',
+            re.DOTALL | re.IGNORECASE
+        )
         
-        for match in stage_pattern.finditer(self.content):
+        matches = stage_pattern.findall(self.content)
+        
+        for i, match in enumerate(matches, start=1):
+            aim, proc, inter = match
+            
             stages.append({
-                'number': match.group(1).strip(),
-                'name': match.group(2).strip(),
-                'time': match.group(3).strip(),
-                'procedure': match.group(5).strip(),
-                'word_count': len(re.findall(r'\w+', match.group(5)))
+                'number':     str(i),
+                'aim':        aim.strip(),
+                'procedure':  proc.strip(),
+                'interaction': inter.strip(),
+                'char_count': len(proc.strip()),
+                'word_count': len(re.findall(r'\w+', proc.strip())),
             })
-        
-        # Fallback for older formats
-        if not stages:
-            stage_headers = re.finditer(r'stage\(\s*"(.*?)"\s*,\s*"(.*?)"', self.content, re.IGNORECASE)
-            for match in stage_headers:
-                stages.append({'name': match.group(2).strip(), 'procedure': "", 'word_count': 0})
-
         return stages
 
     def validate(self):
@@ -60,121 +79,120 @@ class LessonPlanValidator:
         # 1. Structural Checks (Hard Errors)
         self._check_required_components()
         self._check_blueprint_gate()
-        self._check_timing()
         self._check_banned_language()
+        self._check_metadata_completeness()
 
-        # 2. Pedagogical & Naming Checks (Soft Warnings)
-        self._check_stage_names()
-        self._check_preteach_vocabulary()
-        self._check_pedagogical_patterns()
+        # 2. Pedagogical & Naming Checks (Soft Warnings/Advisories)
         self._check_procedural_density()
+        self._check_interaction_markers()
+        self._check_aim_quality()
+        self._check_stage_names()
         
         return len(self.errors) == 0
 
     def _check_required_components(self):
-        """[HARD ERROR] Ensure core components are present."""
-        required = ["#lesson_header", "#metadata_table", "#main_aim_box", "#stage_table", "#stage"]
-        for func in required:
-            if func not in self.content:
-                self.errors.append(f"[ERROR] Missing required Typst component: {func}")
+        """[HARD ERROR] Ensure core components of modern_template are present."""
+        required = {
+            'modern_template import': r'#import\s*"/templates/modern_template.typ":\s*modern_template,\s*stage',
+            '#show: rule':               r'#show:\s*modern_template\.with',
+            'stages: parameter':         r'stages\s*:\s*\(',
+        }
+        for label, pattern in required.items():
+            if not re.search(pattern, self.content, re.IGNORECASE):
+                self.errors.append(f"[ERROR] Missing required structure — {label}. Check SKILL.md for the correct snippet.")
 
     def _check_blueprint_gate(self):
-        """[HARD ERROR] Ensure a visual_plan.md exists."""
+        """[HARD ERROR] Ensure blueprint exists and is approved."""
         if not self.filename: return
         file_path = Path(self.filename)
+        # Handle cases where path is relative to current directory
         if not file_path.is_absolute():
             file_path = Path.cwd() / file_path
             
-        blueprint_path = file_path.parent / "visual_plan.md"
+        lesson_dir = file_path.parent
+            
+        blueprint_path = lesson_dir / "lesson_plan_blueprint.md"
         if not blueprint_path.exists():
-            self.errors.append(f"[ERROR] Blueprint Gate Failed: 'visual_plan.md' missing in {file_path.parent}.")
+            self.errors.append(f"[ERROR] Blueprint Gate Failed: 'lesson_plan_blueprint.md' missing in {lesson_dir}.")
+        else:
+            with open(blueprint_path, 'r', encoding='utf-8') as f:
+                bp_content = f.read()
+                if "[APPROVED]" not in bp_content and "User Approval: YES" not in bp_content:
+                    self.errors.append("[ERROR] Blueprint is not approved. Add '[APPROVED]' to the blueprint file.")
 
-    def _check_timing(self):
-        """[HARD ERROR] Verify stage times add up to total duration."""
-        time_vals = []
-        for s in self.stages:
-            if 'time' in s and s['time'].isdigit():
-                time_vals.append(int(s['time']))
-        
-        if time_vals:
-            total = sum(time_vals)
-            expected = self.metadata.get('duration', 0)
-            if expected and total != expected:
-                self.errors.append(f"[ERROR] Timing Mismatch: Sum is {total}m, but metadata says {expected}m.")
+    def _check_metadata_completeness(self):
+        """[HARD ERROR] Ensure all major metadata fields are provided."""
+        critical_keys = ['topic', 'level', 'shape', 'lesson_aim']
+        for key in critical_keys:
+            if key not in self.metadata or not self.metadata[key]:
+                # lesson_aim is extracted separately above, but if still missing check if it's in content at all
+                if key == 'lesson_aim' and 'lesson_aim:' in self.content:
+                    continue
+                self.errors.append(f"[ERROR] Missing metadata field: '{key}'")
 
     def _check_banned_language(self):
-        """[HARD ERROR] Prevent references to slide numbers."""
-        for stage in self.stages:
-            if re.search(r'Slide\s*\d+', stage['procedure'], re.IGNORECASE):
-                self.errors.append(f"[ERROR] Banned Language in '{stage['name']}': Do not refer to slide numbers (e.g., 'Slide 4').")
-
-    def _check_stage_names(self):
-        """[SOFT WARNING] Validate stage names against reference."""
-        script_dir = Path(__file__).parent
-        ref_path = script_dir.parent / "REFERENCE.py"
-        try:
-            namespace = {}
-            with open(ref_path, 'r', encoding='utf-8') as f:
-                exec(f.read(), namespace)
-            approved = namespace.get('APPROVED_STAGES', set())
-        except:
-            approved = set()
-
-        for stage in self.stages:
-            name = stage['name']
-            if approved and name not in approved:
-                self.warnings.append(f"[ADVISORY] Non-standard Stage Name: '{name}'. Standard options include: {', '.join(sorted(list(approved))[:5])}...")
-
-    def _check_preteach_vocabulary(self):
-        """[SOFT WARNING] Check vocab count for Shape E."""
-        shape = self.metadata.get('shape', '')
-        if shape == 'E':
-            vocab_stage = next((s for s in self.stages if any(kw in s['name'].lower() for kw in ["pre-teach", "vocabulary", "vocab"])), None)
-            if vocab_stage:
-                # ONLY scan the procedure of the specific vocabulary stage
-                # Match items starting with a bullet/number followed by a word in asterisks
-                items = re.findall(r'^[ \t]*[-*\d.]+[ \t]+\*(.*?)\*', vocab_stage['procedure'], re.MULTILINE)
-                if len(items) != 5:
-                    self.warnings.append(f"[PEDAGOGY] Shape E typically requires exactly 5 vocab items. Found {len(items)}: {', '.join(items)}")
-
-    def _check_pedagogical_patterns(self):
-        """[SOFT WARNING] Check for 'Gold Standard' markers."""
-        shape = self.metadata.get('shape', '')
-        if shape == 'E':
-            # Lead-in check
-            lead_in = next((s for s in self.stages if "lead-in" in s['name'].lower() or "context" in s['name'].lower()), None)
-            if lead_in and not any(kw in lead_in['procedure'].lower() for kw in ["quiz", "guess", "vote", "discuss", "truths", "fiction"]):
-                self.warnings.append("[PEDAGOGY] Lead-in should be interactive (quiz, guess, etc.).")
-
-            # Gist check
-            gist = next((s for s in self.stages if any(kw in s['name'].lower() for kw in ["gist", "scanning", "story"])), None)
-            if gist and not any(kw in gist['procedure'].lower() for kw in ["timed", "speed", "scan", "quick", "minutes", "seconds"]):
-                self.warnings.append("[PEDAGOGY] Gist task should be timed or speed-based.")
+        """[HARD ERROR] Prevent references to slide numbers or legacy terms."""
+        banned = [
+            (r'Slide\s*\d+', "Do not refer to specific slide numbers (e.g., 'Slide 4')."),
+            (r'bell_header', "Legacy function 'bell_header' is banned."),
+            (r'intensive_header', "Legacy function 'intensive_header' is banned in LPs."),
+            (r'differentiation_box', "Legacy function 'differentiation_box' is banned.")
+        ]
+        for pattern, reason in banned:
+            if re.search(pattern, self.content, re.IGNORECASE):
+                self.errors.append(f"[ERROR] Banned language/logic found: {reason}")
 
     def _check_procedural_density(self):
-        """[SOFT WARNING] Check for detail and interaction markers."""
+        """[ADVISORY] Check for professional depth in procedures."""
+        if not self.stages:
+            self.errors.append("[ERROR] No stages found! Ensure you use stage(aim, proc, interaction) inside the stages array.")
+            return
+
+        MIN_CHARS = 150
         for stage in self.stages:
-            if len(stage['procedure']) < 100:
-                self.warnings.append(f"[DENSITY] Stage '{stage['name']}' procedure seems thin.")
-            if not re.search(r'(T-S|S-S|Ss-Ss|Pairs|Group|Elicit)', stage['procedure'], re.IGNORECASE):
-                 self.warnings.append(f"[DENSITY] Stage '{stage['name']}' is missing interaction markers.")
+            if stage['char_count'] < MIN_CHARS:
+                self.warnings.append(f"[DENSITY] Stage {stage['number']} procedure is thin ({stage['char_count']} chars). Add more pedagogical detail.")
+
+    def _check_interaction_markers(self):
+        """[ADVISORY] Ensure interaction markers (T-Ss, etc.) are present in prose."""
+        markers = r'(T-Ss|Ss-Ss|Pairs|Group|Elicit|CCQ|Class|Individually)'
+        for stage in self.stages:
+            if not re.search(markers, stage['procedure'], re.IGNORECASE):
+                self.warnings.append(f"[PEDAGOGY] Stage {stage['number']} lacks interaction/management cues (Pairs, Elicit, etc.).")
+
+    def _check_aim_quality(self):
+        """[ADVISORY] Aims should start with 'To...'."""
+        for stage in self.stages:
+            if not stage['aim'].lower().startswith('to '):
+                self.warnings.append(f"[STYLE] Stage {stage['number']} aim should start with 'To...' (e.g., 'To activate schemata').")
+
+    def _check_stage_names(self):
+        """[ADVISORY] Use standard stage names from REFERENCE.py."""
+        # This is harder now because 'aim' is the first arg, not 'name'.
+        # We check if any approved name is present in the aim block.
+        if not APPROVED_STAGES: return
+        
+        for stage in self.stages:
+            if not any(name.lower() in stage['aim'].lower() for name in APPROVED_STAGES):
+                # If the aim doesn't contain a standard stage name (Lead-in, Gist, etc.)
+                self.warnings.append(f"[STYLE] Stage {stage['number']} aim does not mention a standard stage name (e.g., 'Lead-in', 'Gist').")
 
     def print_report(self):
         """Print validation report."""
         print("\n" + "="*60)
-        print("LESSON PLAN VALIDATION REPORT")
-        print(f"File: {self.filename}")
+        print("LESSON PLAN VALIDATION REPORT (v2026)")
+        print(f"File: {Path(self.filename).name}")
         print("="*60 + "\n")
         
         if self.errors:
             print(f"❌ [FAIL] {len(self.errors)} Blocking Errors Found:\n")
-            for err in self.errors: print(f"  {err}")
+            for err in self.errors: print(f"  - {err}")
         else:
             print("✅ [PASS] No blocking structural errors found.\n")
         
         if self.warnings:
             print(f"⚠️  [ADVISORY] {len(self.warnings)} Quality Suggestions:\n")
-            for warn in self.warnings: print(f"  {warn}")
+            for warn in self.warnings: print(f"  - {warn}")
         
         print("\n" + "="*60 + "\n")
 

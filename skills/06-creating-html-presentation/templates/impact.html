@@ -9,7 +9,8 @@
 
         <div style="text-align: center; width: 100%; max-width: 1200px; margin: auto;">
             {% if slide.badge %}
-            <div class="mission-badge" style="display: inline-block; margin-bottom: 20px; min-width: auto; padding: 10px 30px;">
+            <div class="mission-badge"
+                style="display: inline-block; margin-bottom: 20px; min-width: auto; padding: 10px 30px;">
                 <span style="font-weight: 800; letter-spacing: 2px;">{{ slide.badge }}</span>
             </div>
             {% endif %}
@@ -18,15 +19,16 @@
                 style="color: #FFD700; font-size: 2.2em; text-shadow: 2px 2px 15px rgba(0,0,0,1); text-transform: uppercase; margin-bottom: 40px;">
                 {{ slide.title }}
             </h1>
-            
-            <div style="background: rgba(0,0,0,0.6); padding: 50px; border-radius: 20px; backdrop-filter: blur(10px); border: 2px solid rgba(255, 215, 0, 0.3);">
+
+            <div
+                style="background: rgba(0,0,0,0.6); padding: 50px; border-radius: 20px; backdrop-filter: blur(10px); border: 2px solid rgba(255, 215, 0, 0.3);">
                 <p style="font-size: 1.4em; color: white; line-height: 1.4; margin: 0;">
                     {{ slide.text | default(slide.main_text) }}
                 </p>
             </div>
 
             {% if slide.audio %}
-            <div style="margin-top: 30px; display: flex; justify-content: center;">
+            <div class="audio-player-wrapper">
                 <audio-player src="{{ slide.audio }}"></audio-player>
             </div>
             {% endif %}

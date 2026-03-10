@@ -1,14 +1,19 @@
-W need to refactor the answer sli{
+{
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://elwrush.github.io/actions-gh-pages/schemas/presentation.schema.json",
   "title": "Presentation Schema",
   "description": "Validates presentation.json files for the Lesson Plan Agent & Slideshow Factory",
   "type": "object",
-  "required": ["meta", "slides"],
+  "required": [
+    "meta",
+    "slides"
+  ],
   "properties": {
     "meta": {
       "type": "object",
-      "required": ["title"],
+      "required": [
+        "title"
+      ],
       "properties": {
         "title": {
           "type": "string",
@@ -21,12 +26,22 @@ W need to refactor the answer sli{
         },
         "theme": {
           "type": "string",
-          "enum": ["noir", "thai-heritage", "indonesia", "amazon", "noir"],
+          "enum": [
+            "noir",
+            "thai-heritage",
+            "indonesia",
+            "amazon",
+            "black"
+          ],
           "description": "Visual theme for the presentation"
         },
         "mode": {
           "type": "string",
-          "enum": ["bell", "intensive", "standard"],
+          "enum": [
+            "bell",
+            "intensive",
+            "standard"
+          ],
           "description": "Presentation mode"
         },
         "palette": {
@@ -104,7 +119,10 @@ W need to refactor the answer sli{
     },
     "slide": {
       "type": "object",
-      "required": ["layout", "title"],
+      "required": [
+        "layout",
+        "title"
+      ],
       "properties": {
         "layout": {
           "$ref": "#/$defs/allowed_layouts",
@@ -139,8 +157,8 @@ W need to refactor the answer sli{
         "timer": {
           "type": "number",
           "minimum": 1,
-          "maximum": 60,
-          "description": "Timer duration in minutes"
+          "maximum": 1800,
+          "description": "Timer duration in seconds (e.g. 300 = 5 minutes)"
         },
         "content": {
           "type": "string",
@@ -210,53 +228,119 @@ W need to refactor the answer sli{
       "additionalProperties": false,
       "allOf": [
         {
-          "if": { "properties": { "layout": { "const": "matching" } } },
-          "then": {
-            "required": ["pairs", "shuffled"],
+          "if": {
             "properties": {
-              "pairs": { "type": "array" },
-              "shuffled": { "type": "array" }
+              "layout": {
+                "const": "matching"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "pairs",
+              "shuffled"
+            ],
+            "properties": {
+              "pairs": {
+                "type": "array"
+              },
+              "shuffled": {
+                "type": "array"
+              }
             }
           }
         },
         {
-          "if": { "properties": { "layout": { "const": "vocab" } } },
-          "then": {
-            "required": ["word", "phoneme", "context_sentence"],
+          "if": {
             "properties": {
-              "word": { "type": "string" },
-              "phoneme": { "type": "string" },
-              "context_sentence": { "type": "string" }
+              "layout": {
+                "const": "vocab"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "word",
+              "phoneme",
+              "context_sentence"
+            ],
+            "properties": {
+              "word": {
+                "type": "string"
+              },
+              "phoneme": {
+                "type": "string"
+              },
+              "context_sentence": {
+                "type": "string"
+              }
             }
           }
         },
         {
-          "if": { "properties": { "layout": { "const": "split_task" } } },
-          "then": {
-            "required": ["content"],
+          "if": {
             "properties": {
-              "content": { "type": "string" },
-              "timer": { "type": "number" }
+              "layout": {
+                "const": "split_task"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "content"
+            ],
+            "properties": {
+              "content": {
+                "type": "string"
+              },
+              "timer": {
+                "type": "number"
+              }
             }
           }
         },
         {
-          "if": { "properties": { "layout": { "const": "answer" } } },
-          "then": {
-            "required": ["answer"],
+          "if": {
             "properties": {
-              "answer": { "type": "string" },
-              "explanation": { "type": "string" }
+              "layout": {
+                "const": "answer"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "answer"
+            ],
+            "properties": {
+              "answer": {
+                "type": "string"
+              },
+              "explanation": {
+                "type": "string"
+              }
             }
           }
         },
         {
-          "if": { "properties": { "layout": { "const": "impact" } } },
-          "then": {
-            "required": ["main_text", "points"],
+          "if": {
             "properties": {
-              "main_text": { "type": "string" },
-              "points": { "type": "array" }
+              "layout": {
+                "const": "impact"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "main_text",
+              "points"
+            ],
+            "properties": {
+              "main_text": {
+                "type": "string"
+              },
+              "points": {
+                "type": "array"
+              }
             }
           }
         }

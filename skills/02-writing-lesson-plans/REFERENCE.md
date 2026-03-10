@@ -90,57 +90,50 @@ Quick reference for the 7 lesson shapes. Full details in [lesson_shapes.yaml](fi
 
 ## Typst Template <a name="typst-template"></a>
 
-All lesson plans MUST use the Typst components library provided in the skills folder.
+All lesson plans MUST use the single universal template. **No other template exists.**
 
 ```typst
-#import "../../skills/02-writing-lesson-plans/templates/lesson-plan-components.typ": *
+#import "/templates/modern_template.typ": modern_template, stage
 
-#set page(paper: "a4", margin: (top: 1.5cm, bottom: 2cm, x: 2cm))
-#set text(font: "Arial", size: 10pt, fill: rgb("#333333"))
-#set par(leading: 0.65em, justify: false)
+#show: modern_template.with(
+  topic:      "[Lesson Topic]",
+  teachers:   "Ed",
+  date:       "DD-MM-YYYY",
+  week:       "Week N",
+  classes:    "[Class List]",
+  level:      "[CEFR Level]",
+  lesson_aim: "By the end of the lesson, learners will...",
+  shape:      "[Letter] ([Shape Name])",
+  sb:         "Page XX",
+  wb:         "Page XX",
+  resources:  "[Materials list]",
+  slides_url: "https://elwrush.github.io/actions-gh-pages/[lesson-folder]/",
+  stages: (
 
-#lesson_header("intensive") // or "bell"
+    stage(
+      [Stage aim sentence.],
+      [
+        - *Part 1*: Procedure detail.
+        - *Part 2*: Procedure detail.
+      ],
+      [T-Ss],
+    ),
 
-#metadata_table((
-  teacher: "[Teacher Name]",
-  date: "[DD-MM-YYYY]",
-  cefr: "[Level]",
-  duration: "[Duration] Minutes",
-  shape: "[Shape] ([Shape Name])",
-  assessment: "[Assessment Type or N/A]",
-  focus: "[Main Focus]",
-  materials: "[Materials Used]",
-))
+    stage(
+      [Stage aim sentence.],
+      [
+        Workbook Page XX, Ex Y. Students do Z. T monitors.
+      ],
+      [Ss-Ss],
+    ),
 
-#v(0.5cm)
-
-#main_aim_box[
-  By the end of the lesson, learners will...
-]
-
-#v(0.5cm)
-
-#differentiation_box[
-  [Describe differentiation strategies here...]
-]
-
-#v(0.5cm)
-#slideshow_link("https://elwrush.github.io/actions-gh-pages/[lesson-folder-name]/")
-
-#v(0.5cm)
-
-#stage_table((
-  stage("ONE", "[Stage Name]", "[Time]", "[Aim]", [
-    - *Part 1: [Step]*: [Details].
-    - *Part 2: [Step]*: [Details].
-  ], "[Interaction]"),
-
-  stage("TWO", "[Stage Name]", "[Time]", "[Aim]", [
-    - *Part 1: [Step]*: [Details].
-  ], "[Interaction]"),
-))
-
-#answer_key[
-  *Task 1:* 1. A, 2. B, 3. C
-]
+    // Add one stage() call per lesson stage.
+  ),
+)
 ```
+
+### Rules
+- `stage(aim, procedure, interaction)` — all three arguments are **content blocks** (`[...]`).
+- `stages:` receives an **array of `stage()` calls** — one per lesson stage.
+- **Never** pass raw content blocks directly into `stages:` — always wrap in `stage()`.
+- The `#show:` line requires no body content after it; leave the file blank after the closing `)`.

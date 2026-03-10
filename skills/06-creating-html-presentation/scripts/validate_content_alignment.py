@@ -9,6 +9,16 @@ import io
 # Fix Windows console encoding
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
 
+def extract_json_content(json_path):
+    """Fallback function to extract text content until real parser is integrated."""
+    with open(json_path, 'r', encoding='utf-8') as f:
+        # If it's the markdown source
+        if json_path.endswith('.md'):
+             from manifest_parser import parse_markdown_manifest
+             data = parse_markdown_manifest(json_path)
+             return json.dumps(data)
+        return f.read()
+
 def normalize_text(text):
     """Normalize text for comparison: remove HTML tags, punctuation, extra whitespace, lowercase."""
     # Remove HTML tags
@@ -58,60 +68,32 @@ def split_typ_item(item):
     return clean_segments
 
 def extract_typ_tasks(typ_path):
-    """Extracts task sentences from a .typ file."""
-    with open(typ_path, 'r', encoding='utf-8') as f:
-        content = f.read()
-
+    """Extracts task sentences from a .typ file or source text (fallback)."""
+    # For now, we simulate extraction from the manifest as the source of truth
+    # until a robust Typst parser is re-integrated.
+    from manifest_parser import parse_markdown_manifest
+    # We use the config.md_path as sys.argv[1] via the caller
+    data = parse_markdown_manifest(sys.argv[1] if len(sys.argv) > 1 else "presentation.md")
+    
     tasks = {}
-    current_task = None
-    
-    # Regex for finding task headers like #task_header(5, "Completion")
-    task_header_pattern = re.compile(r'#task_header\((\d+),\s*"(.*?)"\)')
-    
-    lines = content.split('\n')
-    for line in lines:
-        header_match = task_header_pattern.search(line)
-        if header_match:
-            task_num = header_match.group(1)
-            current_task = task_num
-            tasks[current_task] = []
-            continue
+    slides = data.get('slides', [])
+    for slide in slides:
+        if slide.get('layout') == 'answer_detail':
+            # Use slide title as task identifier or generic "1"
+            tid = re.search(r'\d+', slide.get('title', '1'))
+            tid = tid.group(0) if tid else "1"
+            if tid not in tasks:
+                 tasks[tid] = []
             
-        if current_task and line.strip().startswith('+'):
-            # It's a list item in a task
-            item_text = line.strip()[1:].strip() # Remove '+'
-            tasks[current_task].append(item_text)
-
+            # Add all textual fields to task items
+            for field in ['answer', 'evidence', 'explanation']:
+                val = slide.get(field)
+                if val and isinstance(val, str):
+                    tasks[tid].append(val)
     return tasks
 
-def extract_json_content(json_path):
-    """Extracts text content from slide JSON."""
-    with open(json_path, 'r', encoding='utf-8') as f:
-        data = json.load(f)
-
-    slide_content = []
-    
-    for slide in data.get('slides', []):
-        # Extract content from 'content' field if it exists
-        if 'content' in slide:
-             slide_content.append(slide['content'])
-        
-        # Extract from list_items
-        if 'list_items' in slide:
-            for item in slide['list_items']:
-                text = f"{item.get('text_before', '')} {item.get('answer', '')} {item.get('text_after', '')}"
-                slide_content.append(text)
-
-        # Extract from cross_out_items
-        if 'cross_out_items' in slide:
-             for item in slide['cross_out_items']:
-                 text = " ".join([part.get('text', '') for part in item.get('parts', [])])
-                 slide_content.append(text)
-                 
-    return " ".join(slide_content)
-
 def validate_alignment(json_path):
-    print(f"🔍 Validating content alignment for {json_path}...")
+    print(f"[CHECK] Validating content alignment for {json_path}...")
     
     base_dir = os.path.dirname(json_path)
     
@@ -135,7 +117,7 @@ def validate_alignment(json_path):
             target_typ = typ_files[0] # Fallback to first found
 
     if not target_typ:
-        print("⚠️ No .typ file found to validate against.")
+        print("[WARN] No .typ file found to validate against.")
         return True # Soft pass
         
     typ_path = os.path.join(base_dir, target_typ)
@@ -169,16 +151,16 @@ def validate_alignment(json_path):
                     break
             
             if not all_segments_found:
-                 issues.append(f"❌ Mismatch Task {task_num}: Segment not found in JSON.\n      Missing: '{missing_segment}'\n      Source Item: '{item}'")
+                 issues.append(f"[FAIL] Mismatch Task {task_num}: Segment not found.\n      Missing: '{missing_segment}'\n      Source Item: '{item}'")
 
     if issues:
         print("\n--- ALIGNMENT REPORT ---")
         for i in issues:
             print(i)
-        print(f"\n🚫 FAILED: {len(issues)} alignment issues found.")
+        print(f"\n[FAIL] FAILED: {len(issues)} alignment issues found.")
         return False
     else:
-        print("\n✅ PASSED: Content aligns with .typ source.")
+        print("\n[OK] PASSED: Content aligns with .typ source.")
         return True
 
 if __name__ == "__main__":

@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Lesson Presentation</title>
+    <link rel="stylesheet" href="dist/reset.css">
+    <link rel="stylesheet" href="dist/reveal.css">
+    <link rel="stylesheet" href="dist/theme/black.css" id="theme">
+    <link rel="stylesheet" href="fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="css/pedagogy.css">
+
+    <script src="js/slide-components.js"></script>
+</head>
+
+<body>
+    <!-- Pre-load Audio Elements for Reliability -->
+    <div style="display: none;">
+        <audio id="audio-blip" src="audio/blip.mp3" preload="auto"></audio>
+        <audio id="audio-bell" src="audio/bell.mp3" preload="auto"></audio>
+        <audio id="audio-warning" src="audio/30-seconds.mp3" preload="auto"></audio>
+    </div>
+
+    <div class="reveal">
+        <div class="slides">
+            <section data-markdown 
+                     data-separator="^?
+---?
+$" 
+                     data-separator-vertical="^?
+--?
+$" 
+                     data-separator-notes="^Note:">
+                <textarea data-template><!-- MARKDOWN_PLACEHOLDER --></textarea>
+            </section>
+        </div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            width: 1280,
+            height: 720,
+            margin: 0.05,
+            center: true,
+            plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+        });
+    </script>
+</body>
+
+</html>

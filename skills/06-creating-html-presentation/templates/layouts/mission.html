@@ -9,7 +9,7 @@
             style="font-family: 'Outfit', sans-serif; color: white; margin-bottom: 40px; text-shadow: 2px 2px 15px rgba(0,0,0,1); font-size: 2.5em; font-weight: 800; letter-spacing: 2px; text-transform: uppercase;">
             {{ slide.title | default('YOUR MISSION') }}</h1>
 
-        {% set mission_items = slide.get('items') or slide.get('objectives') %}
+        {% set mission_items = slide.get('mission_items') or slide.get('items') or slide.get('objectives') or [] %}
         <!-- HORIZONTAL STACKING -->
         <div
             style="display: flex; flex-direction: row; justify-content: center; flex-wrap: wrap; gap: 20px; margin-top: 20px; width: 100%;">

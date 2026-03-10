@@ -89,15 +89,26 @@ def build(target_folder=None):
 
     # 2. Process Lessons (Bundled Architecture - each lesson is self-contained)
     log("Aggregating presentations...", "[PROCESS]")
-    if target_folder:
-        lessons_to_process = [target_folder]
-    else:
-        lessons_to_process = [d.name for d in INPUTS_DIR.iterdir() if d.is_dir()]
     
-    for folder in lessons_to_process:
-        lesson_path = INPUTS_DIR / folder
-        if not lesson_path.exists():
-            continue
+    found_lessons = []
+    if target_folder:
+        # Search recursively for the target folder
+        for root, dirs, files in os.walk(str(INPUTS_DIR)):
+            if target_folder in dirs:
+                found_lessons.append(Path(root) / target_folder)
+                break
+    else:
+        # Find all folders that contain an index.html or presentation.md
+        for root, dirs, files in os.walk(str(INPUTS_DIR)):
+            if "index.html" in files or "presentation.md" in files:
+                found_lessons.append(Path(root))
+
+    if target_folder and not found_lessons:
+        log(f"Lesson '{target_folder}' not found.", "[ERROR]")
+        return
+
+    for lesson_path in found_lessons:
+        folder = lesson_path.name
 
         published_path = lesson_path / "published"
         index_html = published_path / "index.html"

@@ -40,13 +40,13 @@ For complex tasks, copy `.agent/workflows/task.md` to your lesson folder and com
 ---
 
 ## 1. THE PEDAGOGICAL CONSTITUTION (THE "WHY")
-*   **The Roadmap First Law**: **NEVER** write code (JSON or Typst) without first presenting a **Visual Roadmap**. 
+*   **The Roadmap First Law**: **NEVER** write code (Markdown or Typst) without first presenting a **Visual Roadmap**. 
 *   **The Compartmentalization Law**: **NEVER** jump ahead to the next phase. Complete Ingestion -> Plan -> Visuals -> Code in isolation.
 *   **The Source Gate**: All content must be **verbatim** from the user-provided `SOURCE_TEXT.md` and `blueprint.md`. 
     *   **User Provision**: The USER provides the `SOURCE_TEXT.md` (content) and `blueprint.md` (structure). DO NOT create `lesson_plan.typ`.
-    *   **The Answering Rule**: You MUST solve all lesson tasks (Genre, Recall, Analysis, etc.) within `SOURCE_TEXT.md` using verbatim evidence before creating JSON.
-    *   **The Source-Anchor Law**: Each JSON object MUST include a `source_reference` key for internal validation (hidden in HTML).
-    *   **The Grounding Validator**: You MUST run `python scripts/validate_groundedness.py` after every JSON edit.
+    *   **The Answering Rule**: You MUST solve all lesson tasks (Genre, Recall, Analysis, etc.) within `SOURCE_TEXT.md` using verbatim evidence before creating your Markdown presentation.
+    *   **The Native Markdown Law**: You MUST write native Reveal.js Markdown (`presentation.md`). The legacy JSON pipeline is DELETED.
+    *   **The Grounding Validator**: You MUST ensure your Markdown precisely maps to the source text.
     *   **The Nuke Clause**: If hallucinations are detected or validation fails, you MUST delete all lesson artifacts and restart from the `SOURCE_TEXT.md` phase.
 *   **Student Voice**: Use a **Warm, Encouraging ESL Teacher Persona**. Abandon all teacher-facing labels (Gist, Lead-in, Objective). Use "Pop & Verve" student-centric language.
 *   **The Bridge Slide**: Every task MUST be preceded by a `strategy` slide explaining **What**, **Why**, and **How (Tips)** using an HTML table.
@@ -91,7 +91,7 @@ For complex tasks, copy `.agent/workflows/task.md` to your lesson folder and com
 *   **Zero Duplication**: NEVER commit the same binary to both `inputs/` and `dist/`.
 
 ### B. Engineering Standards
-*   **Standalone Build**: Use `build.py` (Python) for processing. Node.js is decommissioned.
+*   **Standalone Build**: Use `build.py` (Python) for processing. HTML is the sole presentation format. PowerPoint (PPTX) is decommissioned.
 *   **Deterministic Validation**: Run `.gemini/hooks/present-validator.py` before finishing. It enforces hygiene, answer separation, and verbatim alignment.
 *   **Single-Header Policy**: Use **Pipes** (`|`) to combine titles and sub-instructions. Never use two header tags (h1/h2) on one slide.
 

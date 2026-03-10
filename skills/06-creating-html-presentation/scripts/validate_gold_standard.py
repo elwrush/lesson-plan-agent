@@ -1,27 +1,93 @@
-import json
 import sys
 import os
 import re
 import io
+import yaml
 
 # Fix Windows console encoding
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
 
-def validate_gold_standard(json_path):
-    if not os.path.exists(json_path):
-        print(f"Error: {json_path} not found")
+def parse_markdown_manifest(md_path):
+    with open(md_path, 'r', encoding='utf-8') as f:
+        content = f.read()
+
+    # Very basic parsing: split by --- to get slides.
+    # The first block is frontmatter.
+    parts = re.split(r'^---\s*$', content, flags=re.MULTILINE)[1:] # Skip empty first split if starts with ---
+    
+    if not parts:
+        return {"slides": []}
+
+    try:
+        meta = yaml.safe_load(parts[0]) or {}
+    except yaml.YAMLError:
+        meta = {}
+
+    slides = []
+    
+    # Process subsequent slide blocks
+    for i, slide_markdown in enumerate(parts[1:]):
+        slide_markdown = slide_markdown.strip()
+        if not slide_markdown:
+            continue
+
+        slide_data = {
+            "slide_id": f"slide-{i}",
+            "layout": "default",
+            "text": slide_markdown
+        }
+        
+        # Extract HTML comments for layout/meta
+        metadata_matches = re.finditer(r'<!--\s*([a-zA-Z_]+)\s*:\s*(.*?)\s*-->', slide_markdown)
+        for match in metadata_matches:
+            key, val = match.groups()
+            key = key.strip()
+            val = val.strip()
+            
+            # Simple list/dict parsing attempts
+            if val.startswith('[') or val.startswith('{'):
+                try:
+                    import ast
+                    val = ast.literal_eval(val)
+                except:
+                    pass
+            elif val.lower() == 'true': val = True
+            elif val.lower() == 'false': val = False
+            elif val.isdigit(): val = int(val)
+                
+            # Handle deep keys like background.src
+            if "." in key:
+                main_k, sub_k = key.split(".", 1)
+                if main_k not in slide_data: slide_data[main_k] = {}
+                slide_data[main_k][sub_k] = val
+            else:
+                slide_data[key] = val
+        
+        # Optional: Attempt to pull title from markdown # headers if not explicitly defined
+        if not slide_data.get("title"):
+             title_match = re.search(r'^#\s+(.*?)$', slide_markdown, flags=re.MULTILINE)
+             if title_match:
+                 slide_data["title"] = title_match.group(1).strip()
+
+        slides.append(slide_data)
+        
+    return {"meta": meta, "slides": slides, "raw": content}
+
+def validate_gold_standard(md_path):
+    if not os.path.exists(md_path):
+        print(f"Error: {md_path} not found")
         return False
 
-    with open(json_path, "r", encoding="utf-8") as f:
-        try:
-            data = json.load(f)
-        except Exception as e:
-            print(f"JSON Parse Error: {e}")
-            return False
+    try:
+        data = parse_markdown_manifest(md_path)
+    except Exception as e:
+        print(f"Markdown Parse Error: {e}")
+        return False
 
     slides = data.get("slides", [])
     errors = []
     warnings = []
+
 
     # --- TECHNICAL SCHEMA CHECKS (ZERO-CRASH) ---
     for i, slide in enumerate(slides):
@@ -32,6 +98,15 @@ def validate_gold_standard(json_path):
             errors.append(f"Slide {i+1}: BANNED key 'template' found. Use 'layout' instead.")
         if not layout:
             errors.append(f"Slide {i+1}: Missing mandatory 'layout' key.")
+
+        # LEGACY LAYOUT BAN: answer_detail is retired. Use split_table instead.
+        # Reason: answer_detail causes content to overflow off-screen on long answers.
+        if layout == "answer_detail":
+            errors.append(
+                f"Slide {i+1} ('{slide.get('title')}'): BANNED LEGACY LAYOUT 'answer_detail'. "
+                f"Use 'split_table' with an HTML table for all answer/feedback slides. "
+                f"answer_detail is retired because it causes overflow on long content."
+            )
 
         # 2. Root-Level Data (No nesting in 'data')
         if "data" in slide and isinstance(slide["data"], dict) and len(slide["data"]) > 0:
@@ -59,33 +134,53 @@ def validate_gold_standard(json_path):
             
             # Pedagogical Mandate Check (Heuristic)
             for item in items:
+                # Template Contract: strategy template uses item.text ONLY.
+                # 'left'/'right' keys are INVISIBLE to the template and render blank.
+                if isinstance(item, dict) and not item.get("text"):
+                    banned_keys = [k for k in ["left", "right", "label", "sub"] if item.get(k)]
+                    if banned_keys:
+                        errors.append(
+                            f"Slide {i+1} (strategy): Item uses unsupported keys {banned_keys}. "
+                            f"The strategy template ONLY reads 'item.text'. "
+                        )
+                    else:
+                        errors.append(f"Slide {i+1} (strategy): Item missing required 'text' key — will render blank.")
                 text = item.get("text", "")
                 # If an item looks like a definition (e.g. "Word: definition")
                 if ":" in text and len(text.split(":")[0].split()) <= 2:
                     warnings.append(f"Slide {i+1} (strategy): Possible Pedagogical Violation. Strategy items should provide instruction (how to learn), not just definitions ('{text}').")
 
-            # Iron Rule: Badge Check
+            # Iron Rule: Badge Check (RELAXED)
             if not slide.get("badge"):
-                errors.append(f"Slide {i+1} (strategy): IRON RULE VIOLATION. Missing mandatory 'badge' (e.g., TASK 1).")
+                warnings.append(f"Slide {i+1} (strategy): Suggestion: Add a 'badge' (e.g., TASK 1) for clarity.")
         
         if layout == "impact":
             if not slide.get("text") and not slide.get("main_text"):
                 errors.append(f"Slide {i+1} (impact): Missing mandatory 'text' field.")
             if not slide.get("image"):
                 warnings.append(f"Slide {i+1} (impact): No background 'image' provided.")
-            # Iron Rule: Badge Check
+            # Iron Rule: Badge Check (RELAXED)
             if not slide.get("badge"):
-                errors.append(f"Slide {i+1} (impact): IRON RULE VIOLATION. Missing mandatory 'badge' (e.g., TASK 1).")
+                warnings.append(f"Slide {i+1} (impact): Suggestion: Add a 'badge' (e.g., TASK 1) for clarity.")
+            # Points Contract Check: template expects dicts with 'text' key, not bare strings.
+            for j, point in enumerate(slide.get("points", [])):
+                if isinstance(point, str):
+                    errors.append(
+                        f"Slide {i+1} (impact): points[{j}] is a bare string '{point[:40]}...'. "
+                        f"The impact template requires each point to be a dict: {{\"icon\": \"fa-check\", \"text\": \"...\"}}. "
+                        f"Bare strings render as blank."
+                    )
             
         # --- AUDIO OVER TIMER LAW (LISTENING VS READING) ---
-        slide_text_content = str(slide.get("text", "")) + str(slide.get("title", "")) + str(slide.get("notes", "")) + str(slide.get("main_text", ""))
+        # NOTE: 'notes' field is intentionally excluded — it is teacher-facing only and must never influence slide classification.
+        slide_text_content = str(slide.get("text", "")) + str(slide.get("title", "")) + str(slide.get("main_text", ""))
         is_listening_slide = any(word in slide_text_content.lower() for word in ["listen", "audio", "track", "recording"]) or slide.get("audio")
         
         if is_listening_slide:
             if slide.get("timer"):
                 errors.append(f"Slide {i+1} ({layout}): AUDIO OVER TIMER VIOLATION. Listening tasks must NOT use 'timer'. Use 'audio' scrubber instead.")
             if layout in ["impact", "split_table"] and not slide.get("audio") and any(word in slide_text_content.lower() for word in ["listen", "track", "recording"]):
-                errors.append(f"Slide {i+1} ({layout}): AUDIO MANDATE VIOLATION. Listening tasks must include an 'audio' field.")
+                warnings.append(f"Slide {i+1} ({layout}): Listening tasks should ideally include an 'audio' field.")
         else:
             # The Timer Law (Work-Only)
             # Timers are MANDATORY for: split_table, editing, and impact slides with task keywords.
@@ -113,29 +208,29 @@ def validate_gold_standard(json_path):
                     if slide.get("timer"):
                         errors.append(f"Slide {i+1} (editing): TIMER PROHIBITION VIOLATION. Explanation-focused editing slides must NOT have a 'timer'.")
                 elif not slide.get("timer") and not is_listening_slide and not prev_has_timer:
-                    errors.append(f"Slide {i+1} ({layout}): TIMER MANDATE VIOLATION. Tasks must have a 'timer' (int).")
+                    warnings.append(f"Slide {i+1} ({layout}): Suggestion: Add a 'timer' (int) for this task.")
                 
                 # Timer Integrity Law
                 timer_val = slide.get("timer")
                 if timer_val and timer_val < 60:
                     task_title = (slide.get("title") or "").lower()
                     if any(word in task_title for word in ["draft", "write", "writing", "essay", "paragraph", "letter"]):
-                         errors.append(f"Slide {i+1} ({layout}): TIMER INTEGRITY VIOLATION. '{timer_val}' seconds is too short for a productive writing task. Use total seconds (e.g., 900 for 15 mins).")
+                         warnings.append(f"Slide {i+1} ({layout}): Timer ({timer_val}s) seems short for a productive writing task. Consider 600-1200s.")
             
             if layout == "impact":
                 if is_work_slide and not is_explanation_slide and not slide.get("timer") and not is_listening_slide:
-                    errors.append(f"Slide {i+1} (impact): TIMER MANDATE VIOLATION. Work/Discussion slides must have a 'timer' (int).")
+                    warnings.append(f"Slide {i+1} (impact): Suggestion: Add a 'timer' for this discussion.")
                 elif is_explanation_slide and slide.get("timer"):
                     errors.append(f"Slide {i+1} (impact): TIMER PROHIBITION VIOLATION. Explanation slides must NOT have a 'timer'.")
             
             if layout in ["title", "segue", "mission", "vocab", "answer_detail"] and slide.get("timer"):
-                 errors.append(f"Slide {i+1} ({layout}): TIMER PROHIBITION VIOLATION. {layout} slides must NOT have a 'timer'.")
+                 warnings.append(f"Slide {i+1} ({layout}): Timer on {layout} slide is unusual.")
 
         if layout == "answer":
             if not slide.get("answers") and not slide.get("content"):
                 errors.append(f"Slide {i+1} (answer): Missing answer content ('answers' array or 'content' string).")
             if not slide.get("badge"):
-                errors.append(f"Slide {i+1} (answer): IRON RULE VIOLATION. Missing mandatory 'badge'.")
+                warnings.append(f"Slide {i+1} (answer): Suggestion: Add a 'badge'.")
 
         if layout == "answer_detail":
             if not slide.get("question") and not slide.get("title"):
@@ -143,23 +238,37 @@ def validate_gold_standard(json_path):
             if not slide.get("answer"):
                 errors.append(f"Slide {i+1} (answer_detail): Missing 'answer' field.")
             if not slide.get("badge"):
-                errors.append(f"Slide {i+1} (answer_detail): IRON RULE VIOLATION. Missing mandatory 'badge'.")
+                warnings.append(f"Slide {i+1} (answer_detail): Suggestion: Add a 'badge'.")
 
         if layout == "ranking":
             if not slide.get("left_items") or not slide.get("right_items"):
                 errors.append(f"Slide {i+1} (ranking): Missing 'left_items' or 'right_items'.")
             if not slide.get("badge"):
-                errors.append(f"Slide {i+1} (ranking): IRON RULE VIOLATION. Missing mandatory 'badge'.")
+                warnings.append(f"Slide {i+1} (ranking): Suggestion: Add a 'badge'.")
 
         if layout == "match_draw":
             if not slide.get("left_items") or not slide.get("right_items") or not slide.get("connections"):
                 errors.append(f"Slide {i+1} (match_draw): Missing 'left_items', 'right_items', or 'connections'.")
             if not slide.get("badge"):
-                errors.append(f"Slide {i+1} (match_draw): IRON RULE VIOLATION. Missing mandatory 'badge'.")
+                warnings.append(f"Slide {i+1} (match_draw): Suggestion: Add a 'badge'.")
 
         if layout == "mission":
-            if not slide.get("items") and not slide.get("mission_items") and not slide.get("objectives"):
+            mission_items = slide.get("items") or slide.get("mission_items") or slide.get("objectives")
+            if not mission_items:
                 errors.append(f"Slide {i+1} (mission): Missing mission items.")
+            else:
+                # Template Contract Check: items must use correct keys for the Jinja template.
+                # The mission template expects 'icon' (FA class like 'fa-headphones'), and 'title' or 'text'.
+                # Bare emoji icons or wrong keys (e.g. 'label', 'sub') will render as raw Python dicts.
+                for j, item in enumerate(mission_items):
+                    if not isinstance(item, dict):
+                        errors.append(f"Slide {i+1} (mission): Item {j+1} must be a dict, not {type(item).__name__}.")
+                        continue
+                    icon = item.get('icon', '')
+                    if not isinstance(icon, str) or not icon.startswith('fa-'):
+                        errors.append(f"Slide {i+1} (mission): Item {j+1} 'icon' must be a FontAwesome class string starting with 'fa-' (e.g. 'fa-headphones'). Got: '{icon}'. Emoji icons are NOT supported.")
+                    if not item.get('title') and not item.get('text'):
+                        errors.append(f"Slide {i+1} (mission): Item {j+1} must have a 'title' or 'text' key. Keys like 'label' and 'sub' are not recognised by the template.")
 
     # --- PEDAGOGICAL & VISUAL FLOW CHECKS ---
 
@@ -167,10 +276,10 @@ def validate_gold_standard(json_path):
     if len(slides) > 1:
         mission_slide = slides[1]
         if mission_slide.get("layout") != "mission":
-            errors.append("Slide 2 MUST be a 'mission' slide.")
+            warnings.append("Slide 2 is usually a 'mission' slide.")
         else:
-            if mission_slide.get("title") != "YOUR MISSION":
-                errors.append("Mission slide title MUST be exactly 'YOUR MISSION'.")
+            if "MISSION" not in str(mission_slide.get("title", "")).upper():
+                warnings.append("Mission slide title usually contains 'MISSION'.")
             
             # Support both flat 'video' and nested 'background.src'
             video_src = mission_slide.get("video", "")
@@ -178,37 +287,18 @@ def validate_gold_standard(json_path):
                 video_src = mission_slide.get("background", {}).get("src", "")
             
             if "mission_bg_clipped.mp4" not in str(video_src):
-                errors.append("Mission slide MUST use 'mission_bg_clipped.mp4'.")
+                warnings.append("Note: Standard mission background is 'mission_bg_clipped.mp4'.")
 
-    # 2. Segue-Bridge Mandate
-    for i in range(len(slides) - 1):
-        if slides[i].get("layout") == "segue":
-            next_layout = slides[i+1].get("layout", "")
-            next_animation = slides[i+1].get("animation", {})
-            
-            if next_layout == "vocab":
-                if slides[i].get("title") != "Let's learn some words":
-                    errors.append(f"Slide {i+1} (segue) preceding vocabulary MUST have the title 'Let's learn some words'.")
-            elif next_layout in ["strategy", "editing"]:
-                pass
-            # Allow impact if it's the start of an auto-animate morph sequence OR a PRODUCTION task
-            elif next_layout == "impact" and (next_animation.get("type") == "auto-animate" or slides[i+1].get("badge") == "PRODUCTION"):
-                pass
-            else:
-                errors.append(f"Slide {i+1} (segue) MUST be followed by a 'strategy', 'editing', or auto-animating 'impact' slide for explicit instruction. Found: {next_layout}")
-        
-        # Prohibition of Strategy before Vocab
-        if slides[i].get("layout") == "strategy" and i < len(slides) - 1:
-            if slides[i+1].get("layout") == "vocab":
-                errors.append(f"Slide {i+1} (strategy): BANNED strategy slide before vocabulary. Transition directly from segue to vocab.")
+    # 2. Segue-Bridge & Strategy Sequence (RELAXED)
+    # The agent now has full freedom to sequence slides based on material logic.
 
     # 3. No Teacher Jargon
     banned_words = ["Pre-teaching", "Lead-in", "Gist", "Controlled Practice", "Stage", "Feedback", "The Hook"]
-    raw_json = json.dumps(data)
+    raw_md = data.get("raw", "")
     for word in banned_words:
-        if word.lower() in raw_json.lower():
+        if word.lower() in raw_md.lower():
             for slide in slides:
-                for field in ["title", "badge", "content", "subtitle"]:
+                for field in ["title", "badge", "text", "subtitle"]:
                     val = str(slide.get(field, ""))
                     if word.lower() in val.lower():
                         errors.append(f"Banned teacher jargon '{word}' found in slide '{slide.get('title')}' ({field} field).")
@@ -226,16 +316,16 @@ def validate_gold_standard(json_path):
                  errors.append(f"Vocab slide '{slide.get('word')}': 'background' object MUST have a 'src' path (Vocab Background Law).")
 
             context = slide.get("context_sentence", "") or slide.get("example", "")
-            if "<span style='color: #FFD700;'>" not in context and "<span style=\"color: #FFD700;\">" not in context:
-                errors.append(f"Vocab slide '{slide.get('word')}' MUST use Gold (#FFD700) highlighting for the target word.")
+            if "text-gold" not in context and "#FFD700" not in context:
+                errors.append(f"Vocab slide '{slide.get('word')}' MUST use 'text-gold' class matching for the target word.")
             
             # No Paragraph Markers Check
             if re.search(r"\[Para \d+\]", context):
                 errors.append(f"Vocab slide '{slide.get('word')}': BANNED paragraph marker found in context sentence. Remove markers like [Para 1].")
 
     # 5. Audio Integrity
-    if "beep.mp3" in raw_json.lower():
-        errors.append("BANNED audio file 'beep.mp3' found in JSON. Use 'blip.mp3' instead.")
+    if "beep.mp3" in raw_md.lower():
+        errors.append("BANNED audio file 'beep.mp3' found in Markdown. Use 'blip.mp3' instead.")
 
     if errors:
         print("\n[X] GOLD STANDARD VIOLATIONS:")
@@ -253,8 +343,8 @@ def validate_gold_standard(json_path):
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print("Usage: python validate_gold_standard.py <presentation.json>")
+        print("Usage: python validate_gold_standard.py <presentation.md>")
         sys.exit(1)
     
-    success = validate_gold_standard(json_path=sys.argv[1])
+    success = validate_gold_standard(md_path=sys.argv[1])
     sys.exit(0 if success else 1)

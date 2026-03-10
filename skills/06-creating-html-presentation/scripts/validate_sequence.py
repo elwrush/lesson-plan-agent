@@ -10,10 +10,10 @@ def validate_sequence(json_path):
     print(f"🔍 Validating Sequence: {json_path}")
     
     try:
-        with open(json_path, 'r', encoding='utf-8') as f:
-            data = json.load(f)
+        from manifest_parser import parse_markdown_manifest
+        data = parse_markdown_manifest(sys.argv[1] if len(sys.argv) > 1 else json_path)
     except Exception as e:
-        print(f"❌ Error reading JSON: {e}")
+        print(f"[ERROR] Error reading manifest: {e}")
         return False
 
     slides = data.get('slides', [])
@@ -25,14 +25,14 @@ def validate_sequence(json_path):
         
         # Rule: Strategy cannot be immediately followed by Segue
         if current_layout == 'strategy' and next_layout == 'segue':
-            issues.append(f"❌ Sequencing Violation (Slide {i+1} -> {i+2}): Found 'strategy' followed by 'segue'. Strategy slides must come AFTER the segue.")
+            issues.append(f"[FAIL] Sequencing Violation (Slide {i+1} -> {i+2}): Found 'strategy' followed by 'segue'. Strategy slides must come AFTER the segue.")
 
     if issues:
         for issue in issues:
             print(issue)
         return False
     
-    print("✅ Sequence Validation Passed: No Strategy->Segue violations found.")
+    print("[OK] Sequence Validation Passed: No Strategy->Segue violations found.")
     return True
 
 if __name__ == "__main__":

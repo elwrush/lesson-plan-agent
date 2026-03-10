@@ -79,9 +79,10 @@ description: The Master Gated Pipeline for all lesson plan and slideshow creatio
 **Trigger**: Visual Roadmap approved in Phase 3
 
 1. **User Input**: **STOP AND ASK**: "I am about to acquire assets. Do you have any specific images, videos, or files you want me to use?"
-2. **Sourcing**: Use `skills/searching-pixabay/SKILL.md` to find missing assets
-3. **Processing**: Ensure all videos are 7s loops, 720p, and muted
-4. **Data Assembly**: Write `inputs/[Lesson]/presentation.json`
+2. **Sourcing**: Use `skills/searching-pixabay/SKILL.md` to find missing assets.
+3. **Processing**: Ensure all videos are processed using `skills/04-searching-pixabay/scripts/process_video.py` (FFmpeg).
+   - Enforce 7s loops, 720p, and muted audio.
+4. **Data Assembly**: Write `inputs/[Lesson]/presentation.md` (Director Format).
 5. **GATE**: Self-verify against `SOURCE_TEXT.md`.
    - Ask: "Did I include every question from Phase 1?"
 
@@ -91,8 +92,9 @@ description: The Master Gated Pipeline for all lesson plan and slideshow creatio
 
 **Trigger**: Assets assembled in Phase 4
 
-1. **Building**: Run `python scripts/fast_edit.py [lesson-name]`
-2. **Validation**: Run `python .gemini/hooks/present-validator.py [lesson-name]`
+1. **Normalization**: Run `python skills/06-creating-html-presentation/scripts/presentation_fixer.py [lesson_folder]` to convert `.md` to `.json`.
+2. **Building**: Run `python build.py [lesson-name]` to bundle the Reveal.js environment.
+3. **Validation**: Run `python .gemini/hooks/present-validator.py [lesson-name]`.
 3. **Preview**: Provide the localhost link for final review
 4. **GATE**: FINAL REVIEW. **STOP AND WAIT** for user approval.
 

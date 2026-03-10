@@ -48,43 +48,46 @@ def parse_directives(text):
     text = re.sub(r'\[HIGHLIGHT:\s*(.*?)\]', r'<span style="color: #FFD700; font-weight: bold;">\1</span>', text)
     return text
 
-def generate_presentation(json_path):
-    # 1. Load Configuration
-    with open(json_path, "r", encoding="utf-8") as f:
+def generate_presentation(md_path_arg):
+    # 1. Initialize Central Config
+    from presentation_config import PresentationConfig
+    config_obj = PresentationConfig(md_path_arg)
+    config_obj.ensure_directories()
+
+    print(f"[INFO] Building Presentation: {config_obj.lesson_name}")
+
+    if not config_obj.internal_json.exists():
+        print(f"❌ Error: Normalized {config_obj.internal_json.name} not found. Did the Fixer hook run?")
+        sys.exit(1)
+
+    with open(config_obj.internal_json, 'r', encoding='utf-8') as f:
         config = json.load(f)
 
     # 2. Setup Environment
-    script_dir = Path(__file__).resolve().parent
-    skill_dir = script_dir.parent
-    template_dir = skill_dir / "templates"
-    project_root = skill_dir.parents[1]
+    script_dir = config_obj.scripts_dir
+    skill_dir = config_obj.skill_dir
+    template_dir = config_obj.templates_dir
+    project_root = config_obj.project_root
 
     # Use the internal reveal.js library
     reveal_source = project_root / "lib" / "reveal"
     
     # Target 'published' folder within the lesson directory
-    lesson_dir = Path(json_path).resolve().parent
-    output_dir = lesson_dir / "published"
-    output_dir.mkdir(parents=True, exist_ok=True)
+    output_dir = config_obj.published_dir
 
     # 2.1 Surgical Cleanup (Preserve PDFs)
-    print("  [CLEAN] Removing old slideshow assets (preserving PDFs)...")
-    for item in ["dist", "plugin", "fontawesome", "images", "audio", "css", "index.html"]:
-        target = output_dir / item
-        if target.exists():
-            if target.is_dir():
-                shutil.rmtree(target, ignore_errors=True)
-            else:
-                try:
-                    target.unlink()
-                except:
-                    pass
+    print("  [CLEAN] Removing old slideshow HTML (preserving assets)...")
+    if config_obj.output_html.exists():
+        try:
+            config_obj.output_html.unlink()
+        except:
+            pass
 
     # Implementation Choice: If lib/reveal is missing core folders, we try to clone the shallow repo
     if not (reveal_source / "dist").exists() or not (reveal_source / "plugin").exists():
         reveal_source.parent.mkdir(exist_ok=True)
         print(f"  [GIT] Cloning reveal.js into {reveal_source}...")
-        os.system(f'git clone --depth 1 https://github.com/hakimel/reveal.js.git "{reveal_source}"')
+        os.system(f'git clone --depth 1 https://github.com/reveal/revealjs.com.git "{reveal_source}"')
     
     # 3. Bundle Reveal.js Engine & UI Assets
     print("[1/4] Bundling engine & UI assets...")
@@ -119,8 +122,7 @@ def generate_presentation(json_path):
 
     # 4. Resolve and Optimize Media
     print("[2/4] Resolving and optimizing media...")
-    images_dst = output_dir / "images"
-    images_dst.mkdir(exist_ok=True)
+    images_dst = config_obj.published_images
     
     # 4.1 Collect all referenced media from JSON content
     raw_json = json.dumps(config)
@@ -162,7 +164,7 @@ def generate_presentation(json_path):
             print(f"  [WARN] Failed to scan template {template_file.name}: {e}")
 
     # 4.2 Copy and Optimize referenced images
-    local_images_src = lesson_dir / "images"
+    local_images_src = config_obj.lesson_dir / "images"
     root_images_src = project_root / "images"
     
     for filename in referenced_images:
@@ -196,7 +198,7 @@ def generate_presentation(json_path):
     audio_dst.mkdir(exist_ok=True)
 
     # Lesson audio
-    lesson_audio_src = lesson_dir / "audio"
+    lesson_audio_src = config_obj.lesson_dir / "audio"
     if lesson_audio_src.exists():
         shutil.copytree(lesson_audio_src, audio_dst, dirs_exist_ok=True)
 
@@ -214,32 +216,32 @@ def generate_presentation(json_path):
     env.filters["parse_directives"] = parse_directives
     template = env.get_template("base.html")
 
-    
-    # Update slide URLs to be relative to the published folder
-    # Note: In the HTML, assets like /images/foo.png should now be ./images/foo.png
-    # We can handle this by making root_path empty and ensuring no leading slash in template
-    
+    slides_data = []
+    for slide in config.get("slides", []):
+        if slide.get("layout") == "split_table":
+            if slide.get("table"):
+                slide["content"] = slide["table"]
+        slides_data.append(slide)
+
     output_html = template.render(
         meta=config.get("meta", {}),
-        slides=config.get("slides", []),
-        root_path="",  # Made empty for relative pathing
+        slides=slides_data,
+        root_path="",
+        config=config_obj.get_dict(), # Expose config to Jinja
     )
 
-    # Clean up the leading slashes in rendered HTML for images/videos
-    # Actually, it's safer to do this in the template, but we can do a broad replace here too
     output_html = output_html.replace('="/images/', '="images/')
     output_html = output_html.replace('="/audio/', '="audio/')
 
     # Save Output
-    output_path = output_dir / "index.html"
-    output_path.write_text(output_html, encoding="utf-8")
-    print(f"[SUCCESS] Presentation bundled at: {output_path}")
+    config_obj.output_html.write_text(output_html, encoding="utf-8")
+    print(f"[SUCCESS] HTML Presentation bundled at: {config_obj.output_html}")
 
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print("Usage: python generate_presentation.py <path_to_config.json>")
+        print("Usage: python generate_presentation.py <path_to_presentation.md>")
         sys.exit(1)
 
-    json_path = sys.argv[1]
-    generate_presentation(json_path)
+    md_path_arg = sys.argv[1]
+    generate_presentation(md_path_arg)

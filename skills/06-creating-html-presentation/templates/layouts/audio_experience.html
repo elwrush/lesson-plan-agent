@@ -15,10 +15,13 @@
 
     <div
         style="background: rgba(0,0,0,0.4); padding: 30px; border-radius: 12px; border: 2px solid #FFD700; width: 80%; max-width: 800px;">
-        <p style="color: #ddd; font-size: 1.2em; margin-bottom: 20px;">{{ slide.instruction | parse_directives | safe }}</p>
+        <p style="color: #ddd; font-size: 1.2em; margin-bottom: 20px;">{{ slide.instruction | parse_directives | safe }}
+        </p>
 
         {% if slide.audio %}
-        <audio-player src="{{ slide.audio }}"></audio-player>
+        <div class="audio-player-wrapper">
+            <audio-player src="{{ slide.audio }}"></audio-player>
+        </div>
         {% endif %}
     </div>
 

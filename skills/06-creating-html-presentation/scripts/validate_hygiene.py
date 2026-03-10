@@ -48,27 +48,27 @@ def validate_hygiene(json_path):
 
 
     # 3. JSON Background Check
-    with open(json_path, 'r', encoding='utf-8') as f:
-        try:
-            data = json.load(f)
-            slides = data.get('slides', [])
-            for i, slide in enumerate(slides):
-                layout = slide.get('layout', '')
-                # Task slides (split_table, ranking, checklist, quiz, etc.)
-                if any(k in layout for k in ['table', 'ranking', 'checklist', 'quiz', 'cloze', 'match']):
-                    if 'image' in slide and slide['image']:
-                        # Exception 1: if they explicitly override with a gradient it might be okay
-                        # Exception 2: if the slide has a badge (PROFILE, SCANNING etc.), it's informational, not a pure quiz
-                        if 'background_gradient' not in slide and 'badge' not in slide:
-                            errors.append(f"Slide {i} ({slide.get('title')}): Question slides must not use image backgrounds. Use green radial design.")
-        except Exception as e:
-            errors.append(f"JSON Parse Error: {e}")
+    from manifest_parser import parse_markdown_manifest
+    try:
+        data = parse_markdown_manifest(sys.argv[1] if len(sys.argv) > 1 else json_path)
+        slides = data.get('slides', [])
+        for i, slide in enumerate(slides):
+            layout = slide.get('layout', '')
+            # Task slides (split_table, ranking, checklist, quiz, etc.)
+            if any(k in layout for k in ['table', 'ranking', 'checklist', 'quiz', 'cloze', 'match']):
+                if 'image' in slide and slide['image']:
+                    # Exception 1: if they explicitly override with a gradient it might be okay
+                    # Exception 2: if the slide has a badge (PROFILE, SCANNING etc.), it's informational, not a pure quiz
+                    if 'background_gradient' not in slide and 'badge' not in slide:
+                        errors.append(f"Slide {i} ({slide.get('title')}): Question slides must not use image backgrounds. Use green radial design.")
+    except Exception as e:
+        errors.append(f"Manifest Parse Error: {e}")
 
     if errors:
-        print("\n[X] REPO HYGIENE VIOLATIONS:")
+        print("\n[REPO HYGIENE VIOLATIONS]")
         for error in errors:
             print(f"  - {error}")
-        print("\n[!] FAILED: Please resize images (<1MB) and move videos to root images/.")
+        print("\n[FAIL] Please resize images (<1MB) and move videos to root images/.")
         return False
     
     print("[OK] Repo hygiene check passed.")

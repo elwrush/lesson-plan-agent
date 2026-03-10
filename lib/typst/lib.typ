@@ -177,6 +177,8 @@
   )
 }
 
+#let identity_block_sat = identity_block
+
 // ==========================================
 // 6. WRITING LINES (DYNAMIC) - FINAL SOLUTION 2026-03-02
 // ==========================================

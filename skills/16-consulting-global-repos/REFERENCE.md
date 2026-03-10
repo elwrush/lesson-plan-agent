@@ -5,8 +5,8 @@ Mappings used by `gh_fetch.py`:
 
 | Alias | Repository | Description |
 |-------|------------|-------------|
-| `typst` | `typst/typst` | Official Typst source (Rust) & Language features. |
-| `revealjs` | `hakimel/reveal.js` | Core presentation engine. |
+| typst | typst/typst | Official Typst source (Rust) & Language features. |
+| revealjs | reveal/revealjs.com | Core presentation engine (Source of Truth). |
 | `fontawesome` | `FortAwesome/Font-Awesome` | Metadata for icons and SVG definitions. |
 | `reference` | `elwrush/lesson-plan-references` | **MANDATORY**: Pedagogical templates for Bell/Intensive (replacing /lib/). |
 

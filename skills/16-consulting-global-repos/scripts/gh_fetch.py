@@ -11,10 +11,11 @@ from pathlib import Path
 REPOS = {
     "typst": "typst/typst",
     "typst-packages": "typst/packages",
-    "revealjs": "hakimel/reveal.js",
+    "revealjs": "reveal/revealjs.com",
     "fontawesome": "FortAwesome/Font-Awesome",
     "reference": "elwrush/lesson-plan-agent",
     "meander": "Vanille-N/meander.typ",
+    "pandoc": "jgm/pandoc",
 }
 
 # The PAT provided by the user in the environment
